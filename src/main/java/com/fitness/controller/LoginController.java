@@ -1,5 +1,5 @@
 
-package com.example.controller;
+package com.fitness.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
