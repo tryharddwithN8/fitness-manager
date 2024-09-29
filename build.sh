@@ -1,4 +1,0 @@
-
-
-
-mvn clean javafx:run
