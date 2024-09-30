@@ -1,4 +1,5 @@
 .vscode
-
+/target/
+/test/
 /src/main/resources/application.properties
 
