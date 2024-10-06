@@ -17,11 +17,15 @@ public class App extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Login");
-        stage.setScene(scene);
-        stage.show();
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Login.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Login");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public static void testDBConnection() {
         Properties properties = new Properties();
@@ -53,7 +57,7 @@ public class App extends Application
 
     public static void main( String[] args )
     {
-        testDBConnection();
+        // testDBConnection();
         launch(args);
     }
 }
