@@ -1,4 +1,4 @@
-# JavaFX Project - Project Name
+# JavaFX - Fitness Management
 
 ## Introduction
 This project is a simple JavaFX application support LAB of team N8
