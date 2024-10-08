@@ -1,0 +1,15 @@
+/* 
+ * Alert CSS
+ *
+ */
+
+.dialog-pane {
+    -fx-background-color: #d4edda;
+}
+
+.content {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #155724;
+}
+

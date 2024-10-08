@@ -1,10 +1,18 @@
 package com.fitness.controller;
 
+import com.fitness.utility.UtilityAlert;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 public class LoginController {
 
@@ -31,6 +39,8 @@ public class LoginController {
     
     @FXML
     private TextField forgotEmailField;
+    @FXML
+    private Button loginButton;
 
     @FXML
     public void initialize() {
@@ -57,17 +67,49 @@ public class LoginController {
         signUpPane.setVisible(false);
     }
 
+    private double x, y;
     @FXML
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (username.equals("admin") && password.equals("password")) {
-            showAlert(Alert.AlertType.INFORMATION, "Đăng nhập thành công", "Chào mừng " + username + "!");
+        // Check account on SQL (placeholder for actual logic)
+        if (username.equals("") && password.equals("")) {
+            UtilityAlert.showInfo("Login Success", "Welcome back!");
+
+            // Handle login main mode
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Admin");
+
+                // Center the window on the screen
+                stage.setX((Screen.getPrimary().getVisualBounds().getWidth() - stage.getWidth()) / 2);
+                stage.setY((Screen.getPrimary().getVisualBounds().getHeight() - stage.getHeight()) / 2);
+
+                // Drag functionality
+                root.setOnMousePressed(event -> {
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                });
+                root.setOnMouseDragged(event -> {
+                    stage.setX(event.getScreenX() - x);
+                    stage.setY(event.getScreenY() - y);
+                });
+
+                stage.show();
+            } catch (Exception e) {
+                System.out.println("Error loading Main.fxml: " + e.getMessage());
+                e.printStackTrace();
+            }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Đăng nhập thất bại", "Sai tên người dùng hoặc mật khẩu!");
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Login Failed", "Invalid username or password!");
         }
     }
+
 
     @FXML
     private void handleSignUp() {
