@@ -1,9 +1,18 @@
 package com.fitness.repositories;
 
-/**
- * CourseRepository
- */
-public class CourseRepository {
+import com.fitness.repositories.Interface.ICourseRepository;
 
-    // implement
+public class CourseRepository implements ICourseRepository{
+
+    @Override
+    public void saveFile() {
+        throw new UnsupportedOperationException("Unimplemented method 'saveFile'");
+    }
+
+    @Override
+    public void loadFile() {
+        throw new UnsupportedOperationException("Unimplemented method 'loadFile'");
+    }
+
+   
 }

@@ -1,9 +1,18 @@
 package com.fitness.repositories;
 
-/**
- * ProgressRepository
- */
-public class ProgressRepository {
+import com.fitness.repositories.Interface.IProgressRepository;
 
-    // implement
+public class ProgressRepository implements IProgressRepository {
+
+    @Override
+    public void saveFile() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'saveFile'");
+    }
+
+    @Override
+    public void loadFile() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadFile'");
+    }
 }

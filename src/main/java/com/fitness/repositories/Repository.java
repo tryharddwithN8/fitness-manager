@@ -1,5 +1,6 @@
 package com.fitness.repositories;
 
-public class Repository {
-    
+public interface Repository {
+    void saveFile();
+    void loadFile();
 }
