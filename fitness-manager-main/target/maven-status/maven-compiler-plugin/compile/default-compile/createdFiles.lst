@@ -1,0 +1,17 @@
+com\fitness\model\User.class
+com\fitness\repositories\UserRepository.class
+com\fitness\model\Workout.class
+com\fitness\repositories\SubscriptionRepository.class
+com\fitness\services\CourseService.class
+com\fitness\model\Subscription.class
+com\fitness\services\UserService.class
+com\fitness\repositories\WorkoutRepository.class
+com\fitness\model\Progress.class
+com\fitness\services\SubscriptionService.class
+com\fitness\model\Course.class
+com\fitness\repositories\CourseRepository.class
+com\fitness\services\WorkoutService.class
+com\fitness\services\NotificationService.class
+com\fitness\App.class
+com\fitness\controller\LoginController.class
+com\fitness\repositories\ProgressRepository.class
