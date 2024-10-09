@@ -8,7 +8,7 @@ Below is the list of members participating in the project:
 
 | Name              | Role                  | Description                          |
 |-------------------|-----------------------|--------------------------------------|
-| APT3233           | Lead                  | Dont make everything :))             |
+| APT3233           | Lead                  | Dont make anything   :))             |
 | VinCSS            | NULL                  | NULL                                 |
 | VuongPro22        | NULL                  | NULL                                 |
 | Tieens-1910       | NULL                  | NULL                                 |
