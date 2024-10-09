@@ -7,14 +7,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.fitness.utility.UtilityAlert;
 
 public class MainController implements Initializable {
 
@@ -80,6 +84,7 @@ public class MainController implements Initializable {
 
 
     public void handleClicks(ActionEvent actionEvent) {
+
         if (actionEvent.getSource() == btnCustomers) {
             pnlCustomer.setStyle("-fx-background-color : #1620A1");
             pnlCustomer.toFront();
@@ -98,4 +103,19 @@ public class MainController implements Initializable {
             pnlOrders.toFront();
         }
     }
+
+    /*
+     * Exit App
+     */
+    public void handleExit(){
+        UtilityAlert.showConfimExit("Exit", "Do you want to exit :((");
+    }
+
+    /*
+     * return login page
+     */
+    public void handleSignOut(){
+        UtilityAlert.showConfirmSignOut("Sign Out", "Do you want to logout", (Stage)btnSignout.getScene().getWindow());
+    }
+
 }

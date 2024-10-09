@@ -1,4 +1,4 @@
-package com.fitness.model.Fitness;
+package com.fitness.model.fitness;
 
 /**
  * Subscription
