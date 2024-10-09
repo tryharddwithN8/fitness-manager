@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LoginController {
 
@@ -84,7 +85,8 @@ public class LoginController {
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-                stage.setTitle("Admin");
+                // stage.setTitle("Admin");
+                stage.show();
 
                 // Center the window on the screen
                 stage.setX((Screen.getPrimary().getVisualBounds().getWidth() - stage.getWidth()) / 2);
@@ -100,7 +102,7 @@ public class LoginController {
                     stage.setY(event.getScreenY() - y);
                 });
 
-                stage.show();
+                
             } catch (Exception e) {
                 System.out.println("Error loading Main.fxml: " + e.getMessage());
                 e.printStackTrace();
