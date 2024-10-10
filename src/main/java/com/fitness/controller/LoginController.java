@@ -1,6 +1,12 @@
 package com.fitness.controller;
 
+import com.fitness.dto.EncryptAES;
+import com.fitness.dto.EncryptRSA;
 import com.fitness.utility.UtilityAlert;
+import com.fitness.utility.UtilitySecurity;
+import com.mysql.cj.util.Util;
+import java.util.Base64;
+
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -70,14 +76,29 @@ public class LoginController {
 
     private double x, y;
     @FXML
-    private void handleLogin() {
+    private void handleLogin() throws Exception {
         String username = usernameField.getText();
         String password = passwordField.getText();
+
+        try {
+            // code test here 
+            String key = UtilitySecurity.genKey(32);
+            EncryptAES encryptAES = new EncryptAES(key);
+
+            String encryptedData = encryptAES.encryptData("admin$test");
+            String encryptedAESKey = EncryptRSA.encryptAESKey(Base64.getEncoder().encodeToString(key.getBytes("UTF-8")));
+
+            EncryptRSA.sendData("Data Encrypted:-"+encryptedData + "Key Encrypted: " + encryptedAESKey);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
 
         // Check account on SQL (placeholder for actual logic)
         if (username.equals("") && password.equals("")) {
             UtilityAlert.showInfo("Login Success", "Welcome back!");
-
+            
             // Handle login main mode
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
@@ -133,11 +154,11 @@ public class LoginController {
     private void handleForgotPassword() {
         String email = forgotEmailField.getText();
 
-        if (email.isEmpty()) {
+        if (email.isEmpty()) 
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập email!");
-        } else {
+        else 
             showAlert(Alert.AlertType.INFORMATION, "Yêu cầu đặt lại mật khẩu", "Liên kết khôi phục mật khẩu đã được gửi tới " + email);
-        }
+        
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

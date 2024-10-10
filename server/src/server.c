@@ -16,6 +16,7 @@
 #include "../include/file.h"
 #include "../include/mime.h"
 #include "../include/cache.h"
+#include "../include/rsa.h"
 
 #define PORT "4444"
 
@@ -235,6 +236,10 @@ void get_verify_account(int fd, char *body, const char *email)
     if (email_json && cJSON_IsString(email_json))
     {
         printf("Received email: %s\n", email_json->valuestring);
+        (void)email;    // updating
+        /*
+         * handle query database
+         */
         send_response(fd, "HTTP/1.1 200 OK", "text/plain", "Account verified", 16);
     }
     else
@@ -254,7 +259,7 @@ void handle_get(int fd, Cache *cache, char *path)
 }
 
 
-void handle_post(int fd, HttpRequest *http_request)
+void handle_post_email(int fd, HttpRequest *http_request)
 {
     const char *email_pref = "/api/email/";
     if (strncmp(http_request->path, email_pref, strlen(email_pref)) == 0)
@@ -269,6 +274,30 @@ void handle_post(int fd, HttpRequest *http_request)
         send_response(fd, "HTTP/1.1 405 METHOD NOT ALLOWED", "text/plain", "Method Not Allowed", 15);
 }
 
+void handle_post_login(int fd, HttpRequest *http_request)
+{
+    fprintf(stdout, "Get connection\n");
+
+    if(http_request->body == NULL)
+        send_response(fd, "HTTP/1.1 501 NOT IMPLEMENTED", "text/plain", "Not Implemented", 14);
+
+    RSA* rsa = rsa_load_private_key("../key/private_key.pem");
+    if(rsa==NULL)
+    {
+        send_response(fd, "HTTP/1.1 500 INTERNAL SERVER ERROR", "text/plain", "Server Error", 12);
+        return;
+    }
+    char *encrypted_data = http_request->body;
+    int encrypted_data_len = strlen(encrypted_data);
+    fprintf(stdout, encrypted_data);
+
+    /* 
+     * Todo: nên làm gì đây nhở
+     */   
+
+
+    rsa_free(rsa);
+}
 
 void handle_http_request(int fd, Cache *cache)
 {
@@ -295,7 +324,13 @@ void handle_http_request(int fd, Cache *cache)
     if (strcmp(http_request.method, "GET") == 0)
         handle_get(fd, cache, http_request.path);
     else if (strcmp(http_request.method, "POST") == 0)
-        handle_post(fd, &http_request);
+    {
+        if (strncmp(http_request.path, "/api/email/", strlen("/api/email/")) == 0)
+            handle_post_email(fd, &http_request);
+        
+        if(strncmp(http_request.path, "/api/login/auth", strlen("/api/login/auth/")) == 0)
+            handle_post_login(fd, &http_request);
+    }
     else
         send_response(fd, "HTTP/1.1 501 NOT IMPLEMENTED", "text/plain", "Not Implemented", 14);
 

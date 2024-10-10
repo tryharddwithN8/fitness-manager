@@ -1,12 +1,12 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -lcjson
+CFLAGS=-Wall -Wextra -lcjson -lssl -lcrypto
 
 BUILD_DIR=../build
 DST_DIR=../dst
 LOG_FILE=../sys.log
 PID_FILE=../server.pid
 
-OBJS=$(BUILD_DIR)/server.o $(BUILD_DIR)/net.o $(BUILD_DIR)/file.o $(BUILD_DIR)/mime.o $(BUILD_DIR)/cache.o $(BUILD_DIR)/hashtable.o $(BUILD_DIR)/llist.o
+OBJS=$(BUILD_DIR)/server.o $(BUILD_DIR)/net.o $(BUILD_DIR)/file.o $(BUILD_DIR)/mime.o $(BUILD_DIR)/cache.o $(BUILD_DIR)/hashtable.o $(BUILD_DIR)/llist.o $(BUILD_DIR)/rsa.o
 
 # Đảm bảo thư mục build và dst tồn tại trước khi biên dịch
 all: $(BUILD_DIR) $(DST_DIR) $(DST_DIR)/server
@@ -39,6 +39,9 @@ $(BUILD_DIR)/hashtable.o: hashtable.c ../include/hashtable.h
 
 $(BUILD_DIR)/llist.o: llist.c ../include/llist.h
 	$(CC) $(CFLAGS) -c llist.c -o $@
+
+$(BUILD_DIR)/rsa.o: rsa.c ../include/rsa.h
+	$(CC) $(CFLAGS) -c rsa.c -o $@
 
 clean:
 	rm -rf $(BUILD_DIR)
