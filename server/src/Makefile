@@ -1,29 +1,24 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -lcjson
 
-# Đặt thư mục chứa các file .o
 BUILD_DIR=../build
 DST_DIR=../dst
 LOG_FILE=../sys.log
 PID_FILE=../server.pid
 
-# Danh sách các file object lưu vào thư mục build
 OBJS=$(BUILD_DIR)/server.o $(BUILD_DIR)/net.o $(BUILD_DIR)/file.o $(BUILD_DIR)/mime.o $(BUILD_DIR)/cache.o $(BUILD_DIR)/hashtable.o $(BUILD_DIR)/llist.o
 
 # Đảm bảo thư mục build và dst tồn tại trước khi biên dịch
 all: $(BUILD_DIR) $(DST_DIR) $(DST_DIR)/server
 
-# Tạo server từ các file object trong build và lưu vào thư mục dst
 $(DST_DIR)/server: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-# Quy tắc để tạo thư mục build nếu nó chưa tồn tại
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 $(DST_DIR):
 	mkdir -p $(DST_DIR)
 
-# Định nghĩa cách biên dịch các file .o và lưu vào thư mục build
 $(BUILD_DIR)/net.o: net.c ../include/net.h
 	$(CC) $(CFLAGS) -c net.c -o $@
 
@@ -68,7 +63,6 @@ stop:
 	fi
 
 
-# Quy tắc kiểm tra
 TEST_SRC=$(wildcard cache_tests/*_tests.c)
 TESTS=$(patsubst %.c,%,$(TEST_SRC))
 
