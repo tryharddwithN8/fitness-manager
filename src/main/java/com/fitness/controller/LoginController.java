@@ -85,10 +85,10 @@ public class LoginController {
             String key = UtilitySecurity.genKey(32);
             EncryptAES encryptAES = new EncryptAES(key);
 
-            String encryptedData = encryptAES.encryptData("admin$test");
+            String encryptedData = encryptAES.encryptData(username + "$" + password);
             String encryptedAESKey = EncryptRSA.encryptAESKey(Base64.getEncoder().encodeToString(key.getBytes("UTF-8")));
 
-            EncryptRSA.sendData("Data Encrypted:-"+encryptedData + "Key Encrypted: " + encryptedAESKey);
+            EncryptRSA.sendData(encryptedAESKey,encryptedData);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -142,11 +142,11 @@ public class LoginController {
         String confirmPassword = confirmPasswordField.getText();
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi đăng ký", "Vui lòng điền đầy đủ thông tin!");
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Lỗi đăng ký", "Vui lòng điền đầy đủ thông tin!");
         } else if (!password.equals(confirmPassword)) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi đăng ký", "Mật khẩu không khớp!");
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Lỗi đăng ký", "Mật khẩu không khớp!");
         } else {
-            showAlert(Alert.AlertType.INFORMATION, "Đăng ký thành công", "Chào mừng " + username + "!");
+            UtilityAlert.showInfo("Đăng ký thành công", "Chào mừng " + username + "!");
         }
     }
 
@@ -155,17 +155,10 @@ public class LoginController {
         String email = forgotEmailField.getText();
 
         if (email.isEmpty()) 
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập email!");
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập email!");
         else 
-            showAlert(Alert.AlertType.INFORMATION, "Yêu cầu đặt lại mật khẩu", "Liên kết khôi phục mật khẩu đã được gửi tới " + email);
+            UtilityAlert.showError(Alert.AlertType.INFORMATION, "Yêu cầu đặt lại mật khẩu", "Liên kết khôi phục mật khẩu đã được gửi tới " + email);
         
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }

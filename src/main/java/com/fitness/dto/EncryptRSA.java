@@ -55,27 +55,26 @@ public class EncryptRSA {
      * @param encryptedData The encrypted data to be sent
      * @throws Exception if any HTTP or I/O error occurs
      */
-    public static void sendData(String encryptedData) throws Exception {
+    public static void sendData(String encryted_key, String encryptedData) throws Exception {
         URL url = new URL(IP_TARGET);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
-
-        // JSON format data to send
-        String jsonInputString = "{\"data\":\"" + encryptedData + "\"}";
-
+    
+        String jsonInputString = "{\"key\":\"" + encryted_key + "\", \"data\":\"" + encryptedData + "\"}";
+    
         try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
-
+    
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) 
             System.out.println("Data sent successfully.");
         else 
             System.out.println("Failed to send data. Response code: " + responseCode);
-        
     }
+    
 }
