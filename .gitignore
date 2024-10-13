@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 .idea
 .vscode
+=======
+.idea/
+.vscode/
+>>>>>>> a83950f9c2f6883f45b1314f3f51e1e3f5fea6fc
 target/*
 test/
 src/main/resources/application.properties
+nbactions.xml
