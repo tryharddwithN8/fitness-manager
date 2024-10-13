@@ -37,7 +37,8 @@ CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,  -- Lưu trữ mật khẩu băm (hashed)
     email VARCHAR(100) NOT NULL,
-    role ENUM('user', 'coach', 'admin') DEFAULT 'user',  -- Phân biệt vai trò người dùng
+    role ENUM('user', 'coach', 'admin') DEFAULT 'user',
+    address VARCHAR(500),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

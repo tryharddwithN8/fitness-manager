@@ -12,7 +12,7 @@ public class Admin extends Person {
     }
 
     public Admin(String id, String name, String phone, String email, String address, LocalDateTime dob, String username, String password, String role) {
-        super(id, name, phone, email, address, dob);
+        super(id, email, address);
         this.username = username;
         this.password = password;
         this.role = role;

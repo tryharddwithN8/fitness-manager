@@ -8,7 +8,7 @@ public class Guest extends Person {
     }
 
     public Guest(String id, String name, String phone, String email, String address, LocalDateTime dob) {
-        super(id, name, phone, email, address, dob);
+        super();
     }
 
     @Override

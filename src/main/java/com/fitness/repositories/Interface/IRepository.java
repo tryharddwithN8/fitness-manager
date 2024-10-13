@@ -18,11 +18,11 @@ public interface IRepository<T, ID> {
     T getById(ID id) throws SQLException;
 
     // Thêm bản ghi mới
-    void add(T entity) throws SQLException;
+    int add(T entity) throws SQLException;
 
     // Cập nhật bản ghi
-    void update(T entity) throws SQLException;
+    int update(T entity) throws SQLException;
 
     // Xóa bản ghi theo ID
-    void delete(ID id) throws SQLException;
+    int delete(ID id) throws SQLException;
 }

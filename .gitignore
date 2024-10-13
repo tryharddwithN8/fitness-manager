@@ -4,3 +4,5 @@ target/*
 test/
 src/main/resources/application.properties
 nbactions.xml
+
+server/key/smtp.key

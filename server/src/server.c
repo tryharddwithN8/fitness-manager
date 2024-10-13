@@ -16,7 +16,7 @@
 #include "../include/file.h"
 #include "../include/mime.h"
 #include "../include/cache.h"
-#include "../include/rsa.h"
+#include "../include/smtp.h"
 
 #define PORT "4444"
 
@@ -84,7 +84,6 @@ void get_rand(int fd)
     send_response(fd, "HTTP/1.1 200 OK", "text/plain", response_body, strlen(response_body));
 }
 
-
 void resp_404(int fd)
 {
     char filepath[4096];
@@ -143,7 +142,6 @@ void get_file(int fd, Cache *cache, char *request_path)
 
     file_free(filedata);
 }
-
 
 char *find_start_of_body(char *header)
 {
@@ -232,15 +230,23 @@ void get_verify_account(int fd, char *body, const char *email)
         return;
     }
 
+    srand(time(NULL));
+
+    int random_number = rand() % 900000 + 100000;
+    char key[7]; 
+    snprintf(key, sizeof(key), "%d", random_number);
+
     cJSON *email_json = cJSON_GetObjectItem(json, "email");
     if (email_json && cJSON_IsString(email_json))
     {
         printf("Received email: %s\n", email_json->valuestring);
-        (void)email;    // updating
-        /*
-         * handle query database
-         */
-        send_response(fd, "HTTP/1.1 200 OK", "text/plain", "Account verified", 16);
+        int res = sendKeyToEmail(email_json->valuestring, key);
+        printf(key);
+        if (res == 0) {
+            send_response(fd, "HTTP/1.1 200 OK", "text/plain", key, 7);
+        } else {
+            send_response(fd, "HTTP/1.1 500 INTERNAL SERVER ERROR", "text/plain", "Failed to send email", 20);
+        }
     }
     else
         send_response(fd, "HTTP/1.1 400 BAD REQUEST", "text/plain", "Invalid email", 13);
@@ -248,6 +254,7 @@ void get_verify_account(int fd, char *body, const char *email)
 
     cJSON_Delete(json);
 }
+
 
 
 void handle_get(int fd, Cache *cache, char *path)
@@ -261,12 +268,15 @@ void handle_get(int fd, Cache *cache, char *path)
 
 void handle_post_email(int fd, HttpRequest *http_request)
 {
-    const char *email_pref = "/api/email/";
+    const char *email_pref = "/resetpasswd/";
     if (strncmp(http_request->path, email_pref, strlen(email_pref)) == 0)
     { // xử lý /api/email/<>
         const char *email = http_request->path + strlen(email_pref);
         if (strlen(email) > 0)
+        {
             get_verify_account(fd, http_request->body, email);
+        }
+            
         else
             send_response(fd, "HTTP/1.1 400 BAD REQUEST", "text/plain", "Bad Request - Email missing", 28);
     }
@@ -276,28 +286,49 @@ void handle_post_email(int fd, HttpRequest *http_request)
 
 void handle_post_login(int fd, HttpRequest *http_request)
 {
-    fprintf(stdout, "Get connection\n");
+    fprintf(stdout, "Fetch Path: %s\n", http_request->path);
 
     if(http_request->body == NULL)
         send_response(fd, "HTTP/1.1 501 NOT IMPLEMENTED", "text/plain", "Not Implemented", 14);
 
-    RSA* rsa = rsa_load_private_key("../key/private_key.pem");
-    if(rsa==NULL)
-    {
-        send_response(fd, "HTTP/1.1 500 INTERNAL SERVER ERROR", "text/plain", "Server Error", 12);
+    /**  
+        STOP THIS FEATURE
+        RSA* rsa = rsa_load_private_key("../key/private_key.pem"); stop this feature
+        if(rsa==NULL)
+        {
+            send_response(fd, "HTTP/1.1 500 INTERNAL SERVER ERROR", "text/plain", "Server Error", 12);
+            return;
+        }
+    */
+
+    cJSON *json = cJSON_Parse(http_request->body);
+    cJSON *username_json = cJSON_GetObjectItem(json, "username");
+    cJSON *password_json = cJSON_GetObjectItem(json, "password");
+    if (!cJSON_IsString(username_json) || !cJSON_IsString(password_json)) {
+        send_response(fd, "HTTP/1.1 400 BAD REQUEST", "text/plain", "Invalid credentials", 19);
+        cJSON_Delete(json);
         return;
     }
-    char *encrypted_data = http_request->body;
-    int encrypted_data_len = strlen(encrypted_data);
-    fprintf(stdout, encrypted_data);
+    fprintf(stdout, "Received username: %s\n", username_json->valuestring);
+    fprintf(stdout, "Received password: %s\n", password_json->valuestring);
 
-    /* 
-     * Todo: nên làm gì đây nhở
-     */   
+    int role = check_user_role(username_json->valuestring, password_json->valuestring);
 
+    if (role == 1) 
+        send_response(fd, "HTTP/1.1 200 OK", "text/plain", "User", 4);
+    else if (role == 2) 
+        send_response(fd, "HTTP/1.1 200 OK", "text/plain", "Coach", 5);
+    else if (role == 0)
+        send_response(fd, "HTTP/1.1 200 OK", "text/plain", "Admin", 4);
+    else
+        send_response(fd, "HTTP/1.1 401 UNAUTHORIZED", "text/plain", "LoginFailed", 27);
+    
 
-    rsa_free(rsa);
+    // Dọn dẹp JSON object
+    cJSON_Delete(json);
 }
+
+
 
 void handle_http_request(int fd, Cache *cache)
 {
@@ -325,11 +356,12 @@ void handle_http_request(int fd, Cache *cache)
         handle_get(fd, cache, http_request.path);
     else if (strcmp(http_request.method, "POST") == 0)
     {
-        if (strncmp(http_request.path, "/api/email/", strlen("/api/email/")) == 0)
+        if (strncmp(http_request.path, "/resetpasswd/", strlen("/resetpasswd/")) == 0)
             handle_post_email(fd, &http_request);
         
         if(strncmp(http_request.path, "/api/login/auth", strlen("/api/login/auth/")) == 0)
             handle_post_login(fd, &http_request);
+
     }
     else
         send_response(fd, "HTTP/1.1 501 NOT IMPLEMENTED", "text/plain", "Not Implemented", 14);

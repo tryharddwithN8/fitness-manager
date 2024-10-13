@@ -15,13 +15,13 @@ public class User extends Person{
         super();
     }
 
-    public User(String id, String name, String phone, String email, String address, LocalDateTime dob, String username, String password, double balance, int quantityCourse, ArrayList<String> courseList, String role) {
-        super(id, name, phone, email, address, dob);
+    public User(String id, String username, String password ,String email, String role, String address) {
+        super(id, email, address);
         this.username = username;
         this.password = password;
-        this.balance = balance;
-        this.quantityCourse = quantityCourse;
-        this.courseList = courseList;
+        this.balance = 0;
+        this.quantityCourse = 0;
+        this.courseList = null;
         this.role = role;
     }
 

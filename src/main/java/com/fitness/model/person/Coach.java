@@ -14,7 +14,7 @@ public class Coach extends Person {
     }
 
     public Coach(String id, String name, String phone, String email, String address, LocalDateTime dob, String username, String password, String courseTeaching, int experience, String role) {
-        super(id, name, phone, email, address, dob);
+        super(id, email, address);
         this.username = username;
         this.password = password;
         this.courseTeaching = courseTeaching;

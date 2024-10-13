@@ -5,6 +5,11 @@ package com.fitness.utility;
  */
 public class UtilityIO {
 
+    public static void showMsg(String msg)
+    {
+        System.out.println(msg);
+    }
+
     /*
      * SignUp Page
      * 

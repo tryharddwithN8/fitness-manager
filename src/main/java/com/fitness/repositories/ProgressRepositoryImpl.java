@@ -31,19 +31,19 @@ public class ProgressRepositoryImpl implements IRepository<Progress, Integer> {
     }
 
     @Override
-    public void add(Progress entity) throws SQLException {
+    public int add(Progress entity) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
 
     @Override
-    public void update(Progress entity) throws SQLException {
+    public int update(Progress entity) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public void delete(Integer id) throws SQLException {
+    public int delete(Integer id) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }

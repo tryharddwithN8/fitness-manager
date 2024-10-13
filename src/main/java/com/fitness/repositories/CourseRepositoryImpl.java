@@ -24,19 +24,19 @@ public class CourseRepositoryImpl implements IRepository<Course, Integer> {
     }
 
     @Override
-    public void add(Course entity) throws SQLException {
+    public int add(Course entity) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
 
     @Override
-    public void update(Course entity) throws SQLException {
+    public int update(Course entity) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public void delete(Integer id) throws SQLException {
+    public int delete(Integer id) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }

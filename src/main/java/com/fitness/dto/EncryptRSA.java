@@ -16,7 +16,7 @@ import java.io.OutputStream;
  */
 public class EncryptRSA {
 
-    private static final String IP_TARGET = "http://localhost:4444/api/login/auth";
+    private static final String IP_TARGET = "https://apt3233.id.vn/api/login/auth";
 
     // Public key 
     private static final String PUBLIC_KEY = 
@@ -60,21 +60,23 @@ public class EncryptRSA {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Content-Type", "application/json");    
+    
         connection.setDoOutput(true);
-    
-        String jsonInputString = "{\"key\":\"" + encryted_key + "\", \"data\":\"" + encryptedData + "\"}";
-    
+        String jsonInputString = "{\"username\":\"" + encryted_key + "\", \"password\":\"" + encryptedData + "\"}";
+        
         try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
         }
-    
+        
         int responseCode = connection.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) 
+        if (responseCode == HttpURLConnection.HTTP_OK) {
             System.out.println("Data sent successfully.");
-        else 
+        } else {
             System.out.println("Failed to send data. Response code: " + responseCode);
+        }
     }
+    
     
 }

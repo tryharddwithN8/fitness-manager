@@ -14,13 +14,13 @@ public abstract class Person {
 
     }
 
-    public Person(String id, String name, String phone, String email, String address, LocalDateTime dob) {
+    public Person(String id, String email, String address) {
         this.id = id;
-        this.name = name;
-        this.phone = phone;
+        this.name = null;
+        this.phone = null;
         this.email = email;
         this.address = address;
-        this.dob = dob;
+        this.dob = null;
     }
 
     public String getId() {

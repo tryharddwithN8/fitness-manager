@@ -1,21 +1,20 @@
-package com.fitness.repositories;
+package com.fitness.services;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.sql.Connection;
 
-import com.fitness.config.ConnectionDB;
 import com.fitness.model.fitness.Subscription;
-import com.fitness.repositories.Interface.IRepository;
+import com.fitness.services.Interface.IService;
 
 /**
- * SubscriptionRepository
+ * SubscriptionService
  */
-public class SubscriptionRepositoryImpl implements IRepository<Subscription, Integer>{
-    
+public class SubscriptionServiceImpl implements IService<Subscription, Integer>{
+
     @Override
-    public Connection getConnection(){
-        return ConnectionDB.getConnection();
+    public int add(Subscription entity) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
 
     @Override
@@ -31,23 +30,18 @@ public class SubscriptionRepositoryImpl implements IRepository<Subscription, Int
     }
 
     @Override
-    public int add(Subscription entity) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
-    }
-
-    @Override
-    public int update(Subscription entity) throws SQLException {
+    public boolean update(Subscription entity) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public int delete(Integer id) throws SQLException {
+    public boolean delete(Integer id) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
 
+    
     // implement
 }
