@@ -3,6 +3,7 @@ package com.fitness.services;
 import java.sql.SQLException;
 import java.util.List;
 
+
 import com.fitness.model.person.User;
 import com.fitness.repositories.UserRepositoryImpl;
 import com.fitness.services.Interface.IService;
@@ -10,7 +11,7 @@ import com.fitness.services.Interface.IService;
 /**
  * UserService
  */
-public class UserServiceImpl implements IService<User, Integer>{
+public class UserServiceImpl implements IService<User, Integer> {
 
     private UserRepositoryImpl userRepoImpl = new UserRepositoryImpl();
 
@@ -23,7 +24,7 @@ public class UserServiceImpl implements IService<User, Integer>{
         if(result != -1) return 1;  // add oke
         return -1;  // add failed
     }
-
+    
     public int loginAuth(String username, String hashPass){
         int checkAccount = userRepoImpl.loginAuth(username, hashPass);
         if(checkAccount == 1)
@@ -70,6 +71,7 @@ public class UserServiceImpl implements IService<User, Integer>{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
+
 
 
     // implement

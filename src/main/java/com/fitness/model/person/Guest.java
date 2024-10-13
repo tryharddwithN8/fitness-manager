@@ -2,24 +2,19 @@ package com.fitness.model.person;
 
 import java.time.LocalDateTime;
 
-public class Guest extends Person {
-    public Guest() {
-        super();
+public class Guest{
+    private String phone;
+
+
+    public Guest(String phone) {
+        this.phone = phone;
     }
 
-    public Guest(String id, String name, String phone, String email, String address, LocalDateTime dob) {
-        super();
+    public String getPhone() {
+        return phone;
     }
 
-    @Override
-    public String toString() {
-        return "Guest{" +
-                "id='" + getId() + '\'' +
-                ", name='" + getName() + '\'' +
-                ", phone='" + getPhone() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", address='" + getAddress() + '\'' +
-                ", dob=" + getDob() +
-                '}';
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

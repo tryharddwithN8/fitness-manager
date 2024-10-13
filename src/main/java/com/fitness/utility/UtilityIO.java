@@ -22,10 +22,16 @@ public class UtilityIO {
     public static String checkUserName(String text, String err)
     {
         try {
-
-            // implement
-            // use regex
-            return text;
+            if (text == null || text.isEmpty()) {
+                return null;
+            }
+            // Sử dụng regex để kiểm tra username
+            String regex = "^[a-zA-Z0-9._-]{3,}$";
+            if (text.matches(regex)) {
+                return text;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             return null;
         }
@@ -37,8 +43,15 @@ public class UtilityIO {
      */
     public static String checkPassWD(String text, String err)
     {
-        // implement
-        return null;
+        if (text == null || text.length() < 8) {
+            return null;
+        }
+        String regex = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
+        if (text.matches(regex)) {
+            return text;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -48,8 +61,15 @@ public class UtilityIO {
      */
     public static String checkEmail(String text, String err) 
     {
-        // implement
-        return null;
+        if (text == null || text.isEmpty()) {
+            return null;
+        }
+        String regex = "^[\\w-\\.]+@(fpt\\.edu\\.vn|gmail\\.com)$";
+        if (text.matches(regex)) {
+            return text;
+        } else {
+            return null;
+        }
     }
 
 }

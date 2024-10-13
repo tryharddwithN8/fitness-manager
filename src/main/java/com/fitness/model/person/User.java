@@ -1,6 +1,5 @@
 package com.fitness.model.person;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class User extends Person{
