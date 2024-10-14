@@ -86,26 +86,32 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
     }
 
     public int loginAuth(String username, String password) {
-        String sql = "SELECT password FROM users WHERE username = ?";
-
+        String sql = "SELECT password, role FROM users WHERE username = ?";
+    
         try (Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);
-
+    
             ResultSet resultSet = statement.executeQuery();
-
+    
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("password");
-                if (password.equals(hashedPassword)) 
-                    return 1; // Đăng nhập thành công
-                
-            } 
-                return 0; // Tài khoản không tồn tại
-            
-
+                String role = resultSet.getString("role");
+    
+                if (password.equals(hashedPassword)) {  
+                    if (role.equals("admin")) 
+                        return 3; //  admin
+                    else 
+                        return 1; // user thường
+                    
+                }
+            }
+    
+            return 0; // Tài khoản không tồn tại hoặc mật khẩu sai
+    
         } catch (SQLException e) {
             System.out.println("Login error: " + e.getMessage());
-            return -1; // Trả về -1 nếu có lỗi xảy ra
+            return -1; //  -1 nếu có lỗi xảy ra
         }
     }
 

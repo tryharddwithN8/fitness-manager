@@ -28,7 +28,9 @@ public class UserServiceImpl implements IService<User, Integer> {
     public int loginAuth(String username, String hashPass){
         int checkAccount = userRepoImpl.loginAuth(username, hashPass);
         if(checkAccount == 1)
-            return 1;
+            return 1;   // user
+        if(checkAccount == 3)
+            return 3;   //admin
         else
             return -1;
     }

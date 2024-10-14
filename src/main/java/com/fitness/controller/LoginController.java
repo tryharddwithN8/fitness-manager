@@ -4,6 +4,7 @@ import com.fitness.dto.Encrypt;
 import com.fitness.model.person.User;
 import com.fitness.services.UserServiceImpl;
 import com.fitness.utility.UtilityAlert;
+import com.fitness.utility.UtilityIO;
 import com.fitness.utility.UtilitySecurity;
 import com.mysql.cj.exceptions.ExceptionInterceptorChain;
 
@@ -54,6 +55,12 @@ public class LoginController {
     private TextField forgotEmailField;
     @FXML
     private Button loginButton;
+    @FXML
+    private Button signUpButton;
+    @FXML
+    private Button resetPasswordButton;
+    @FXML
+    private Button resetPasswordButtonEmail;
 
     @FXML
     private Text waitting_status_login;
@@ -81,6 +88,11 @@ public class LoginController {
 
     private UserServiceImpl userSerImpl = new UserServiceImpl();
 
+
+    @FXML
+    private void closeLogin(){
+        UtilityAlert.showConfimExit("Exit", "Do you want to exit :((");
+    }
     private void showLoginForm() {
         loginPane.setVisible(true);
         signUpPane.setVisible(false);
@@ -135,7 +147,7 @@ public class LoginController {
 
         
         /*
-         * Stop feautuer
+         * Stop feauture
          *   try {
          *       EncryptRSA.sendData(username,password);
          *   
@@ -149,6 +161,7 @@ public class LoginController {
         }
 
         waitting_status_login.setVisible(true);
+        loginButton.setDisable(true);
         Task<Integer> task = new Task<Integer>() {
             @Override
             protected Integer call() throws Exception{
@@ -158,11 +171,18 @@ public class LoginController {
         
         task.setOnSucceeded(event -> {
             waitting_status_login.setVisible(false);
+            loginButton.setDisable(false);
             int check = task.getValue();
             if(check==1){
                 UtilityAlert.showInfo("Login Success", "Welcome " + username + "!");
-                loginHandler();
-            } else{
+                loadFrame("/fxml/Main.fxml");
+            }
+            else if(check == 3) {
+                System.out.println("admin");
+                return;
+                // admin pane;
+            }
+            else{
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Login failed", "Username of password incorrect");
                 usernameField.setText("");
                 passwordField.setText("");
@@ -170,6 +190,7 @@ public class LoginController {
         });
         task.setOnFailed(event -> {
             waitting_status_login.setVisible(false);
+            loginButton.setDisable(false);
             UtilityAlert.showError(Alert.AlertType.ERROR, "Login Error", "An error occurred during login (501)");
         });
 
@@ -181,20 +202,25 @@ public class LoginController {
 
     @FXML
     private void handleSignUp() throws SQLException{
-        String username = signupUsernameField.getText();
+
+        String username = UtilityIO.checkUserName(signupUsernameField.getText(), "");
         String email = emailField.getText();
-        String password = Encrypt.hash(signupPasswordField.getText().trim());
-        String confirmPassword = Encrypt.hash(confirmPasswordField.getText().trim());
+        String password = Encrypt.hash(UtilityIO.checkPassWD(signupPasswordField.getText().trim(), ""));
+        String confirmPassword = Encrypt.hash(UtilityIO.checkPassWD(confirmPasswordField.getText().trim(), ""));
         
         System.out.printf("User: %s\nemail: %s\npassword: %s\n\n", username, email, password);
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) 
-            UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Please fill out all the fields!");
+        if (email == null || email.trim().isEmpty())
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Invalid email format!");
+        else if (username == null || username.isEmpty())
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Please choose a username.");
+        else if (password == null || password.isEmpty() || confirmPassword == null || confirmPassword.isEmpty()) 
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Password must be at least 8 characters long and include lowercase letters, digits or special characters!");
         else if (!password.equals(confirmPassword)) 
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Passwords do not match!");
-    
-        
+
         else 
         {
+            signUpButton.setDisable(true);
             waitting_status_signup.setVisible(true);
             Task<Integer> task = new Task<Integer>() {
                 @Override
@@ -206,10 +232,11 @@ public class LoginController {
 
             task.setOnSucceeded(event -> {
                 waitting_status_signup.setVisible(false);
+                signUpButton.setDisable(false);
                 int check = task.getValue();
                 if (check == 1) {
                     UtilityAlert.showInfo("Registration Successful", "Welcome " + username + "!");
-                    loginHandler();
+                    loadFrame("/fxml/Main.fxml");
                 } else if (check == 0) {
                     UtilityAlert.showError(Alert.AlertType.ERROR, "SignUp Failed", "Account already exists");
                     signupPasswordField.setText("");
@@ -223,6 +250,7 @@ public class LoginController {
 
             task.setOnFailed(event -> {
                 waitting_status_signup.setVisible(false);
+                signUpButton.setDisable(true);
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "An error occurred during registration");
             });
 
@@ -244,6 +272,7 @@ public class LoginController {
         }
 
         waitting_status_forgot.setVisible(true);
+        resetPasswordButtonEmail.setDisable(true);
         Task<Integer> task = new Task<Integer>() {
             @Override
             protected Integer call() throws Exception{
@@ -252,6 +281,7 @@ public class LoginController {
         };
         task.setOnSucceeded(event -> {
             waitting_status_forgot.setVisible(false);
+            resetPasswordButtonEmail.setDisable(false);
             int check = task.getValue();
             if(check != 1){
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Forgot Password Failed", "Email not found\nPlease try agains!");
@@ -259,7 +289,7 @@ public class LoginController {
                 return;
             }
 
-            UtilityAlert.showError(Alert.AlertType.INFORMATION, "Yêu cầu đặt lại mật khẩu", "Liên kết khôi phục mật khẩu đã được gửi tới " + email);
+            UtilityAlert.showError(Alert.AlertType.INFORMATION, "Password Reset Request", "A password recovery link has been sent to " + email);
             try {
                 this.key = UtilitySecurity.getKeyFromServer(email);
             } catch (Exception e) {    
@@ -271,6 +301,7 @@ public class LoginController {
 
         task.setOnFailed(event -> {
             waitting_status_login.setVisible(false);
+            resetPasswordButtonEmail.setDisable(false);
             UtilityAlert.showError(Alert.AlertType.ERROR, "Errorr", "Please try agains!");
         });
         
@@ -293,32 +324,34 @@ public class LoginController {
     @FXML
     public void handleUpdatePasswd(){
         String email = forgotEmailField.getText();
-        String pass = Encrypt.hash(passwd.getText().trim());
-        String conf_pass = Encrypt.hash(confirm_passwd.getText().trim());
-
-        if (pass == null || pass.isEmpty() || conf_pass == null || conf_pass.isEmpty())
-        {
-            UtilityAlert.showError(Alert.AlertType.ERROR, "Errorr", "Điền cho ra trò!");
+        String password = Encrypt.hash(UtilityIO.checkPassWD(passwd.getText().trim(), ""));
+        String conf_pass = Encrypt.hash(UtilityIO.checkPassWD(confirm_passwd.getText().trim(), ""));
+        
+        if (password == null || password.isEmpty() || conf_pass == null || conf_pass.isEmpty()) {
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Password must be at least 8 characters long and include lowercase letters, digits or special characters!");
             passwd.setText("");
             confirm_passwd.setText("");
             return;
         }
-        if(!pass.equals(conf_pass)){
-            UtilityAlert.showError(Alert.AlertType.ERROR, "Errorr", "Đíu giống nhau!\n Nhập lại đi");
+            
+        else if (!password.equals(conf_pass)){
+            UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Passwords do not match!");
             passwd.setText("");
             confirm_passwd.setText("");
-            return;
+            return ;
         }
 
         waitting_status_forgot_update_pass.setVisible(true);
+        resetPasswordButton.setDisable(true);
         Task<Integer> task = new Task<Integer>() {
             @Override
             protected Integer call() throws Exception{
-                return userSerImpl.updatePasswd(email, pass);
+                return userSerImpl.updatePasswd(email, password);
             }
         };
         task.setOnSucceeded(event -> {
             waitting_status_forgot_update_pass.setVisible(false);
+            resetPasswordButton.setDisable(false);
             int check = task.getValue();
             if(check != 1){
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Update Failed", "Failed rồi\nKhông biết lỗi gì :((");
@@ -326,11 +359,12 @@ public class LoginController {
                 confirm_passwd.setText(""); 
                 return;
             }
-            loginHandler();
+            loadFrame("/fxml/Main.fxml");
 
         });
 
         task.setOnFailed(event -> {
+            resetPasswordButton.setDisable(false);
             waitting_status_forgot_update_pass.setVisible(false);
             UtilityAlert.showError(Alert.AlertType.ERROR, "Errorr", "Please try agains!");
         });
@@ -340,9 +374,9 @@ public class LoginController {
         thread.start();
     }
 
-    private void loginHandler(){
+    private void loadFrame(String path){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Main.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(path));
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) loginButton.getScene().getWindow();
             Scene scene = new Scene(root);
@@ -371,5 +405,6 @@ public class LoginController {
         }
     }
     
+   
 
 }

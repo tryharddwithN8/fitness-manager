@@ -21,12 +21,13 @@ public class UtilityIO {
      */
     public static String checkUserName(String text, String err)
     {
-        try {
+        try 
+        {
             if (text == null || text.isEmpty()) {
                 return null;
             }
             // Sử dụng regex để kiểm tra username
-            String regex = "^[a-zA-Z0-9._-]{3,}$";
+            String regex = "^[a-zA-Z][a-zA-Z0-9._-]{2,}$";
             if (text.matches(regex)) {
                 return text;
             } else {

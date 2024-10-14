@@ -1,96 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" 
-   xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" 
-   fx:controller="com.fitness.controller.LoginController" stylesheets="@../css/login.css">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.LoginController">
 
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: gray;" BorderPane.alignment="CENTER">
          <children>
-            <Text styleClass="title-main-left" layoutX="24.0" layoutY="184.0"  strokeType="OUTSIDE" strokeWidth="0.0" text="Fitness Manager" wrappingWidth="250"></Text>
+            <Text layoutX="24.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-main-left" text="Fitness Manager" wrappingWidth="250" />
+            <ImageView fitHeight="31.0" fitWidth="26.0" layoutX="14.0" layoutY="14.0" style="-fx-cursor: hand;" onMouseClicked="#closeLogin" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/close.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
 
    <right>
-      <AnchorPane prefHeight="400.0" prefWidth="350.0">
+      <AnchorPane prefHeight="386.0" prefWidth="341.0">
          <children>
-
             <!-- Login -->
             <AnchorPane fx:id="loginPane" prefHeight="450.0" prefWidth="320.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text layoutX="81.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login" wrappingWidth="150" styleClass="title-right-status"></Text>
+                  <Text layoutX="81.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-right-status" text="User Login" wrappingWidth="150" />
                   
-                  <TextField fx:id="usernameField" layoutX="49.0" layoutY="160.0" prefHeight="25.0" prefWidth="202.0" promptText="User Name"  styleClass="textfield-right-login"/>
+                  <TextField fx:id="usernameField" layoutX="49.0" layoutY="160.0" prefHeight="25.0" prefWidth="202.0" promptText="User Name" styleClass="textfield-right-login" />
                   <PasswordField fx:id="passwordField" layoutX="49.0" layoutY="203.0" prefHeight="25.0" prefWidth="202.0" promptText="Password" styleClass="textfield-right-login" />
                   
-                  <Button fx:id="loginButton" layoutX="112.0" layoutY="255.0" mnemonicParsing="false" text="Login" styleClass="button-right-login" onAction="#handleLogin" />
-                  <Text fx:id="waitting_status_login" visible="false" text="Waiting.." layoutX="125" layoutY="315" />
+                  <Button fx:id="loginButton" layoutX="112.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleLogin" styleClass="button-right-login" text="Login" />
+                  <Text fx:id="waitting_status_login" layoutX="125" layoutY="315" text="Waiting.." visible="false" />
                   
-                  <Text fill="#4299E1" layoutX="130.0" layoutY="340.0" text="Sign Up" style="-fx-cursor: hand; -fx-font-weight: bold;" onMouseClicked="#handleShowSignUp" />
-                  <Text fill="#4299E1" layoutX="100.0" layoutY="360.0" text="Forgot Password?" style="-fx-cursor: hand;" onMouseClicked="#handleShowForgotPassword" />
+                  <Text fill="#4299E1" layoutX="130.0" layoutY="340.0" onMouseClicked="#handleShowSignUp" style="-fx-cursor: hand; -fx-font-weight: bold;" text="Sign Up" />
+                  <Text fill="#4299E1" layoutX="100.0" layoutY="360.0" onMouseClicked="#handleShowForgotPassword" style="-fx-cursor: hand;" text="Forgot Password?" />
                </children>
             </AnchorPane>
          
             <!-- Signup -->
             <AnchorPane fx:id="signUpPane" prefHeight="400.0" prefWidth="350.0">
                <children>
-                  <Text layoutX="81.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SignUp" wrappingWidth="150" styleClass="title-right-status"></Text>
+                  <Text layoutX="81.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-right-status" text="SignUp" wrappingWidth="150" />
 
                   <TextField fx:id="signupUsernameField" layoutX="49.0" layoutY="103.0" prefHeight="25.0" prefWidth="202.0" promptText="User Name" styleClass="textfield-right-login" />
                   <TextField fx:id="emailField" layoutX="49.0" layoutY="153.0" prefHeight="25.0" prefWidth="202.0" promptText="Email" styleClass="textfield-right-login" />
                   <PasswordField fx:id="signupPasswordField" layoutX="49.0" layoutY="203.0" prefHeight="25.0" prefWidth="202.0" promptText="Password" styleClass="textfield-right-login" />
                   <PasswordField fx:id="confirmPasswordField" layoutX="49.0" layoutY="253.0" prefHeight="25.0" prefWidth="202.0" promptText="Confirm Password" styleClass="textfield-right-login" />
 
-                  <Button fx:id="signUpButton"  layoutX="112.0" layoutY="305.0" mnemonicParsing="false" styleClass="button-right-login" text="Sign Up" onAction="#handleSignUp" />
-                  <Text fx:id="waitting_status_signup" visible="false" text="Waiting.." layoutX="125" layoutY="365" />
+                  <Button fx:id="signUpButton" layoutX="112.0" layoutY="305.0" mnemonicParsing="false" onAction="#handleSignUp" styleClass="button-right-login" text="Sign Up" />
+                  <Text fx:id="waitting_status_signup" layoutX="125" layoutY="365" text="Waiting.." visible="false" />
 
-                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" text="Back" style="-fx-cursor: hand; -fx-font-weight: bold;" onMouseClicked="#initialize" />
+                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" onMouseClicked="#initialize" style="-fx-cursor: hand; -fx-font-weight: bold;" text="Back" />
                </children>
             </AnchorPane>
 
             <!-- Forgot Password -->
             <AnchorPane fx:id="forgotPasswordPane" prefHeight="400.0" prefWidth="350.0">
                <children>
-                  <Text layoutX="81.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forgot Password" wrappingWidth="150" styleClass="title-right-status"></Text>
-                  <TextField fx:id="forgotEmailField" layoutX="49.0" layoutY="220.0" prefHeight="25.0" prefWidth="232.0" promptText="Email" focusTraversable="false" styleClass="textfield-right-login"/>
-                  <Button fx:id="resetPasswordButton" layoutX="112.0" layoutY="275.0" mnemonicParsing="false"  text="Reset" styleClass="button-right-login" onAction="#handleForgotPassword" />
-                  <Text fx:id="waitting_status_forgot" visible="false" text="Waiting.." layoutX="125" layoutY="325" />
+                  <Text layoutX="81.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-right-status" text="Forgot Password" wrappingWidth="150" />
+                  <TextField fx:id="forgotEmailField" focusTraversable="false" layoutX="49.0" layoutY="220.0" prefHeight="25.0" prefWidth="232.0" promptText="Email" styleClass="textfield-right-login" />
+                  <Button fx:id="resetPasswordButtonEmail" layoutX="112.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleForgotPassword" styleClass="button-right-login" text="Reset" />
+                  <Text fx:id="waitting_status_forgot" layoutX="125" layoutY="325" text="Waiting.." visible="false" />
 
-                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" text="Back" onMouseClicked="#initialize"/>
+                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" onMouseClicked="#initialize" text="Back" />
                </children>
             </AnchorPane>
 
             <!-- Forgot -> Key -->
             <AnchorPane fx:id="keyPanel" prefHeight="400.0" prefWidth="350.0">
                <children>
-                  <Text layoutX="81.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authenticator" wrappingWidth="150" styleClass="title-right-status"></Text>
-                  <TextField fx:id="key_user" layoutX="49.0" layoutY="220.0" prefHeight="25.0" prefWidth="232.0" promptText="Key" focusTraversable="false" styleClass="textfield-right-login"/>
-                  <Button fx:id="resetPasswordButton" layoutX="112.0" layoutY="275.0" mnemonicParsing="false"  text="Check" styleClass="button-right-login" onAction="#handleVerifyKey" />
-                  <Text fx:id="waitting_status_forgot_key" visible="false" text="Waiting.." layoutX="125" layoutY="325" />
+                  <Text layoutX="81.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-right-status" text="Authenticator" wrappingWidth="150" />
+                  <TextField fx:id="key_user" focusTraversable="false" layoutX="49.0" layoutY="220.0" prefHeight="25.0" prefWidth="232.0" promptText="Key" styleClass="textfield-right-login" />
+                  <Button fx:id="resetPasswordButtonKey" layoutX="112.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleVerifyKey" styleClass="button-right-login" text="Check" />
+                  <Text fx:id="waitting_status_forgot_key" layoutX="125" layoutY="325" text="Waiting.." visible="false" />
 
-                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" text="Back" onMouseClicked="#initialize"/>
+                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" onMouseClicked="#initialize" text="Back" />
                </children>
             </AnchorPane>
             
             <!-- Update Passwd -->
             <AnchorPane fx:id="updatePassPanel" prefHeight="400.0" prefWidth="350.0">
                <children>
-                  <Text layoutX="81.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Password" wrappingWidth="150" styleClass="title-right-status"></Text>
-                  <TextField fx:id="passwd" layoutX="49.0" layoutY="180.0" prefHeight="25.0" prefWidth="232.0" promptText="New Passwd" focusTraversable="false" styleClass="textfield-right-login"/>
-                  <TextField fx:id="confirm_passwd" layoutX="49.0" layoutY="240.0" prefHeight="25.0" prefWidth="232.0" promptText="Confirm Pass" focusTraversable="false" styleClass="textfield-right-login"/>
-                  <Button fx:id="resetPasswordButton" layoutX="112.0" layoutY="325.0" mnemonicParsing="false"  text="Update" styleClass="button-right-login" onAction="#handleUpdatePasswd" />
-                  <Text fx:id="waitting_status_forgot_update_pass" visible="false" text="Waiting.." layoutX="125" layoutY="305" />
+                  <Text layoutX="81.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-right-status" text="Update Password" wrappingWidth="150" />
+                  <TextField fx:id="passwd" focusTraversable="false" layoutX="49.0" layoutY="180.0" prefHeight="25.0" prefWidth="232.0" promptText="New Passwd" styleClass="textfield-right-login" />
+                  <TextField fx:id="confirm_passwd" focusTraversable="false" layoutX="49.0" layoutY="240.0" prefHeight="25.0" prefWidth="232.0" promptText="Confirm Pass" styleClass="textfield-right-login" />
+                  <Button fx:id="resetPasswordButton" layoutX="112.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleUpdatePasswd" styleClass="button-right-login" text="Update" />
+                  <Text fx:id="waitting_status_forgot_update_pass" layoutX="125" layoutY="305" text="Waiting.." visible="false" />
 
-                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" text="Back" onMouseClicked="#initialize"/>
+                  <Text fill="#4299E1" layoutX="230.0" layoutY="370.0" onMouseClicked="#initialize" text="Back" />
                </children>
             </AnchorPane>
 
@@ -99,4 +98,3 @@
    </right>
 
 </BorderPane>
-

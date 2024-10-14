@@ -13,6 +13,7 @@ public class Encrypt {
 
     public static String hash(String in)
     {
+        if(in == null) return null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = md.digest(in.getBytes());

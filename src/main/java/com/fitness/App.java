@@ -1,6 +1,5 @@
 package com.fitness;
 
-import com.fitness.config.ConnectionDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
