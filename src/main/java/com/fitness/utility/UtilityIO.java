@@ -10,14 +10,14 @@ public class UtilityIO {
         System.out.println(msg);
     }
 
-    /*
+    /**
      * SignUp Page
      * 
      * text: string cần check 
      * Oke -> return String
      * No -> return null
      * 
-     * NOTE: Ko sử dụng LOOP
+     * @NOTE: Ko sử dụng LOOP
      */
     public static String checkUserName(String text, String err)
     {
