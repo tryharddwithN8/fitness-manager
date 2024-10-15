@@ -12,6 +12,11 @@
 #include <sys/file.h>
 #include <fcntl.h>
 #include <cjson/cJSON.h>
+#include <sys/epoll.h>  // non-blocking
+#include <signal.h>
+#include <sys/timerfd.h>
+#include <sys/time.h>
+
 #include "../include/net.h"
 #include "../include/file.h"
 #include "../include/mime.h"
@@ -34,6 +39,14 @@ typedef struct
 } HttpRequest;
 
 
+void log_info(const char *msg) 
+{
+    printf("[INFO]: %s\n", msg);
+}
+void log_info_ip(const char *msg, const char *ip) 
+{
+    printf("[INFO]: %s %s\n", msg, ip);
+}
 int send_response(int fd, char *header, char *content_type, void *body, int content_length)
 {
     const int max_response_size = 262144;
@@ -71,6 +84,7 @@ int send_response(int fd, char *header, char *content_type, void *body, int cont
 
     return rv;
 }
+
 
 // Hàm xử lý yêu cầu GET /rand
 void get_rand(int fd)
@@ -120,7 +134,7 @@ void get_file(int fd, Cache *cache, char *request_path)
 
     snprintf(filepath, sizeof(filepath), "%s%s", SERVER_ROOT, request_path);
 
-    printf("[Client] Fetching path: %s\n", request_path);
+    log_info_ip("Fetching path: ", request_path);
 
     Cache_Entry *entry = cache_get(cache, filepath);
     if (entry != NULL)
@@ -239,17 +253,20 @@ void get_verify_account(int fd, char *body, const char *email)
     cJSON *email_json = cJSON_GetObjectItem(json, "email");
     if (email_json && cJSON_IsString(email_json))
     {
-        printf("Received email: %s\n", email_json->valuestring);
+        log_info_ip("Email: ", email_json->valuestring);
         int res = sendKeyToEmail(email_json->valuestring, key);
-        printf(key);
+        log_info_ip("Reset Passwd: ", key);
         if (res == 0) {
             send_response(fd, "HTTP/1.1 200 OK", "text/plain", key, 7);
         } else {
             send_response(fd, "HTTP/1.1 500 INTERNAL SERVER ERROR", "text/plain", "Failed to send email", 20);
         }
     }
-    else
+    else{
+        log_info("Invalid Email");
         send_response(fd, "HTTP/1.1 400 BAD REQUEST", "text/plain", "Invalid email", 13);
+    }
+        
     
 
     cJSON_Delete(json);
@@ -268,21 +285,30 @@ void handle_get(int fd, Cache *cache, char *path)
 
 void handle_post_email(int fd, HttpRequest *http_request)
 {
+    log_info("Handling /resetpassword...");
+
     const char *email_pref = "/resetpasswd/";
     if (strncmp(http_request->path, email_pref, strlen(email_pref)) == 0)
-    { // xử lý /api/email/<>
+    {
         const char *email = http_request->path + strlen(email_pref);
         if (strlen(email) > 0)
         {
-            get_verify_account(fd, http_request->body, email);
+            log_info("Email detected, processing...");
+            get_verify_account(fd, http_request->body, email); 
+            log_info("Email processed.");
         }
-            
         else
+        {
+            log_info("Email missing.");
             send_response(fd, "HTTP/1.1 400 BAD REQUEST", "text/plain", "Bad Request - Email missing", 28);
+        }
     }
     else
+    {
         send_response(fd, "HTTP/1.1 405 METHOD NOT ALLOWED", "text/plain", "Method Not Allowed", 15);
+    }
 }
+
 
 void handle_post_login(int fd, HttpRequest *http_request)
 {
@@ -328,14 +354,14 @@ void handle_post_login(int fd, HttpRequest *http_request)
     cJSON_Delete(json);
 }
 
-
-
 void handle_http_request(int fd, Cache *cache)
 {
     const int request_buffer_size = 65536; // 64K
     char request[request_buffer_size];
     HttpRequest http_request;
     memset(&http_request, 0, sizeof(HttpRequest));
+
+    log_info("Receiving request...");
 
     int bytes_recvd = recv(fd, request, request_buffer_size - 1, 0);
     if (bytes_recvd < 0)
@@ -345,39 +371,44 @@ void handle_http_request(int fd, Cache *cache)
     }
     request[bytes_recvd] = '\0';
 
+
+    log_info("Parsing HTTP request...");
     if (parse_http_request(fd, request, bytes_recvd, &http_request) != 0)
     {
         send_response(fd, "HTTP/1.1 400 BAD REQUEST", "text/plain", "Bad Request", 11);
         return;
     }
 
-
+    log_info("Handling request...");
     if (strcmp(http_request.method, "GET") == 0)
         handle_get(fd, cache, http_request.path);
     else if (strcmp(http_request.method, "POST") == 0)
     {
+        log_info("POST request received...");
         if (strncmp(http_request.path, "/resetpasswd/", strlen("/resetpasswd/")) == 0)
             handle_post_email(fd, &http_request);
-        
-        if(strncmp(http_request.path, "/api/login/auth", strlen("/api/login/auth/")) == 0)
+        else if(strncmp(http_request.path, "/api/login/auth", strlen("/api/login/auth/")) == 0)
             handle_post_login(fd, &http_request);
-
     }
     else
         send_response(fd, "HTTP/1.1 501 NOT IMPLEMENTED", "text/plain", "Not Implemented", 14);
-
 
     if (http_request.body)
     {
         free(http_request.body);
     }
+
+    log_info("Finished handling request...\n");
 }
+
 
 int main(void)
 {
+    long long req_total = 0;
     int newfd;
     struct sockaddr_storage their_addr;
     char s[INET6_ADDRSTRLEN];
+    char req_total_str[20];
 
     Cache *cache = cache_create(10, 0);
 
@@ -394,6 +425,7 @@ int main(void)
     while (1)
     {
         socklen_t sin_size = sizeof their_addr;
+        ++req_total;
 
         newfd = accept(listenfd, (struct sockaddr *)&their_addr, &sin_size);
         if (newfd == -1)
@@ -405,9 +437,12 @@ int main(void)
         inet_ntop(their_addr.ss_family,
                   get_in_addr((struct sockaddr *)&their_addr),
                   s, sizeof s);
-        printf("\nServer: got connection from %s\n", s);
+        sprintf(req_total_str, "%lld", req_total);
+        log_info_ip("Req: ", req_total_str);
+        log_info_ip("Server got connection: ", s);
 
         handle_http_request(newfd, cache);
+        
 
         close(newfd);
     }
