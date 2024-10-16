@@ -177,6 +177,7 @@ public class LoginController {
             }
             else if(check == 3) {
                 UtilityAlert.showInfo("Login Success", "Welcome Admin N8 !");
+                System.out.println("amdin");
                 loadFrame("/fxml/Admin_fxml/Admin.fxml");
             }
             else{

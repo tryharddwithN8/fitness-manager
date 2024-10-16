@@ -1,8 +1,5 @@
-package com.fitness.controller;
+package com.fitness.controller.User_Ctrl_fxml;
 
-import com.fitness.controller.User_Ctrl_fxml.ADController;
-import com.fitness.controller.User_Ctrl_fxml.pnlMenusController;
-import com.fitness.controller.User_Ctrl_fxml.pnlOverViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +17,7 @@ import java.util.ResourceBundle;
 
 import com.fitness.utility.UtilityAlert;
 
-public class MainController implements Initializable {
+public class UserController implements Initializable {
     @FXML
     private HBox hbox_mycourse=null;
     @FXML
