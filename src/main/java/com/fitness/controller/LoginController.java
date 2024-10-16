@@ -176,9 +176,8 @@ public class LoginController {
                 loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
             }
             else if(check == 3) {
-                System.out.println("admin");
-                return;
-                // admin pane;
+                UtilityAlert.showInfo("Login Success", "Welcome Admin N8 !");
+                loadFrame("/fxml/Admin_fxml/Admin.fxml");
             }
             else{
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Login failed", "Username of password incorrect");
