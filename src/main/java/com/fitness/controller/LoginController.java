@@ -6,10 +6,6 @@ import com.fitness.services.UserServiceImpl;
 import com.fitness.utility.UtilityAlert;
 import com.fitness.utility.UtilityIO;
 import com.fitness.utility.UtilitySecurity;
-import com.mysql.cj.exceptions.ExceptionInterceptorChain;
-
-import java.sql.SQLException;
-
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 
 public class LoginController {
 
@@ -175,7 +173,7 @@ public class LoginController {
             int check = task.getValue();
             if(check==1){
                 UtilityAlert.showInfo("Login Success", "Welcome " + username + "!");
-                loadFrame("/fxml/Main.fxml");
+                loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
             }
             else if(check == 3) {
                 System.out.println("admin");
@@ -236,7 +234,7 @@ public class LoginController {
                 int check = task.getValue();
                 if (check == 1) {
                     UtilityAlert.showInfo("Registration Successful", "Welcome " + username + "!");
-                    loadFrame("/fxml/Main.fxml");
+                    loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
                 } else if (check == 0) {
                     UtilityAlert.showError(Alert.AlertType.ERROR, "SignUp Failed", "Account already exists");
                     signupPasswordField.setText("");
@@ -359,7 +357,7 @@ public class LoginController {
                 confirm_passwd.setText(""); 
                 return;
             }
-            loadFrame("/fxml/Main.fxml");
+            loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
 
         });
 
