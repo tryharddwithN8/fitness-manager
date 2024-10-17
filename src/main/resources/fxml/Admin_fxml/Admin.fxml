@@ -201,14 +201,14 @@
                      <Button layoutX="620.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display All" />
                      <TableView layoutX="25.0" layoutY="187.0" prefHeight="375.0" prefWidth="744.0">
                      <columns>
-                        <TableColumn prefWidth="68.0" text="Course ID" />
+                        <TableColumn id="course_id_column" prefWidth="68.0" text="Course ID" />
                         <TableColumn prefWidth="115.0" text="Name" />
-                           <TableColumn prefWidth="101.0" text="description" />
-                           <TableColumn prefWidth="73.0" text="coachId" />
-                           <TableColumn prefWidth="154.0" text="schedule" />
-                           <TableColumn prefWidth="62.0" text="max(*)" />
-                           <TableColumn prefWidth="69.0" text="current(*)" />
-                           <TableColumn prefWidth="101.0" text="fee" />
+                        <TableColumn prefWidth="101.0" text="description" />
+                        <TableColumn prefWidth="73.0" text="coachId" />
+                        <TableColumn prefWidth="154.0" text="schedule" />
+                        <TableColumn prefWidth="62.0" text="max(*)" />
+                        <TableColumn prefWidth="69.0" text="current(*)" />
+                        <TableColumn prefWidth="101.0" text="fee" />
                      </columns>
                      </TableView>
                      <Label layoutX="44.0" layoutY="146.0" text="Note:" />
@@ -217,7 +217,7 @@
 
             <Pane fx:id="pnlCoach" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #CCCCCC;">
                <children>
-                  <Label layoutX="51.0" layoutY="30.0" prefHeight="60.0" prefWidth="135.0" text="Courses" textOverrun="CLIP">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="30.0" prefHeight="60.0" prefWidth="135.0" text="Coaches" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
                         <Font name="Arial" size="22.0" />
                      </font></Label>
@@ -244,26 +244,42 @@
 
             <Pane fx:id="pnlCourse" prefHeight="576.0" prefWidth="839.0" style="-fx-background-color: #CCCCCC;">
                <children>
-                  <Label layoutX="51.0" layoutY="30.0" prefHeight="60.0" prefWidth="135.0" text="Courses" textOverrun="CLIP">
+                  <Label id="colID" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="30.0" prefHeight="60.0" prefWidth="135.0" text="Courses" textAlignment="CENTER" textOverrun="CLIP">
                      <font>
-                        <Font name="Arial" size="22.0" />
-                     </font></Label>
+                        <Font name="Times New Roman" size="30.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill></Label>
                   <TextField id="textFindCourse" layoutX="37.0" layoutY="90.0" prefHeight="25.0" prefWidth="149.0" promptText="Find Course" />
                   <TextField id="textRemoveCourse" layoutX="294.0" layoutY="90.0" promptText="Remove Course" />
                   <Button cancelButton="true" layoutX="192.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" style="-fx-border-radius: 10px;" text="Find" />
                   <Button layoutX="455.0" layoutY="90.0" mnemonicParsing="false" text="Remove" />
-                  <Button layoutX="620.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display All" />
-                  <TableView layoutX="25.0" layoutY="187.0" prefHeight="375.0" prefWidth="744.0">
-                    <columns>
-                      <TableColumn prefWidth="68.0" text="Course ID" />
-                      <TableColumn prefWidth="115.0" text="Name" />
-                        <TableColumn prefWidth="101.0" text="description" />
-                        <TableColumn prefWidth="73.0" text="coachId" />
-                        <TableColumn prefWidth="154.0" text="schedule" />
-                        <TableColumn prefWidth="62.0" text="max(*)" />
-                        <TableColumn prefWidth="69.0" text="current(*)" />
-                        <TableColumn prefWidth="101.0" text="fee" />
-                    </columns>
+                  <Button layoutX="620.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display All" onAction="#handleDisplayAll"/>
+                  <TableView fx:id="courseTable" layoutX="25.0" layoutY="187.0" prefHeight="375.0" prefWidth="744.0">
+                     <columns>
+                        <TableColumn fx:id="courseIdColumn" prefWidth="68.0" text="Course ID" />
+                        <TableColumn fx:id="nameColumn" prefWidth="115.0" text="Name" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="101.0" text="Description" />
+                        <TableColumn fx:id="coachIdColumn" prefWidth="73.0" text="Coach ID" />
+                        <TableColumn fx:id="scheduleColumn" prefWidth="154.0" text="Schedule" />
+                        <TableColumn fx:id="maxParticipantsColumn" prefWidth="62.0" text="Max Participants" />
+                        <TableColumn fx:id="currentParticipantsColumn" prefWidth="69.0" text="Current Participants" />
+                        <TableColumn fx:id="feeColumn" prefWidth="101.0" text="Fee" />
+                     </columns>
                   </TableView>
                   <Label layoutX="44.0" layoutY="146.0" text="Note: (*) Partivipants" />
                </children>
