@@ -268,7 +268,7 @@
                   <TextField id="textRemoveCourse" layoutX="294.0" layoutY="90.0" promptText="Remove Course" />
                   <Button cancelButton="true" layoutX="192.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" style="-fx-border-radius: 10px;" text="Find" />
                   <Button layoutX="455.0" layoutY="90.0" mnemonicParsing="false" text="Remove" />
-                  <Button layoutX="620.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display All" onAction="#handleDisplayAll"/>
+                  <Button layoutX="620.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Display All" onAction="#handleDisplayAllCourse"/>
                   <TableView fx:id="courseTable" layoutX="25.0" layoutY="187.0" prefHeight="375.0" prefWidth="744.0">
                      <columns>
                         <TableColumn fx:id="courseIdColumn" prefWidth="68.0" text="Course ID" />

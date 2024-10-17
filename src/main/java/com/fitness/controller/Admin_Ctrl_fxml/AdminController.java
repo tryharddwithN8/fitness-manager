@@ -139,24 +139,47 @@ public class AdminController {
 
     @FXML
     public void initialize() throws SQLException {
-            courseIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-            coachIdColumn.setCellValueFactory(new PropertyValueFactory<>("coachId"));
-            scheduleColumn.setCellValueFactory(new PropertyValueFactory<>("schedule"));
-            maxParticipantsColumn.setCellValueFactory(new PropertyValueFactory<>("maxParticipants"));
-            currentParticipantsColumn.setCellValueFactory(new PropertyValueFactory<>("currentParticipants"));
-            feeColumn.setCellValueFactory(new PropertyValueFactory<>("fee"));
+        loadDataFromDB();
     }
 
+    public void loadDataFromDB() throws SQLException{
+        handleDisplayAllCourse();
+        handleDisplayAllUsers();
+        handleDisplayAllCoach();
+    }
+    
+    private void handleDisplayAllCoach() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleDisplayAllCoach'");
+    }
+
+
+    private void handleDisplayAllUsers() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleDisplayAllUsers'");
+    }
+
+
     @FXML
-    private void handleDisplayAll() throws SQLException {
+    private void handleDisplayAllCourse() throws SQLException {
         List<Course> courses = courseRepoImpl.getAll();
+        courseIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        coachIdColumn.setCellValueFactory(new PropertyValueFactory<>("coachId"));
+        scheduleColumn.setCellValueFactory(new PropertyValueFactory<>("schedule"));
+        maxParticipantsColumn.setCellValueFactory(new PropertyValueFactory<>("maxParticipants"));
+        currentParticipantsColumn.setCellValueFactory(new PropertyValueFactory<>("currentParticipants"));
+        feeColumn.setCellValueFactory(new PropertyValueFactory<>("fee"));
         if (courses == null) {
             System.out.println("No courses were found.");
         }
         ObservableList<Course> courseList = FXCollections.observableArrayList(courses);
         courseTable.setItems(courseList);
     }
+
+    
+
+
     
 }
