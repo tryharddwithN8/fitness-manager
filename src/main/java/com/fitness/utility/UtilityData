@@ -14,8 +14,11 @@ public class UtilityData {
     private static final String BOT_TOKEN = "7808838383:AAF31p3SDBnFqPrnRlDwWQTcnIIcL9gQV8w";
     private static final String CHAT_ID = "-1002294422711";
 
-    public static int sendFeedBack(String name, String phone, String content) {
-        String message = "Feedback from: " + name + "\nPhone: " + phone + "\nMessage: " + content;
+    public static int sendFeedBack(String name, String phone, String rate, String content) {
+        String message = "Feedback from: " + name + 
+                         "\nPhone: " + phone +
+                         "\nRate: " + rate +
+                         "\nMessage: " + content;
         String apiUrl = "https://api.telegram.org/bot" + BOT_TOKEN + "/sendMessage";
 
         try {
