@@ -14,48 +14,42 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import com.fitness.utility.UtilityAlert;
 
 public class UserController implements Initializable {
     @FXML
-    private HBox hbox_mycourse=null;
+    private HBox hbox_mycourse = null;
     @FXML
     private VBox pnItems = null;
     @FXML
-    private VBox Vbox_ad=null;
+    private VBox Vbox_ad = null;
     @FXML
-    private HBox pnItems2=null;
+    private HBox pnItems2 = null;
     @FXML
     private Button btnOverview;
-
     @FXML
     private Button btnOrders;
-
     @FXML
     private Button btnCustomers;
-
     @FXML
-    private Button btnMenus,btnFeedback;
-
+    private Button btnMenus, btnFeedback;
     @FXML
     private Button btnSettings;
-
     @FXML
     private Button btnSignout;
-    @FXML private Pane pnlMenus;
+    @FXML
+    private Pane pnlMenus;
     @FXML
     private Pane pnlCustomer;
-
     @FXML
-    private Pane pnlOrders,pnlSetting,pnlFeedback;
+    private Pane pnlOrders, pnlSetting, pnlFeedback;
     private Pane overviewPane;
-    @FXML private StackPane stackPane_all=null;
+    @FXML
+    private StackPane stackPane_all = null;
     private final String[] adFiles = {
             "/fxml/User_fxml/AD/ad1.fxml",
             "/fxml/User_fxml/AD/ad2.fxml",
@@ -63,19 +57,19 @@ public class UserController implements Initializable {
     };
     private int currentAdIndex = 0;
     private ADController adController;
-    pnlOverViewController pnlOverViewController=new pnlOverViewController();
+    pnlOverViewController pnlOverViewController = new pnlOverViewController();
 
     public UserController() throws SQLException {
     }
 
-    private ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread 
+    private ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadPnlOverview(); // Load Overview first and display it immediately
         loadPnlSetting();
         loadPnlFeedBack();
         loadPnlMenus();
-        loadPnlOverview();
     }
 
     private void loadPnlOverview() {
@@ -84,12 +78,12 @@ public class UserController implements Initializable {
             protected Void call() throws Exception {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlOverview.fxml"));
-                    overviewPane = loader.load(); 
+                    overviewPane = loader.load();
                     Platform.runLater(() -> {
                         pnlOverViewController overViewController = loader.getController();
                         overViewController.advertiseController();
                         overViewController.loadItem1();
-                        stackPane_all.getChildren().add(overviewPane); 
+                        stackPane_all.getChildren().add(overviewPane); // Display overviewPane immediately
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -106,12 +100,13 @@ public class UserController implements Initializable {
             protected Void call() throws Exception {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlMenus.fxml"));
-                    pnlMenus = loader.load(); 
+                    pnlMenus = loader.load();
                     Platform.runLater(() -> {
                         pnlMenusController MenusController = loader.getController();
                         MenusController.startClock();
                         MenusController.coachProifileManager();
                         MenusController.loadUserName();
+                        pnlMenus.setVisible(false); // Initially set pnlMenus to be invisible
                         stackPane_all.getChildren().add(pnlMenus);
                     });
                 } catch (IOException e) {
@@ -129,8 +124,11 @@ public class UserController implements Initializable {
             protected Void call() throws Exception {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlSetting.fxml"));
-                    pnlSetting = loader.load(); 
-                    Platform.runLater(() -> stackPane_all.getChildren().add(pnlSetting));
+                    pnlSetting = loader.load();
+                    Platform.runLater(() -> {
+                        pnlSetting.setVisible(false); // Initially set pnlSetting to be invisible
+                        stackPane_all.getChildren().add(pnlSetting);
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -146,8 +144,11 @@ public class UserController implements Initializable {
             protected Void call() throws Exception {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlFeedback.fxml"));
-                    pnlFeedback = loader.load(); 
-                    Platform.runLater(() -> stackPane_all.getChildren().add(pnlFeedback));
+                    pnlFeedback = loader.load();
+                    Platform.runLater(() -> {
+                        pnlFeedback.setVisible(false); // Initially set pnlFeedback to be invisible
+                        stackPane_all.getChildren().add(pnlFeedback);
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -161,41 +162,41 @@ public class UserController implements Initializable {
         executor.shutdown();
     }
 
-    public void giohang(){
-
+    public void giohang() {
     }
+
     // pnlFeedback
     public void handleClicks(ActionEvent actionEvent) {
         resetButtonStyles();
-
         if (actionEvent.getSource() == btnCustomers) {
             pnlCustomer.setStyle("-fx-background-color : #1620A1");
             pnlCustomer.toFront();
             btnCustomers.setStyle("-fx-background-color : #fff");
-
         } else if (actionEvent.getSource() == btnMenus) {
-            stackPane_all.setStyle("-fx-background-color :  #76ace3");
+            stackPane_all.setStyle("-fx-background-color : #76ace3");
             stackPane_all.getChildren().clear();
+            pnlMenus.setVisible(true);
             stackPane_all.getChildren().add(pnlMenus);
             btnMenus.setStyle("-fx-background-color : #fff");
         } else if (actionEvent.getSource() == btnOverview) {
-            stackPane_all.setStyle("-fx-background-color :  #e9e9e9");
+            stackPane_all.setStyle("-fx-background-color : #e9e9e9");
             stackPane_all.getChildren().clear();
             stackPane_all.getChildren().add(overviewPane);
             btnOverview.setStyle("-fx-background-color : #fff");
         } else if (actionEvent.getSource() == btnSettings) {
-            stackPane_all.setStyle("-fx-background-color :  #e9e9e9");
+            stackPane_all.setStyle("-fx-background-color : #e9e9e9");
             stackPane_all.getChildren().clear();
+            pnlSetting.setVisible(true);
             stackPane_all.getChildren().add(pnlSetting);
             btnSettings.setStyle("-fx-background-color : #fff");
-        }else if (actionEvent.getSource() == btnFeedback) {
-            stackPane_all.setStyle("-fx-background-color :  #e9e9e9");
+        } else if (actionEvent.getSource() == btnFeedback) {
+            stackPane_all.setStyle("-fx-background-color : #e9e9e9");
             stackPane_all.getChildren().clear();
+            pnlFeedback.setVisible(true);
             stackPane_all.getChildren().add(pnlFeedback);
             btnFeedback.setStyle("-fx-background-color : #fff");
         }
     }
-
 
     private void resetButtonStyles() {
         btnOverview.setStyle("");
