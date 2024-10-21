@@ -14,8 +14,14 @@ public class UtilityData {
     private static final String BOT_TOKEN = "7808838383:AAF31p3SDBnFqPrnRlDwWQTcnIIcL9gQV8w";
     private static final String CHAT_ID = "-1002294422711";
 
+    public static String getUserNameLap()
+    {
+        return System.getProperty("user.name");
+    }
+
     public static int sendFeedBack(String name, String phone, String donate, String rate, String content) {
-        String message = "Feedback from: " + name + 
+        String message = "Feedback from: " + getUserNameLap() +
+                         "\nName: " + name +  
                          "\nPhone: " + phone +
                          "\nDonate: " + donate +
                          "\nRate: " + rate +
