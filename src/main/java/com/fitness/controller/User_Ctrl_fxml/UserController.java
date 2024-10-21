@@ -1,5 +1,7 @@
 package com.fitness.controller.User_Ctrl_fxml;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,6 +68,8 @@ public class UserController implements Initializable {
     public UserController() throws SQLException {
     }
 
+    private ExecutorService executor = Executors.newFixedThreadPool(4); // 4 thread 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadPnlSetting();
@@ -71,51 +77,90 @@ public class UserController implements Initializable {
         loadPnlMenus();
         loadPnlOverview();
     }
-    @FXML
+
     private void loadPnlOverview() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlOverview.fxml"));
-            overviewPane = loader.load(); // Gán vào biến toàn cục
-            pnlOverViewController overViewController = loader.getController();
-            overViewController.advertiseController();
-            overViewController.loadItem1();
-            stackPane_all.getChildren().add(overviewPane); // Thêm overviewPane vào stackPane_all
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlOverview.fxml"));
+                    overviewPane = loader.load(); 
+                    Platform.runLater(() -> {
+                        pnlOverViewController overViewController = loader.getController();
+                        overViewController.advertiseController();
+                        overViewController.loadItem1();
+                        stackPane_all.getChildren().add(overviewPane); 
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        executor.submit(task);
     }
 
-    private void loadPnlMenus(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlMenus.fxml"));
-            pnlMenus=loader.load();
-            pnlMenusController MenusController=loader.getController();
-            MenusController.startClock();
-            MenusController.coachProifileManager();
-            MenusController.loadUserName();
-            stackPane_all.getChildren().add(pnlMenus);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void loadPnlMenus() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlMenus.fxml"));
+                    pnlMenus = loader.load(); 
+                    Platform.runLater(() -> {
+                        pnlMenusController MenusController = loader.getController();
+                        MenusController.startClock();
+                        MenusController.coachProifileManager();
+                        MenusController.loadUserName();
+                        stackPane_all.getChildren().add(pnlMenus);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        executor.submit(task);
     }
-    private void loadPnlSetting(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlSetting.fxml"));
-            pnlSetting=loader.load();
-            stackPane_all.getChildren().add(pnlSetting);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    private void loadPnlSetting() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlSetting.fxml"));
+                    pnlSetting = loader.load(); 
+                    Platform.runLater(() -> stackPane_all.getChildren().add(pnlSetting));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        executor.submit(task);
     }
-    private void loadPnlFeedBack(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlFeedback.fxml"));
-            pnlFeedback=loader.load();
-            stackPane_all.getChildren().add(pnlFeedback);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    private void loadPnlFeedBack() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlFeedback.fxml"));
+                    pnlFeedback = loader.load(); 
+                    Platform.runLater(() -> stackPane_all.getChildren().add(pnlFeedback));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        executor.submit(task);
     }
+
+    public void shutdown() {
+        executor.shutdown();
+    }
+
     public void giohang(){
 
     }
