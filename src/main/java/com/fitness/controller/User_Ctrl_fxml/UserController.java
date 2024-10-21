@@ -66,7 +66,7 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadPnlOverview(); // Load Overview first and display it immediately
+        loadPnlOverview();
         loadPnlSetting();
         loadPnlFeedBack();
         loadPnlMenus();
@@ -83,7 +83,7 @@ public class UserController implements Initializable {
                         pnlOverViewController overViewController = loader.getController();
                         overViewController.advertiseController();
                         overViewController.loadItem1();
-                        stackPane_all.getChildren().add(overviewPane); // Display overviewPane immediately
+                        stackPane_all.getChildren().add(overviewPane); 
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -106,7 +106,7 @@ public class UserController implements Initializable {
                         MenusController.startClock();
                         MenusController.coachProifileManager();
                         MenusController.loadUserName();
-                        pnlMenus.setVisible(false); // Initially set pnlMenus to be invisible
+                        pnlMenus.setVisible(false);
                         stackPane_all.getChildren().add(pnlMenus);
                     });
                 } catch (IOException e) {
@@ -126,7 +126,7 @@ public class UserController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlSetting.fxml"));
                     pnlSetting = loader.load();
                     Platform.runLater(() -> {
-                        pnlSetting.setVisible(false); // Initially set pnlSetting to be invisible
+                        pnlSetting.setVisible(false); 
                         stackPane_all.getChildren().add(pnlSetting);
                     });
                 } catch (IOException e) {
@@ -146,7 +146,7 @@ public class UserController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlFeedback.fxml"));
                     pnlFeedback = loader.load();
                     Platform.runLater(() -> {
-                        pnlFeedback.setVisible(false); // Initially set pnlFeedback to be invisible
+                        pnlFeedback.setVisible(false); 
                         stackPane_all.getChildren().add(pnlFeedback);
                     });
                 } catch (IOException e) {
