@@ -4,6 +4,7 @@ import com.fitness.utility.UtilityAlert;
 import com.fitness.utility.UtilityData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -23,11 +24,10 @@ public class pnlFeedbackController {
     @FXML
     private TextField textField_name_fb, textField_phone_fb, textField_donate_fb;
     @FXML
-    private Button btn_clear_fb, btn_submit_fb;
+    private Button btn_clear_fb, btn_submit_fb,btn_vote1s,btn_vote2s,btn_vote3s,btn_vote4s,btn_vote5s;
     @FXML
     private Text text_waiting_fb;
-
-    
+    private String getrate;
     @FXML
     public void clearTextArea()
     {
@@ -35,6 +35,7 @@ public class pnlFeedbackController {
         textField_name_fb.setText("");
         textField_phone_fb.setText("");
         textField_donate_fb.setText("");
+        resetButtonStyles();
     }
 
     @FXML
@@ -44,7 +45,7 @@ public class pnlFeedbackController {
         String donate = textField_donate_fb.getText() + "$";
         String text = textArea_content_fb.getText();
 
-        String rate = "Uknow";
+        String rate = getrate;
 
         if (name == null || name.trim().isEmpty()) {
             UtilityAlert.showError(Alert.AlertType.ERROR, "Missing Information", "Please enter your name.");
@@ -103,5 +104,37 @@ public class pnlFeedbackController {
         thread.setDaemon(true);
         thread.start();
         
+    }
+
+    @FXML
+    public void handleClicks(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == btn_vote1s) {
+            resetButtonStyles();
+            btn_vote1s.setStyle("-fx-background-color : #ffa6c6");
+            getrate = "1/5";
+        } else if (actionEvent.getSource() == btn_vote2s) {
+            resetButtonStyles();
+            btn_vote2s.setStyle("-fx-background-color : #ffa6c6");
+            getrate = "2/5";
+        } else if (actionEvent.getSource() == btn_vote3s) {
+            resetButtonStyles();
+            btn_vote3s.setStyle("-fx-background-color : #ffa6c6");
+            getrate = "3/5";
+        } else if (actionEvent.getSource() == btn_vote4s) {
+            resetButtonStyles();
+            btn_vote4s.setStyle("-fx-background-color : #ffa6c6");
+            getrate = "4/5";
+        } else if (actionEvent.getSource() == btn_vote5s) {
+            resetButtonStyles();
+            btn_vote5s.setStyle("-fx-background-color : #ffa6c6");
+            getrate = "5/5";
+        }
+    }
+    private void resetButtonStyles() {
+        btn_vote1s.setStyle("");
+        btn_vote2s.setStyle("");
+        btn_vote3s.setStyle("");
+        btn_vote4s.setStyle("");
+        btn_vote5s.setStyle("");
     }
 }
