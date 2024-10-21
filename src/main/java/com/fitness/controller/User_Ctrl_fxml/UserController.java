@@ -210,8 +210,8 @@ public class UserController implements Initializable {
     /*
      * Exit App
      */
-    public void handleExit(){
-        UtilityAlert.showConfimExit("Exit", "Do you want to exit :((");
+    public void handleExit() {
+        UtilityAlert.showConfimExit("Exit", "Do you want to exit :(");
     }
     /*
      * return login page

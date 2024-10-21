@@ -20,6 +20,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import java.util.concurrent.ExecutorService;
+
 
 
 /**
@@ -85,10 +87,10 @@ public class UtilityAlert {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             Platform.exit();
+            System.exit(0); 
         }
     }
 
