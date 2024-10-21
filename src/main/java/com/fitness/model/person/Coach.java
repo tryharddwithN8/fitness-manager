@@ -6,20 +6,39 @@ public class Coach extends Person {
     private String username;
     private String password;
     private String courseTeaching;
-    private int experience;
+    private String experience;
     private String role;
-
+    private String bio;
+    private String linkImg;
     public Coach() {
         super();
     }
 
-    public Coach(String id, String name, String phone, String email, String address, LocalDateTime dob, String username, String password, String courseTeaching, int experience, String role) {
+    public Coach(String id, String name, String phone,String linkImg, String email, String address, LocalDateTime dob, String username, String password, String courseTeaching, String experience, String role, String bio) {
         super(id, email, address);
         this.username = username;
         this.password = password;
         this.courseTeaching = courseTeaching;
         this.experience = experience;
         this.role = role;
+        this.bio=bio;
+        this.linkImg=linkImg;
+    }
+
+    public String getLinkImg() {
+        return linkImg;
+    }
+
+    public void setLinkImg(String linkImg) {
+        this.linkImg = linkImg;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public String getUsername() {
@@ -46,11 +65,11 @@ public class Coach extends Person {
         this.courseTeaching = courseTeaching;
     }
 
-    public int getExperience() {
+    public String getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
+    public void setExperience(String experience) {
         this.experience = experience;
     }
 
@@ -75,6 +94,8 @@ public class Coach extends Person {
                 ", courseTeaching='" + courseTeaching + '\'' +
                 ", experience=" + experience +
                 ", role='" + role + '\'' +
+                ", bio='" + bio + '\'' +
+                ", linkImg='" + linkImg + '\'' +
                 '}';
     }
 }

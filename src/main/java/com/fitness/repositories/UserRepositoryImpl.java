@@ -1,13 +1,13 @@
 package com.fitness.repositories;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.fitness.config.ConnectionDB;
-import com.fitness.dto.Encrypt;
 import com.fitness.model.person.User;
 import com.fitness.repositories.Interface.IRepository;
 import com.fitness.utility.UtilityIO;
@@ -24,9 +24,42 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
 
     @Override
     public List<User> getAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        List<User> users = new ArrayList<>();
+        try (Connection connection = getConnection()) {
+            if (connection == null || connection.isClosed()) {
+                UtilityIO.showMsg("Failed to establish or maintain connection to the database.");
+                return null;
+            }
+            String sql = "SELECT * FROM users";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        User user = new User();
+                        user.setUsername(resultSet.getString("username"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setAddress(resultSet.getString("address"));
+                        users.add(user);
+                    }
+                    if (users != null) {
+                        return users;
+                    }
+                } catch (SQLException e) {
+                    UtilityIO.showMsg("Error occurred while retrieving users: " + e.getMessage()
+                            + " SQLState: " + e.getSQLState()
+                            + " ErrorCode: " + e.getErrorCode());
+                    return null;
+                }
+            } catch (SQLException e) {
+                UtilityIO.showMsg("Error occurred while preparing statement: " + e.getMessage());
+                return null;
+            }
+        } catch (SQLException e) {
+            UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
+            return null;
+        }
+        return users;
     }
+
 
     @Override
     public User getById(Integer id) throws SQLException {
@@ -51,7 +84,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 statement.setString(4, entity.getRole());
                 statement.setString(5, entity.getAddress());
 
-                
+
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
                     UtilityIO.showMsg("user "+entity.getUsername()+" was added successfully!");
@@ -61,9 +94,9 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                     return -1;
                 }
             } catch (SQLException e) {
-                UtilityIO.showMsg("Error occurred while adding user: " + e.getMessage() 
-                    + " SQLState: " + e.getSQLState() 
-                    + " ErrorCode: " + e.getErrorCode());
+                UtilityIO.showMsg("Error occurred while adding user: " + e.getMessage()
+                        + " SQLState: " + e.getSQLState()
+                        + " ErrorCode: " + e.getErrorCode());
                 return -1;
             }
         } catch (SQLException e) {
@@ -85,30 +118,38 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
+    public int getInfoByUsername(String user){
+        /**
+         * input: username
+         * output: List(all info from user)
+         */
+        return 3233;
+    }
+
     public int loginAuth(String username, String password) {
         String sql = "SELECT password, role FROM users WHERE username = ?";
-    
+
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);
-    
+
             ResultSet resultSet = statement.executeQuery();
-    
+
             if (resultSet.next()) {
                 String hashedPassword = resultSet.getString("password");
                 String role = resultSet.getString("role");
-    
-                if (password.equals(hashedPassword)) {  
-                    if (role.equals("admin")) 
+
+                if (password.equals(hashedPassword)) {
+                    if (role.equals("admin"))
                         return 3; //  admin
-                    else 
+                    else
                         return 1; // user thường
-                    
+
                 }
             }
-    
-            return 0; // Tài khoản không tồn tại hoặc mật khẩu sai
-    
+
+            return 0; 
+
         } catch (SQLException e) {
             System.out.println("Login error: " + e.getMessage());
             return -1; //  -1 nếu có lỗi xảy ra
@@ -116,51 +157,51 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
     }
 
     public int getByEmailExist(String email) {
-        int exists = 0; 
-    
+        int exists = 0;
+
         String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
         try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
-    
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
             pstmt.setString(1, email);
-    
+
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    int count = rs.getInt(1);  
-                    if (count > 0) 
-                        exists = 1; 
+                    int count = rs.getInt(1);
+                    if (count > 0)
+                        exists = 1;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
-    
+
         return exists;
     }
-    
+
 
     public int checkExitsAccount(String username, String email) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ? OR email = ?";
-        
+
         try (Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, username);
             statement.setString(2, email);
 
             ResultSet resultSet = statement.executeQuery();
-            
+
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
-                if (count > 0) 
+                if (count > 0)
                     return 0;
             }
-            
+
             return 1;
 
         } catch (SQLException e) {
             UtilityIO.showMsg("Error occurred while checking account: " + e.getMessage());
-            return -1;  
+            return -1;
         }
     }
 
@@ -168,24 +209,24 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         Connection conn = null;
         PreparedStatement pstmt = null;
         int result = -1;
-    
+
         try {
             conn = getConnection();
-    
+
             String sql = "UPDATE users SET password = ? WHERE email = ?";
-    
+
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, password); 
-            pstmt.setString(2, email);     
-    
+            pstmt.setString(1, password);
+            pstmt.setString(2, email);
+
             int rowsUpdated = pstmt.executeUpdate();
-            
+
             if (rowsUpdated > 0) {
-                result = 1;  
+                result = 1;
             }
-    
+
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         } finally {
             try {
                 if (pstmt != null) pstmt.close();
@@ -194,8 +235,8 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 e.printStackTrace();
             }
         }
-    
-        return result; 
+
+        return result;
     }
-    
+
 }

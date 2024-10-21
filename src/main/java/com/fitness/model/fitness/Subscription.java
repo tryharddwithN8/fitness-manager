@@ -3,6 +3,7 @@ package com.fitness.model.fitness;
 public class Subscription {
     private String id;
     private String memberId;
+    private String membername;
     private String courseId;
     private String startDate;
     private String endDate;
@@ -13,14 +14,23 @@ public class Subscription {
 
     }
 
-    public Subscription(String id, String memberId, String courseId, String startDate, String endDate, double fee, String status) {
+    public Subscription(String id, String memberId,String membername, String courseId, String startDate, String endDate, double fee, String status) {
         this.id = id;
         this.memberId = memberId;
+        this.membername=membername;
         this.courseId = courseId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.fee = fee;
         this.status = status;
+    }
+
+    public String getMembername() {
+        return membername;
+    }
+
+    public void setMembername(String membername) {
+        this.membername = membername;
     }
 
     public String getId() {
@@ -84,6 +94,7 @@ public class Subscription {
         return "Subscription{" +
                 "id='" + id + '\'' +
                 ", memberId='" + memberId + '\'' +
+                ", memberName='" + membername + '\'' +
                 ", courseId='" + courseId + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +

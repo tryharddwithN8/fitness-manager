@@ -8,13 +8,13 @@ public class Course {
     private String schedule;
     private int maxParticipants;
     private int currentParticipants;
-    private double fee;
+    private double fee,discount;
 
     public Course() {
 
     }
 
-    public Course(String id, String name, String description, String coachId, String schedule, int maxParticipants, int currentParticipants, double fee) {
+    public Course(String id, String name, String description, String coachId, String schedule, int maxParticipants, int currentParticipants, double fee,double discount) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -23,6 +23,15 @@ public class Course {
         this.maxParticipants = maxParticipants;
         this.currentParticipants = currentParticipants;
         this.fee = fee;
+        this.discount=discount;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     public String getId() {
@@ -100,6 +109,7 @@ public class Course {
                 ", maxParticipants=" + maxParticipants +
                 ", currentParticipants=" + currentParticipants +
                 ", fee=" + fee +
+                ", discount"+discount+
                 '}';
     }
 }

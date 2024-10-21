@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.User_Ctrl_fxml.pnlFeedbackController">
+     <Pane fx:id="pnlFeedback" prefHeight="596.0" prefWidth="1066.0" style="-fx-background-color: #dedede; -fx-cursor: hand;">
+      <children>
+         <Label layoutX="41.0" layoutY="29.0" prefHeight="57.0" prefWidth="163.0" text="FeedBack">
+            <font>
+               <Font name="Times New Roman Bold" size="30.0" />
+            </font>
+         </Label>
+         <TextArea id="testAreaFeedback" layoutX="78.0" layoutY="195.0" prefHeight="330.0" prefWidth="791.0" promptText="Write your response" style="-fx-border-radius: 20;" wrapText="true" />
+         <TextField layoutX="142.0" layoutY="138.0" prefHeight="31.0" prefWidth="241.0" promptText="Your Name">
+            <font>
+               <Font name="Roboto Light" size="14.0" />
+            </font>
+         </TextField>
+         <TextField layoutX="474.0" layoutY="138.0" prefHeight="31.0" prefWidth="241.0" promptText="Phone Number">
+            <font>
+               <Font name="Roboto" size="14.0" />
+            </font>
+         </TextField>
+         <Label layoutX="925.0" layoutY="176.0" prefHeight="39.0" prefWidth="58.0" text="Rate" textFill="#ad5d31">
+            <font>
+               <Font name="Roboto Medium" size="19.0" />
+            </font>
+         </Label>
+
+         <RadioButton contentDisplay="RIGHT" layoutX="925.0" layoutY="240.0" mnemonicParsing="false" text="1" textFill="RED">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../img/star.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </RadioButton>
+         <RadioButton contentDisplay="RIGHT" layoutX="925.0" layoutY="328.0" mnemonicParsing="false" text="2" textFill="RED">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/star.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </RadioButton>
+         <RadioButton contentDisplay="RIGHT" layoutX="935.0" layoutY="378.0" mnemonicParsing="false" text="3" textFill="RED">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/star.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </RadioButton>
+         <RadioButton contentDisplay="RIGHT" layoutX="935.0" layoutY="418.0" mnemonicParsing="false" text="4" textFill="RED">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/star.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </RadioButton>
+         <RadioButton contentDisplay="RIGHT" layoutX="935.0" layoutY="458.0" mnemonicParsing="false" text="5" textFill="RED">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/star.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </RadioButton>
+      </children>
+    </Pane>
+</AnchorPane>

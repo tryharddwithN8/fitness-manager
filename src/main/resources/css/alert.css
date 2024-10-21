@@ -2,6 +2,28 @@
  * Alert CSS
  *
  */
+ @font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('/font/Roboto/Roboto-Medium.ttf');
+}
+
+.root {
+    -fx-font-family: 'Roboto';
+}
+
+.button {
+    -fx-font-family: 'Roboto-Medium';
+}
+
+.label {
+    -fx-font-family: 'Roboto';
+}
+
 
 .dialog-pane {
     -fx-background-color: #d4edda;

@@ -44,7 +44,7 @@
                </effect>
             </AnchorPane>
             <Label layoutX="74.0" layoutY="171.0" style="-fx-font-size: 13px;" text="4.8" textFill="RED" />
-            <Label layoutX="53.0" layoutY="150.0" styleClass="tile_course" text="COURSE 1" />
+            <Label fx:id="label_itemOverview" layoutX="2.0" layoutY="150.0" prefHeight="21.0" prefWidth="191.0" style="-fx-alignment: center;" styleClass="tile_course" text="COURSE 1" />
             <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="51.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../img/star2.png" />

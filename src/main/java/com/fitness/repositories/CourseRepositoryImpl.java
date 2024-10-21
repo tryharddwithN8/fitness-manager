@@ -19,7 +19,7 @@ public class CourseRepositoryImpl implements IRepository<Course, Integer> {
 
     @Override
     public Connection getConnection() {
-       return ConnectionDB.getConnection();
+        return ConnectionDB.getConnection();
     }
 
     @Override
@@ -64,11 +64,13 @@ public class CourseRepositoryImpl implements IRepository<Course, Integer> {
                         Course course = new Course();
                         course.setId(String.valueOf(resultSet.getInt("id")));
                         course.setName(resultSet.getString("course_name"));
+                        course.setDescription(resultSet.getString("description"));
                         course.setCoachId(String.valueOf(resultSet.getInt("coach_id")));
                         course.setSchedule(String.valueOf(resultSet.getInt("duration_weeks")));
                         course.setMaxParticipants(resultSet.getInt("participants"));
                         course.setCurrentParticipants(resultSet.getInt("participants"));
                         course.setFee(resultSet.getDouble("fee"));
+                        course.setDiscount(resultSet.getDouble("discount"));
                         courses.add(course);
                     }
                     if (courses != null) {

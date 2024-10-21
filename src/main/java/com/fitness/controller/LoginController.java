@@ -6,6 +6,11 @@ import com.fitness.services.UserServiceImpl;
 import com.fitness.utility.UtilityAlert;
 import com.fitness.utility.UtilityIO;
 import com.fitness.utility.UtilitySecurity;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
+
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +44,7 @@ public class LoginController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
-    
+
     @FXML
     private TextField signupUsernameField;
     @FXML
@@ -48,7 +53,7 @@ public class LoginController {
     private PasswordField signupPasswordField;
     @FXML
     private PasswordField confirmPasswordField;
-    
+
     @FXML
     private TextField forgotEmailField;
     @FXML
@@ -71,12 +76,13 @@ public class LoginController {
 
     @FXML
     private TextField key_user;
-    
+
     @FXML
     private TextField passwd;
     @FXML
     private TextField confirm_passwd;
 
+    public static String nameUser;
     private String key = null;
 
     @FXML
@@ -135,20 +141,22 @@ public class LoginController {
         updatePassPanel.setVisible(true);
     }
 
-    
+    public String getNameUser(){
+        return nameUser;
+    }
 
     private double x, y;
     @FXML
     private void handleLogin() throws Exception {
         String username = usernameField.getText();
         String password = Encrypt.hash(passwordField.getText());
+        nameUser = username;
 
-        
         /*
          * Stop feauture
          *   try {
          *       EncryptRSA.sendData(username,password);
-         *   
+         *
          *  } catch (Exception e) {
          *       e.printStackTrace();
          *   }
@@ -160,33 +168,43 @@ public class LoginController {
 
         waitting_status_login.setVisible(true);
         loginButton.setDisable(true);
+        Timeline timeline = new Timeline(
+            new KeyFrame(Duration.seconds(0), e -> waitting_status_login.setText("Waiting")),
+            new KeyFrame(Duration.seconds(0.3), e -> waitting_status_login.setText("Waiting.")),
+            new KeyFrame(Duration.seconds(0.6), e -> waitting_status_login.setText("Waiting..")),
+            new KeyFrame(Duration.seconds(0.9), e -> waitting_status_login.setText("Waiting..."))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);  
+        timeline.play(); 
+
         Task<Integer> task = new Task<Integer>() {
             @Override
-            protected Integer call() throws Exception{
-                return userSerImpl.loginAuth(username, password);
+            protected Integer call() throws Exception {
+                return userSerImpl.loginAuth(username, password);  
             }
         };
-        
+
         task.setOnSucceeded(event -> {
+            timeline.stop(); 
             waitting_status_login.setVisible(false);
             loginButton.setDisable(false);
+
             int check = task.getValue();
-            if(check==1){
+            if (check == 1) {
                 UtilityAlert.showInfo("Login Success", "Welcome " + username + "!");
-                loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
-            }
-            else if(check == 3) {
+                loadFrame("/fxml/User_fxml/Main_Pane/Main.fxml");
+            } else if (check == 3) {
                 UtilityAlert.showInfo("Login Success", "Welcome Admin N8 !");
-                System.out.println("amdin");
                 loadFrame("/fxml/Admin_fxml/Admin.fxml");
-            }
-            else{
-                UtilityAlert.showError(Alert.AlertType.ERROR, "Login failed", "Username of password incorrect");
+            } else {
+                UtilityAlert.showError(Alert.AlertType.ERROR, "Login Failed", "Username or password is incorrect");
                 usernameField.setText("");
                 passwordField.setText("");
             }
         });
+
         task.setOnFailed(event -> {
+            timeline.stop(); 
             waitting_status_login.setVisible(false);
             loginButton.setDisable(false);
             UtilityAlert.showError(Alert.AlertType.ERROR, "Login Error", "An error occurred during login (501)");
@@ -198,6 +216,7 @@ public class LoginController {
     }
 
 
+
     @FXML
     private void handleSignUp() throws SQLException{
 
@@ -205,18 +224,18 @@ public class LoginController {
         String email = emailField.getText();
         String password = Encrypt.hash(UtilityIO.checkPassWD(signupPasswordField.getText().trim(), ""));
         String confirmPassword = Encrypt.hash(UtilityIO.checkPassWD(confirmPasswordField.getText().trim(), ""));
-        
+
         System.out.printf("User: %s\nemail: %s\npassword: %s\n\n", username, email, password);
         if (email == null || email.trim().isEmpty())
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Invalid email format!");
         else if (username == null || username.isEmpty())
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Please choose a username.");
-        else if (password == null || password.isEmpty() || confirmPassword == null || confirmPassword.isEmpty()) 
+        else if (password == null || password.isEmpty() || confirmPassword == null || confirmPassword.isEmpty())
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Password must be at least 8 characters long and include lowercase letters, digits or special characters!");
-        else if (!password.equals(confirmPassword)) 
+        else if (!password.equals(confirmPassword))
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Passwords do not match!");
 
-        else 
+        else
         {
             signUpButton.setDisable(true);
             waitting_status_signup.setVisible(true);
@@ -234,7 +253,7 @@ public class LoginController {
                 int check = task.getValue();
                 if (check == 1) {
                     UtilityAlert.showInfo("Registration Successful", "Welcome " + username + "!");
-                    loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
+                    loadFrame("/fxml/User_fxml/Main_Pane/Main.fxml");
                 } else if (check == 0) {
                     UtilityAlert.showError(Alert.AlertType.ERROR, "SignUp Failed", "Account already exists");
                     signupPasswordField.setText("");
@@ -283,14 +302,14 @@ public class LoginController {
             int check = task.getValue();
             if(check != 1){
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Forgot Password Failed", "Email not found\nPlease try agains!");
-                forgotEmailField.setText("");    
+                forgotEmailField.setText("");
                 return;
             }
 
             UtilityAlert.showError(Alert.AlertType.INFORMATION, "Password Reset Request", "A password recovery link has been sent to " + email);
             try {
                 this.key = UtilitySecurity.getKeyFromServer(email);
-            } catch (Exception e) {    
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             handleKeyForgotPass();
@@ -302,7 +321,7 @@ public class LoginController {
             resetPasswordButtonEmail.setDisable(false);
             UtilityAlert.showError(Alert.AlertType.ERROR, "Errorr", "Please try agains!");
         });
-        
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
@@ -324,14 +343,14 @@ public class LoginController {
         String email = forgotEmailField.getText();
         String password = Encrypt.hash(UtilityIO.checkPassWD(passwd.getText().trim(), ""));
         String conf_pass = Encrypt.hash(UtilityIO.checkPassWD(confirm_passwd.getText().trim(), ""));
-        
+
         if (password == null || password.isEmpty() || conf_pass == null || conf_pass.isEmpty()) {
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Password must be at least 8 characters long and include lowercase letters, digits or special characters!");
             passwd.setText("");
             confirm_passwd.setText("");
             return;
         }
-            
+
         else if (!password.equals(conf_pass)){
             UtilityAlert.showError(Alert.AlertType.ERROR, "Registration Error", "Passwords do not match!");
             passwd.setText("");
@@ -354,10 +373,10 @@ public class LoginController {
             if(check != 1){
                 UtilityAlert.showError(Alert.AlertType.ERROR, "Update Failed", "Failed rồi\nKhông biết lỗi gì :((");
                 passwd.setText("");
-                confirm_passwd.setText(""); 
+                confirm_passwd.setText("");
                 return;
             }
-            loadFrame("/fxml/User_fxml/Main Pane/Main.fxml");
+            loadFrame("/fxml/User_fxml/Main_Pane/Main.fxml");
 
         });
 
@@ -366,7 +385,7 @@ public class LoginController {
             waitting_status_forgot_update_pass.setVisible(false);
             UtilityAlert.showError(Alert.AlertType.ERROR, "Errorr", "Please try agains!");
         });
-        
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
@@ -396,13 +415,13 @@ public class LoginController {
                 stage.setY(event.getScreenY() - y);
             });
 
-            
+
         } catch (Exception e) {
             System.out.println("Error loading Main.fxml: " + e.getMessage());
             e.printStackTrace();
         }
     }
-    
-   
+
+
 
 }
