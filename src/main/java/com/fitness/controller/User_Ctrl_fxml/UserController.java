@@ -104,7 +104,7 @@ public class UserController implements Initializable {
                     Platform.runLater(() -> {
                         pnlMenusController MenusController = loader.getController();
                         MenusController.startClock();
-                        MenusController.coachProifileManager();
+                        MenusController.coachProfileManager();
                         MenusController.loadUserName();
                         pnlMenus.setVisible(false);
                         stackPane_all.getChildren().add(pnlMenus);
