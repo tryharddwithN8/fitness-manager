@@ -7,20 +7,32 @@ public class Workout {
     private String date;
     private String startTime;
     private String endTime;
-    private String status;
+    private String description;
+    private String workout_name;
+    private int duration_minustes;
 
     public Workout() {
 
     }
 
-    public Workout(String id, String courseId, String memberId, String date, String startTime, String endTime, String status) {
+    public Workout(String workout_name, int duration_minustes,String id, String courseId, String memberId, String date, String startTime, String endTime, String description) {
         this.id = id;
         this.courseId = courseId;
         this.memberId = memberId;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.status = status;
+        this.description = description;
+        this.duration_minustes=duration_minustes;
+        this.workout_name=workout_name;
+    }
+
+    public int getDuration_minustes() {
+        return duration_minustes;
+    }
+
+    public void setDuration_minustes(int duration_minustes) {
+        this.duration_minustes = duration_minustes;
     }
 
     public String getId() {
@@ -71,12 +83,20 @@ public class Workout {
         this.endTime = endTime;
     }
 
-    public String getStatus() {
-        return status;
+    public String getdescription() {
+        return description;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setdescription(String status) {
+        this.description = status;
+    }
+
+    public String getWorkout_name() {
+        return workout_name;
+    }
+
+    public void setWorkout_name(String workout_name) {
+        this.workout_name = workout_name;
     }
 
     @Override
@@ -84,11 +104,13 @@ public class Workout {
         return "Workout{" +
                 "id='" + id + '\'' +
                 ", courseId='" + courseId + '\'' +
+                ", courseName='" + workout_name  + '\'' +
                 ", memberId='" + memberId + '\'' +
                 ", date='" + date + '\'' +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
-                ", status='" + status + '\'' +
+                ", duration time='" + duration_minustes + '\'' +
+                ", status='" + description + '\'' +
                 '}';
     }
 }
