@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -16,6 +17,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../css/user_css/myCourse.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.User_Ctrl_fxml.pnlMenusController">
     <Pane fx:id="pnlMenus" prefHeight="596.0" prefWidth="1066.0" style="-fx-background-color: #76ace3; -fx-cursor: hand;">
@@ -57,9 +59,9 @@
                             <Image url="@../../../img/ta2.png" />
                         </image>
                     </ImageView>
-                    <Pane layoutX="15.0" layoutY="15.0" prefHeight="38.0" prefWidth="176.0" style="-fx-background-color: #83b0de; -fx-background-radius: 10px;">
+                    <Pane layoutX="15.0" layoutY="15.0" prefHeight="38.0" prefWidth="193.0" style="-fx-background-color: #83b0de; -fx-background-radius: 10px;">
                         <children>
-                            <Label fx:id="time_myplan" layoutX="30.0" layoutY="10.0" prefHeight="21.0" prefWidth="141.0" style="-fx-font-size: 15px;" text="Day, Month, Year" />
+                            <Label fx:id="time_myplan" layoutX="30.0" layoutY="10.0" prefHeight="21.0" prefWidth="160.0" style="-fx-font-size: 15px;" text="Day, Month, Year" />
                             <ImageView fitHeight="21.0" fitWidth="24.0" layoutX="8.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                                 <image>
                                     <Image url="@../../../img/calendar.png" />
@@ -70,7 +72,7 @@
                     <Label layoutX="15.0" layoutY="67.0" style="-fx-font-size: 40px;" text="Good Day," />
                     <Label fx:id="label_Username_myCourse" layoutX="204.0" layoutY="69.0" style="-fx-font-size: 40px;" text="Coach Apt" />
                     <Label layoutX="20.0" layoutY="120.0" prefHeight="24.0" prefWidth="368.0" style="-fx-font-size: 20px;" text="Continues practice try your best" />
-                    <ImageView fitHeight="122.0" fitWidth="141.0" layoutX="204.0" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="99.0" fitWidth="141.0" layoutX="228.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@../../../img/ta3.png" />
                         </image>
@@ -95,14 +97,14 @@
                 <children>
                     <Pane fx:id="layer_coachProfile" layoutY="-1.0" prefHeight="42.0" prefWidth="227.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 10px 0 0;">
                         <children>
-                            <Label layoutX="6.0" layoutY="91.0" prefHeight="30.0" prefWidth="216.0" style="-fx-font-size: 20px; -fx-background-color: #6b9bcd; -fx-background-radius: 12px; -fx-alignment: center;" text="Choose Course to see !" textAlignment="CENTER" />
+                            <Label layoutX="6.0" layoutY="91.0" prefHeight="30.0" prefWidth="216.0" style="-fx-font-size: 20px; -fx-background-color: #6b9bcd; -fx-background-radius: 12px; -fx-alignment: center;" text="Choose Course please !" textAlignment="CENTER" />
                             <Label layoutX="46.0" layoutY="4.0" prefHeight="35.0" prefWidth="135.0" style="-fx-font-size: 20px;" text="Coach Profile" />
                         </children></Pane>
                     <Pane fx:id="pane_coachProfile" layoutY="42.0" prefHeight="158.0" prefWidth="227.0" style="-fx-background-color: #70a3d7;">
                         <children>
-                            <Pane layoutY="14.0" prefHeight="80.0" prefWidth="82.0" style="-fx-background-color: #cecece; -fx-background-radius: 50%;">
+                            <Pane layoutX="2.0" layoutY="14.0" prefHeight="80.0" prefWidth="82.0" style="-fx-background-color: #cecece; -fx-background-radius: 50%;">
                                 <children>
-                                    <Circle fx:id="circleAva" layoutX="41.0" layoutY="40.0" radius="41.0" stroke="BLACK" strokeType="INSIDE"  />
+                                    <Circle fx:id="circleAva" layoutX="42.0" layoutY="40.0" radius="41.0" stroke="BLACK" strokeType="INSIDE" />
                                 </children>
                             </Pane>
                             <Pane layoutX="93.0" layoutY="14.0" prefHeight="29.0" prefWidth="125.0" style="-fx-background-color: #8cb4f5; -fx-background-radius: 20px;">
@@ -155,10 +157,22 @@
             </Pane>
             <Pane layoutX="15.0" layoutY="443.0" prefHeight="141.0" prefWidth="432.0" style="-fx-background-color: #70a3d7; -fx-background-radius: 10px;">
                 <children>
-                    <Pane layoutX="-1.0" prefHeight="141.0" prefWidth="36.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 0 0 10px;">
+               <Label layoutX="96.0" layoutY="56.0" prefHeight="30.0" prefWidth="241.0" style="-fx-background-color: #6b9bcd; -fx-background-radius: 20px; -fx-alignment: center; -fx-font-size: 20px;" text="Choose Course please !" />
+                    <Pane prefHeight="141.0" prefWidth="36.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 0 0 10px;">
                         <children>
-                            <Label layoutX="-31.0" layoutY="63.0" rotate="-90.0" style="-fx-font-size: 20px;" text="Description" />
-                        </children></Pane>
+                            <Label layoutX="-30.0" layoutY="53.0" rotate="-90.0" style="-fx-font-size: 25px;" text="Workout" />
+                        </children>
+               </Pane>
+               <Pane fx:id="tabPane_schedule" layoutX="36.0" layoutY="9.0" prefHeight="124.0" prefWidth="386.0" style="-fx-background-color: #c4c4c4;">
+                  <children>
+                     <Label fx:id="name_workout" layoutX="110.0" layoutY="-1.0" prefHeight="30.0" prefWidth="160.0" style="-fx-alignment: center; -fx-font-size: 20px;" text="Choose course !" textAlignment="CENTER" />
+                     <Text layoutX="15.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15px;" text="Duration:" />
+                     <Text fx:id="duration_workout" layoutX="91.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15px;" text="null" wrappingWidth="42.59997558593773" />
+                     <Text layoutX="129.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15px;" text="/ (minute)times" />
+                     <TextArea fx:id="description_workout" layoutX="15.0" layoutY="57.0" prefHeight="58.0" prefWidth="329.0" style="-fx-background-radius: 10px;" stylesheets="@../../../css/user_css/myCourse.css" />
+                     <Button fx:id="btn_next_workout" layoutX="347.0" layoutY="72.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" style="-fx-background-radius: 50%; -fx-background-color: transparent; -fx-border-color: #000; -fx-border-radius: 50%;" text="&gt;" />
+                  </children>
+               </Pane>
                 </children>
             </Pane>
             <Pane layoutX="780.0" layoutY="400.0" prefHeight="21.0" prefWidth="22.0" style="-fx-background-color: #76ace3;" />
