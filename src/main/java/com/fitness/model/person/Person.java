@@ -1,14 +1,14 @@
 package com.fitness.model.person;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public abstract class Person {
     private String id;
-    private String name;
+    private String fullName;
     private String phone;
     private String email;
     private String address;
-    private LocalDateTime dob;
+    private LocalDate dob;
 
     public Person() {
 
@@ -16,11 +16,20 @@ public abstract class Person {
 
     public Person(String id, String email, String address) {
         this.id = id;
-        this.name = null;
+        this.fullName = null;
         this.phone = null;
         this.email = email;
         this.address = address;
         this.dob = null;
+    }
+
+    public Person(String id, String address, LocalDate dob, String email, String fullName, String phone) {
+        this.id = id;
+        this.address = address;
+        this.dob = dob;
+        this.email = email;
+        this.fullName = fullName;
+        this.phone = phone;
     }
 
     public String getId() {
@@ -31,12 +40,12 @@ public abstract class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhone() {
@@ -63,11 +72,11 @@ public abstract class Person {
         this.address = address;
     }
 
-    public LocalDateTime getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(LocalDateTime dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 }

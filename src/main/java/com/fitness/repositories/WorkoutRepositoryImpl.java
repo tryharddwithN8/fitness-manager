@@ -8,7 +8,6 @@ import java.util.List;
 import java.sql.Connection;
 
 import com.fitness.config.ConnectionDB;
-import com.fitness.model.fitness.Course;
 import com.fitness.model.fitness.Workout;
 import com.fitness.repositories.Interface.IRepository;
 import com.fitness.utility.UtilityIO;
@@ -21,8 +20,8 @@ public class WorkoutRepositoryImpl implements IRepository<Workout, Integer>{
 
 
     @Override
-    public Connection getConnection(){
-        return ConnectionDB.getConnection();
+    public Connection getConnection() throws SQLException {
+        return ConnectionDB.getConnection();    
     }
 
     @Override
@@ -47,9 +46,6 @@ public class WorkoutRepositoryImpl implements IRepository<Workout, Integer>{
                     }
                     if (workouts != null) {
                         return workouts;
-                    } else {
-                        UtilityIO.showMsg("No workouts were found.");
-                        return null;
                     }
                 } catch (SQLException e) {
                     UtilityIO.showMsg("Error occurred while retrieving workouts: " + e.getMessage()
@@ -65,6 +61,7 @@ public class WorkoutRepositoryImpl implements IRepository<Workout, Integer>{
             UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
             return null;
         }
+        return workouts;
     }
 
     @Override

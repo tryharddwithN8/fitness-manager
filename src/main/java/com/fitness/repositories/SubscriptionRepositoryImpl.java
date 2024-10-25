@@ -9,10 +9,12 @@ import java.sql.Connection;
 
 import com.fitness.config.ConnectionDB;
 import com.fitness.model.fitness.Course;
-import com.fitness.model.fitness.Progress;
 import com.fitness.model.fitness.Subscription;
 import com.fitness.repositories.Interface.IRepository;
 import com.fitness.utility.UtilityIO;
+
+import static com.fitness.controller.LoginController.nameUser;
+import static com.fitness.controller.User_Ctrl_fxml.pnlOrdersController.subcriptions;
 
 /**
  * SubscriptionRepository
@@ -20,8 +22,8 @@ import com.fitness.utility.UtilityIO;
 public class SubscriptionRepositoryImpl implements IRepository<Subscription, Integer>{
     
     @Override
-    public Connection getConnection(){
-        return ConnectionDB.getConnection();
+    public Connection getConnection() throws SQLException {
+        return ConnectionDB.getConnection();    
     }
 
     @Override
@@ -75,8 +77,7 @@ public class SubscriptionRepositoryImpl implements IRepository<Subscription, Int
 
     @Override
     public int add(Subscription entity) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
@@ -92,5 +93,45 @@ public class SubscriptionRepositoryImpl implements IRepository<Subscription, Int
     }
 
 
-    // implement
+    public void saveSubDB() {
+        try (Connection connection = getConnection()) {
+            if (connection == null || connection.isClosed()) {
+                UtilityIO.showMsg("Failed to establish or maintain connection to the database.");
+                return;
+            }
+            String checkSql = "SELECT COUNT(*) FROM subscriptions WHERE course_id = ? AND username = ?";
+            String insertSql = "INSERT INTO subscriptions (course_id, username) VALUES (?, ?)";
+            for (Course course : subcriptions) {
+                String courseId = course.getId();
+                if (courseId == null || courseId.isEmpty()) {
+                    UtilityIO.showMsg("Invalid course ID for one of the courses.");
+                    continue;
+                }
+                try (PreparedStatement checkStatement = connection.prepareStatement(checkSql)) {
+                    checkStatement.setString(1, courseId);
+                    checkStatement.setString(2, nameUser);
+                    ResultSet rs = checkStatement.executeQuery();
+                    rs.next();
+                    int count = rs.getInt(1);
+                    if (count > 0) {
+                        UtilityIO.showMsg("Subscription already exists for course: " + courseId);
+                        continue;
+                    }
+                    try (PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
+                        insertStatement.setString(1, courseId);
+                        insertStatement.setString(2, nameUser);
+                        insertStatement.executeUpdate();
+                    }
+                } catch (SQLException e) {
+                    UtilityIO.showMsg("Error occurred while adding user: " +
+                            e.getMessage() + " SQLState: " + e.getSQLState() + " ErrorCode: " + e.getErrorCode());
+                }
+            }
+        } catch (SQLException e) {
+            UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
+        }
+    }
+
+
+
 }

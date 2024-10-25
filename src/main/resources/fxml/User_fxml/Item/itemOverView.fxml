@@ -22,7 +22,7 @@
                         <Image url="@../../../img/gym1.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="item_button" layoutX="141.0" layoutY="110.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="30.0" styleClass="item_button" text="+" textFill="#dd1010">
+                  <Button fx:id="itemOverview_button" layoutX="141.0" layoutY="110.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="30.0" styleClass="item_button" text="+" textFill="#dd1010">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>

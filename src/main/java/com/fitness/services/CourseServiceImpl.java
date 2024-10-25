@@ -22,14 +22,12 @@ public class CourseServiceImpl implements IService<Course, Integer>{
 
     @Override
     public List<Course> getAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return courseRepoImpl.getAll();
     }
 
     @Override
     public Course getById(Integer id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return courseRepoImpl.getById(id);
     }
 
     @Override
@@ -40,8 +38,15 @@ public class CourseServiceImpl implements IService<Course, Integer>{
 
     @Override
     public boolean delete(Integer id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        if (courseRepoImpl.delete(id) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Course> displayCourses(String col, String val) throws SQLException {
+        return courseRepoImpl.displayCourses(col, val);
     }
 
 }

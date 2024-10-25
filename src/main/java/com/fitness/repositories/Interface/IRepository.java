@@ -2,6 +2,9 @@ package com.fitness.repositories.Interface;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
+
 import java.sql.Connection;
 
 /**
@@ -9,7 +12,7 @@ import java.sql.Connection;
  */
 public interface IRepository<T, ID> {
     
-    Connection getConnection();   // get connection from db
+    Connection getConnection() throws SQLException;   // get connection from db
 
     // Lấy tất cả các bản ghi
     List<T> getAll() throws SQLException;

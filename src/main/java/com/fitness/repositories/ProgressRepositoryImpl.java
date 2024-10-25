@@ -14,8 +14,8 @@ import com.fitness.repositories.Interface.IRepository;
 public class ProgressRepositoryImpl implements IRepository<Progress, Integer> {
     
     @Override
-    public Connection getConnection() {
-        return ConnectionDB.getConnection();
+    public Connection getConnection() throws SQLException {
+        return ConnectionDB.getConnection();    
     }
 
     @Override

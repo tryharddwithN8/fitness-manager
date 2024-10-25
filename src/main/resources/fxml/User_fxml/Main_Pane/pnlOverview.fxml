@@ -37,7 +37,6 @@
                             </VBox>
                         </content>
                     </ScrollPane>
-               <Button fx:id="btn_gioHang" layoutX="770.0" layoutY="165.0" mnemonicParsing="false" onAction="#giohang" prefHeight="47.0" prefWidth="6.0" style="-fx-background-color: transparent;" />
                 </children>
             </Pane>
             <Label layoutX="814.0" layoutY="78.0" prefHeight="35.0" prefWidth="158.0" text="Fitness Orders" textFill="#171515">
@@ -95,6 +94,20 @@
                     </Pane>
                 </children>
             </VBox>
+            <Pane fx:id="modal_pnlOverview" layoutX="31.0" layoutY="283.0" prefHeight="258.0" prefWidth="804.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);">
+                <children>
+                    <ScrollPane layoutX="34.0" layoutY="18.0" prefHeight="222.0" prefWidth="737.0">
+                        <content>
+                            <HBox fx:id="hbox_modal"  />
+                        </content>
+                    </ScrollPane>
+                    <Button fx:id="btn_exit_modal" layoutX="760.0" layoutY="-12.0" mnemonicParsing="false" onAction="#handleClick" prefHeight="47.0" prefWidth="45.0" style="-fx-background-color: transparent; -fx-text-fill: red; -fx-font-size: 30px;" text="X" textFill="#fc0000">
+                        <font>
+                            <Font size="14.0" />
+                        </font>
+                    </Button>
+                </children>
+            </Pane>
         </children>
     </Pane>
 

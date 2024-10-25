@@ -122,4 +122,16 @@ public class UtilityAlert {
             }
         }
     }
+
+    public static int showConfirm(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            return 1;
+        }
+        return 0;
+    }
 }

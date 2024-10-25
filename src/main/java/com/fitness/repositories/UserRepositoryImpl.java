@@ -1,11 +1,14 @@
 package com.fitness.repositories;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Objects;
 
 import com.fitness.config.ConnectionDB;
 import com.fitness.model.person.User;
@@ -18,8 +21,8 @@ import com.fitness.utility.UtilityIO;
 public class UserRepositoryImpl implements IRepository<User, Integer>{
 
     @Override
-    public Connection getConnection(){
-        return ConnectionDB.getConnection();
+    public Connection getConnection() throws SQLException {
+        return ConnectionDB.getConnection();    
     }
 
     @Override
@@ -35,9 +38,18 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         User user = new User();
+                        user.setFullName(resultSet.getString("fullname"));
+                        user.setPhone(resultSet.getString("phone"));
                         user.setUsername(resultSet.getString("username"));
                         user.setEmail(resultSet.getString("email"));
                         user.setAddress(resultSet.getString("address"));
+                        user.setId(resultSet.getString("id"));
+                        user.setRole(resultSet.getString("role"));
+                        user.setCreateDate(resultSet.getString("created_at"));
+                        String dob = resultSet.getString("dob");
+                        if (dob != null) {
+                            user.setDob(LocalDate.parse(dob, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                        }
                         users.add(user);
                     }
                     if (users != null) {
@@ -60,11 +72,41 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         return users;
     }
 
-
     @Override
     public User getById(Integer id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        try (Connection connection = getConnection()) {
+            if (connection == null || connection.isClosed()) {
+                UtilityIO.showMsg("Failed to establish or maintain connection to the database.");
+                return null;
+            }
+
+            String sql = "SELECT * FROM users WHERE id = ? AND role = 'user'";
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, id);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        User user = new User();
+                        user.setId(String.valueOf(resultSet.getInt("id")));
+                        user.setUsername(resultSet.getString("username"));
+                        user.setPassword(resultSet.getString("password"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setPhone(resultSet.getString("phone"));
+                        user.setAddress(resultSet.getString("address"));
+                        return user;
+                    } else {
+                        UtilityIO.showMsg("No user found with ID " + id);
+                        return null;
+                    }
+                }
+            } catch (SQLException e) {
+                UtilityIO.showMsg("Error occurred while fetching user: " + e.getMessage());
+                return null;
+            }
+        } catch (SQLException e) {
+            UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -108,22 +150,77 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
 
     @Override
     public int update(User entity) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        try (Connection connection = getConnection()) {
+            if (connection == null || connection.isClosed()) {
+                UtilityIO.showMsg("Failed to establish or maintain connection to the database.");
+                return -1;
+            }
+
+            String sql = "UPDATE users SET phone = ?, email = ?, address = ?, fullname = ?, dob = ? WHERE id = ?";
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, entity.getPhone());
+                statement.setString(2, entity.getEmail());
+                statement.setString(3, entity.getAddress());
+                statement.setString(4, entity.getFullName());
+                if (entity.getDob() != null)
+                    statement.setString(5, entity.getDob().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                else
+                    statement.setString(5, "");
+
+                statement.setInt(6, Integer.parseInt(entity.getId().replaceAll("\\D+", "")));
+
+                int rowsUpdated = statement.executeUpdate();
+                if (rowsUpdated > 0) {
+                    UtilityIO.showMsg("User " + entity.getUsername() + " was updated successfully!");
+                    return rowsUpdated;
+                } else {
+                    UtilityIO.showMsg("No rows were updated.");
+                    return -1;
+                }
+            } catch (SQLException e) {
+                UtilityIO.showMsg("Error occurred while updating user: " + e.getMessage()
+                        + " SQLState: " + e.getSQLState()
+                        + " ErrorCode: " + e.getErrorCode());
+                return -1;
+            }
+        } catch (SQLException e) {
+            UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
+            return -1;
+        }
     }
 
     @Override
     public int delete(Integer id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
+        try {
+            Connection connection = getConnection();
+            if (connection == null || connection.isClosed()) {
+                UtilityIO.showMsg("Failed to establish or maintain connection to the database.");
+                return -1;
+            }
 
-    public int getInfoByUsername(String user){
-        /**
-         * input: username
-         * output: List(all info from user)
-         */
-        return 3233;
+            String sql = "DELETE FROM users WHERE id = ?";
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, id);
+                int rowsDeleted = statement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    UtilityIO.showMsg("User with ID " + id + " was deleted successfully!");
+                    return rowsDeleted;
+                } else {
+                    UtilityIO.showMsg("No rows were deleted.");
+                    return -1;
+                }
+            } catch (SQLException e) {
+                UtilityIO.showMsg("Error occurred while deleting user: " + e.getMessage()
+                        + " SQLState: " + e.getSQLState()
+                        + " ErrorCode: " + e.getErrorCode());
+                return -1;
+            }
+        } catch (SQLException e) {
+            UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
+            return -1;
+        }
     }
 
     public int loginAuth(String username, String password) {
@@ -148,7 +245,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 }
             }
 
-            return 0; 
+            return 0; // Tài khoản không tồn tại hoặc mật khẩu sai
 
         } catch (SQLException e) {
             System.out.println("Login error: " + e.getMessage());
@@ -239,4 +336,49 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         return result;
     }
 
+    public List<User> display(String col, String val) {
+        try {
+            Connection connection = getConnection();
+            if (connection == null || connection.isClosed()) {
+                return null;
+            }
+
+            String sql = "";
+            if (Objects.equals(col, "id")) {
+                val = String.valueOf(Integer.parseInt(val));
+                sql = "SELECT * FROM users WHERE id = ? AND role = 'user'";
+            } else if (Objects.equals(col, "name")) {
+                sql = "SELECT * FROM users WHERE role = 'user' AND " + col + " LIKE ?";
+            } else if (Objects.equals(col, "username")) {
+                sql = "SELECT * FROM users WHERE role = 'user' AND " + col + " LIKE ?";
+            }
+
+            List<User> users = new ArrayList<>();
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                if (Objects.equals(col, "id")) {
+                    statement.setString(1, val);
+                } else {
+                    statement.setString(1, "%" + val + "%");
+                }
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        User user = new User();
+                        user.setId(String.valueOf(resultSet.getInt("id")));
+                        user.setUsername(resultSet.getString("username"));
+                        user.setPassword(resultSet.getString("password"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setPhone(resultSet.getString("phone"));
+                        user.setAddress(resultSet.getString("address"));
+                        users.add(user);
+                    }
+                    return users;
+                }
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

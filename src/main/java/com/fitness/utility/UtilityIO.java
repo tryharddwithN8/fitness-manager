@@ -5,24 +5,21 @@ package com.fitness.utility;
  */
 public class UtilityIO {
 
-    public static void showMsg(String msg)
-    {
+    public static void showMsg(String msg) {
         System.out.println(msg);
     }
 
     /**
      * SignUp Page
-     * 
-     * text: string cần check 
+     * <p>
+     * text: string cần check
      * Oke -> return String
      * No -> return null
-     * 
+     *
      * @NOTE: Ko sử dụng LOOP
      */
-    public static String checkUserName(String text, String err)
-    {
-        try 
-        {
+    public static String checkUserName(String text, String err) {
+        try {
             if (text == null || text.isEmpty()) {
                 return null;
             }
@@ -42,8 +39,7 @@ public class UtilityIO {
      * Pass phải đủ 8 ký tự, số và chữ cái
      * Chữ hoa, ký tự đặc biệt không bắt buộc
      */
-    public static String checkPassWD(String text, String err)
-    {
+    public static String checkPassWD(String text, String err) {
         if (text == null || text.length() < 8) {
             return null;
         }
@@ -56,12 +52,11 @@ public class UtilityIO {
     }
 
     /**
-     * @param Email phải đủ điều kiện là *@fpt.edu.vn và *@gmail.com 
-     *
-     *  Chỉ nhận 2 domain mail này              
+     * @param Email phải đủ điều kiện là *@fpt.edu.vn và *@gmail.com
+     *              <p>
+     *              Chỉ nhận 2 domain mail này
      */
-    public static String checkEmail(String text, String err) 
-    {
+    public static String checkEmail(String text, String err) {
         if (text == null || text.isEmpty()) {
             return null;
         }
@@ -71,6 +66,14 @@ public class UtilityIO {
         } else {
             return null;
         }
+    }
+
+    // Phone  "^0\\d{9}$"
+    // Email  "^[\\w._%+-]+@gmail\\.com$"
+    // Name   "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$"
+    public boolean checkRegex(String s, String regex) {
+        if (s.matches(regex)) return true;
+        return false;
     }
 
 }

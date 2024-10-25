@@ -2,6 +2,7 @@ package com.fitness.services;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 import com.fitness.model.person.User;
@@ -19,12 +20,12 @@ public class UserServiceImpl implements IService<User, Integer> {
     public int add(User entity) throws SQLException {
         int checkAccount = userRepoImpl.checkExitsAccount(entity.getUsername(), entity.getEmail());
         if(checkAccount == 0)   return 0;   // account exits
-        
+
         int result = userRepoImpl.add(entity);
         if(result != -1) return 1;  // add oke
         return -1;  // add failed
     }
-    
+
     public int loginAuth(String username, String hashPass){
         int checkAccount = userRepoImpl.loginAuth(username, hashPass);
         if(checkAccount == 1)
@@ -52,29 +53,35 @@ public class UserServiceImpl implements IService<User, Integer> {
 
     @Override
     public List<User> getAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return userRepoImpl.getAll();
     }
 
     @Override
     public User getById(Integer id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return userRepoImpl.getById(id);
     }
 
     @Override
     public boolean update(User entity) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        if (entity == null) return false;
+        int result = userRepoImpl.update(entity);
+        if(result != -1) return true;
+        return false;
     }
 
     @Override
     public boolean delete(Integer id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        if (userRepoImpl.delete(id) == 1) return true;
+        return false;
     }
 
+    public List<User> display(String col, String key) throws SQLException {
+        return userRepoImpl.display(col, key);
+    }
 
-
-    // implement
+    public User getByUserName(String userName) throws SQLException {
+        List<User> list = userRepoImpl.getAll().stream().filter(p -> p.getUsername().equals(userName)).collect(Collectors.toList());
+        if (list.isEmpty()) return null;
+        else return list.get(0);
+    }
 }

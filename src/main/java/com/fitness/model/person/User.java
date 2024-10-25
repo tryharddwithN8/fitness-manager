@@ -1,20 +1,23 @@
 package com.fitness.model.person;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class User extends Person{
+public class User extends Person {
     private String username;
     private String password;
     private double balance;
     private int quantityCourse;
     private ArrayList<String> courseList;
     private String role;
+    private String createDate;
 
     public User() {
         super();
     }
 
-    public User(String id, String username, String password ,String email, String role, String address) {
+    public User(String id, String username, String password, String email, String role, String address) {
         super(id, email, address);
         this.username = username;
         this.password = password;
@@ -22,6 +25,18 @@ public class User extends Person{
         this.quantityCourse = 0;
         this.courseList = null;
         this.role = role;
+    }
+
+    public User(String id, String fullName, LocalDate dob, String email, String phone, String address) {
+        super(id,address, dob, email, fullName, phone);
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public String getUsername() {
@@ -100,7 +115,7 @@ public class User extends Person{
     public String toString() {
         return "User{" +
                 "id='" + getId() + '\'' +
-                ", name='" + getName() + '\'' +
+                ", name='" + getFullName() + '\'' +
                 ", phone='" + getPhone() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", address='" + getAddress() + '\'' +

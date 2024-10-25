@@ -46,7 +46,7 @@ public class Admin extends Person {
     public String toString() {
         return "Admin{" +
                 "id='" + getId() + '\'' +
-                ", name='" + getName() + '\'' +
+                ", name='" + getFullName() + '\'' +
                 ", phone='" + getPhone() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", address='" + getAddress() + '\'' +

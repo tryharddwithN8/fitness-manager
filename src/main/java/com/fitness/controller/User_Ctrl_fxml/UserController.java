@@ -1,5 +1,7 @@
 package com.fitness.controller.User_Ctrl_fxml;
 
+import com.fitness.controller.LoginController;
+import com.fitness.services.UserServiceImpl;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -44,7 +46,7 @@ public class UserController implements Initializable {
     @FXML
     private Pane pnlMenus;
     @FXML
-    private Pane pnlCustomer;
+    private Pane pnlCustomer ;
     @FXML
     private Pane pnlOrders, pnlSetting, pnlFeedback;
     private Pane overviewPane;
@@ -57,7 +59,15 @@ public class UserController implements Initializable {
     };
     private int currentAdIndex = 0;
     private ADController adController;
+
+    //Khai Báo Controller
+    LoginController loginController = new LoginController();
+    pnlSettingController pnlSettingController ;
+    pnlOrdersController pnlOrdersController;
     pnlOverViewController pnlOverViewController = new pnlOverViewController();
+
+    //Khai Báo Service
+    UserServiceImpl userService = new UserServiceImpl();
 
     public UserController() throws SQLException {
     }
@@ -70,6 +80,7 @@ public class UserController implements Initializable {
         loadPnlSetting();
         loadPnlFeedBack();
         loadPnlMenus();
+        loadPnlOder();
     }
 
     private void loadPnlOverview() {
@@ -80,10 +91,11 @@ public class UserController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlOverview.fxml"));
                     overviewPane = loader.load();
                     Platform.runLater(() -> {
-                        pnlOverViewController overViewController = loader.getController();
-                        overViewController.advertiseController();
-                        overViewController.loadItem1();
-                        stackPane_all.getChildren().add(overviewPane); 
+                        pnlOverViewController = loader.getController();
+                        pnlOverViewController.advertiseController();
+                        pnlOverViewController.setPnlOrdersController(pnlOrdersController);
+                        pnlOverViewController.loadItem1();
+                        stackPane_all.getChildren().add(overviewPane);
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -93,7 +105,26 @@ public class UserController implements Initializable {
         };
         executor.submit(task);
     }
-
+    private void loadPnlOder(){
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlOrders.fxml"));
+                    pnlOrders = loader.load();
+                    Platform.runLater(() -> {
+                        pnlOrdersController=loader.getController();
+                        pnlOrdersController.loadOrder();
+                        stackPane_all.getChildren().add(pnlOrders);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        executor.submit(task);
+    }
     private void loadPnlMenus() {
         Task<Void> task = new Task<>() {
             @Override
@@ -126,9 +157,12 @@ public class UserController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlSetting.fxml"));
                     pnlSetting = loader.load();
                     Platform.runLater(() -> {
-                        pnlSetting.setVisible(false); 
+                        pnlSettingController = loader.getController();
+                        pnlSettingController.setUserService(userService);
+                        pnlSetting.setVisible(false);
                         stackPane_all.getChildren().add(pnlSetting);
                     });
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -146,7 +180,7 @@ public class UserController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlFeedback.fxml"));
                     pnlFeedback = loader.load();
                     Platform.runLater(() -> {
-                        pnlFeedback.setVisible(false); 
+                        pnlFeedback.setVisible(false);
                         stackPane_all.getChildren().add(pnlFeedback);
                     });
                 } catch (IOException e) {
@@ -168,10 +202,11 @@ public class UserController implements Initializable {
     // pnlFeedback
     public void handleClicks(ActionEvent actionEvent) {
         resetButtonStyles();
-        if (actionEvent.getSource() == btnCustomers) {
-            pnlCustomer.setStyle("-fx-background-color : #1620A1");
-            pnlCustomer.toFront();
-            btnCustomers.setStyle("-fx-background-color : #fff");
+        if (actionEvent.getSource() == btnOrders) {
+            stackPane_all.setStyle("-fx-background-color : #e9e9e9");
+            stackPane_all.getChildren().clear();
+            stackPane_all.getChildren().add(pnlOrders);
+            btnOrders.setStyle("-fx-background-color : #fff");
         } else if (actionEvent.getSource() == btnMenus) {
             stackPane_all.setStyle("-fx-background-color : #76ace3");
             stackPane_all.getChildren().clear();
@@ -184,11 +219,19 @@ public class UserController implements Initializable {
             stackPane_all.getChildren().add(overviewPane);
             btnOverview.setStyle("-fx-background-color : #fff");
         } else if (actionEvent.getSource() == btnSettings) {
+
+            try {
+                pnlSettingController.loadSettingProfile(userService.getByUserName(loginController.getNameUser()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
             stackPane_all.setStyle("-fx-background-color : #e9e9e9");
             stackPane_all.getChildren().clear();
             pnlSetting.setVisible(true);
             stackPane_all.getChildren().add(pnlSetting);
             btnSettings.setStyle("-fx-background-color : #fff");
+
         } else if (actionEvent.getSource() == btnFeedback) {
             stackPane_all.setStyle("-fx-background-color : #e9e9e9");
             stackPane_all.getChildren().clear();
@@ -200,7 +243,6 @@ public class UserController implements Initializable {
 
     private void resetButtonStyles() {
         btnOverview.setStyle("");
-        btnCustomers.setStyle("");
         btnMenus.setStyle("");
         btnOrders.setStyle("");
         btnSettings.setStyle("");
@@ -210,6 +252,8 @@ public class UserController implements Initializable {
     /*
      * Exit App
      */
+
+
     public void handleExit() {
         UtilityAlert.showConfimExit("Exit", "Do you want to exit :(");
     }

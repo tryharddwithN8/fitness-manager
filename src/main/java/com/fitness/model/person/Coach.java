@@ -85,7 +85,7 @@ public class Coach extends Person {
     public String toString() {
         return "Coach{" +
                 "id='" + getId() + '\'' +
-                ", name='" + getName() + '\'' +
+                ", name='" + getFullName() + '\'' +
                 ", phone='" + getPhone() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", address='" + getAddress() + '\'' +
