@@ -7,8 +7,6 @@ import com.fitness.repositories.CourseRepositoryImpl;
 import com.fitness.repositories.OrderRepository;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

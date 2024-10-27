@@ -8,6 +8,16 @@ import com.fitness.services.UserServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import javafx.scene.control.*;
 import com.fitness.model.fitness.Course;
 import com.fitness.utility.UtilityAlert;
@@ -16,10 +26,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
+
+
 
 public class AdminController {
 
@@ -28,7 +45,7 @@ public class AdminController {
     final private CoachServiceImpl coachServiceImpl = new CoachServiceImpl();
 
     @FXML
-    private Button btnSignout, btnOverview, btnCoach, btnCourse, btnExit, btnUser;
+    private Button btnSignout, btnOverview, btnCoach, btnCourse, btnExit, btnUser, btnFindCoach, btnRemoveCoach, btnDisplayCoach, btnFindCourse, btnRemoveCourse, btnDisplayCourse, btnFindUser, btnRemoveUser, btnDisplayUser;
     @FXML
     private Pane pnlOverview, pnlCoach, pnlUser, pnlCourse;
     @FXML
@@ -36,9 +53,7 @@ public class AdminController {
     @FXML
     private TableColumn<Course, String> courseIdColumn, nameColumn, descriptionColumn, coachIdColumn, scheduleColumn;
     @FXML
-    private TableColumn<Course, Integer> maxParticipantsColumn;
-    @FXML
-    private TableColumn<Course, Integer> currentParticipantsColumn;
+    private TableColumn<Course, Integer> maxParticipantsColumn, currentParticipantsColumn;
     @FXML
     private TableColumn<Course, Double> feeColumn;
     @FXML
@@ -54,12 +69,87 @@ public class AdminController {
     @FXML
     private TableColumn<User, String> userIDCol, userNameCol, userUserNameCol, userEmailCol, userPhoneCol, userAddressCol;
     @FXML
-    private Label lblWaitingFindCoach, lblWaitingFindCourse, lblWaitingRemoveCoach, lblWaitingRemoveCourse, lblWaitingDisplayCoach, lblWaitingDisplayCourse, lblWaitingFindUser, lblWaitingRemoveUser, lblWaitingDisplayUser;
+    private Label lblWaitingFindCoach, lblWaitingFindCourse, lblWaitingRemoveCoach, lblWaitingRemoveCourse, lblWaitingDisplayCoach, lblWaitingDisplayCourse, lblWaitingFindUser, lblWaitingRemoveUser, lblWaitingDisplayUser, labelTotalCourses, labelTotalUsers, labelTotalCoachs;
     @FXML
-    private Button btnFindCoach, btnRemoveCoach, btnDisplayCoach, btnFindCourse, btnRemoveCourse, btnDisplayCourse, btnFindUser, btnRemoveUser, btnDisplayUser;
+    private LineChart<Number, Number> lineChart;
+    @FXML
+    private NumberAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
 
-    public AdminController() {
+    @FXML
+    private PieChart ratingPieChart;
+
+    public void displayInfoOverview(){
+        loadSeries(lineChart);
+        loadPieChart();
+        labelTotalUsers.setText(String.valueOf(userServiceImpl.getTotalUsers()));
+        labelTotalCourses.setText(String.valueOf(courseServiceImpl.getTotalCourses()));
+        labelTotalCoachs.setText(String.valueOf(coachServiceImpl.getTotalCoachs()));
     }
+
+    private void loadSeries(XYChart<Number, Number> lineChart) {
+        lineChart.getData().clear();
+
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("Sales Data");
+
+        series.getData().add(new XYChart.Data<>(0, 0));   
+        series.getData().add(new XYChart.Data<>(1, 50));
+        series.getData().add(new XYChart.Data<>(3, 192)); 
+        series.getData().add(new XYChart.Data<>(4, 129)); 
+        series.getData().add(new XYChart.Data<>(6, 310)); 
+        series.getData().add(new XYChart.Data<>(10, 242));
+
+        lineChart.getData().add(series);
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), lineChart);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+    }
+
+
+    
+    private void loadPieChart() {
+        ratingPieChart.getData().clear();
+    
+        int oneStar = 20, twoStar = 30, threeStar = 50, fourStar = 400, fiveStar = 500;  
+    
+        int total = oneStar + twoStar + threeStar + fourStar + fiveStar;
+    
+        PieChart.Data oneStarData = new PieChart.Data("1⭐️", oneStar);
+        PieChart.Data twoStarData = new PieChart.Data("2⭐️", twoStar);
+        PieChart.Data threeStarData = new PieChart.Data("3⭐️", threeStar);
+        PieChart.Data fourStarData = new PieChart.Data("4⭐️", fourStar);
+        PieChart.Data fiveStarData = new PieChart.Data("5⭐️", fiveStar);
+    
+        ratingPieChart.getData().addAll(oneStarData, twoStarData, threeStarData, fourStarData, fiveStarData);
+        ratingPieChart.setLegendVisible(false);
+        ratingPieChart.setStartAngle(90);
+        ratingPieChart.getData().forEach(data -> data.getNode().setOpacity(1));
+
+        Timeline timeline = new Timeline();
+        int delay = 0;
+
+        for (PieChart.Data data : ratingPieChart.getData()) {
+            KeyFrame keyFrameShow = new KeyFrame(
+                Duration.millis(delay),
+                new KeyValue(data.getNode().opacityProperty(), 1),
+                new KeyValue(data.getNode().scaleXProperty(), 1.3), 
+                new KeyValue(data.getNode().scaleYProperty(), 1.3)
+            );
+            KeyFrame keyFrameReturn = new KeyFrame(
+                Duration.millis(delay + 500),
+                new KeyValue(data.getNode().scaleXProperty(), 1),
+                new KeyValue(data.getNode().scaleYProperty(), 1)
+            );
+            timeline.getKeyFrames().addAll(keyFrameShow, keyFrameReturn);
+            delay += 555;
+        }
+        timeline.play(); 
+    }
+
 
     @FXML
     public void handleClicks(ActionEvent event) {
@@ -100,6 +190,7 @@ public class AdminController {
         pnlOverview.setVisible(true);
         pnlCoach.setVisible(false);
         pnlCourse.setVisible(false);
+        displayInfoOverview();
     }
 
     private void UserPanel() {

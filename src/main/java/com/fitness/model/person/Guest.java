@@ -1,6 +1,5 @@
 package com.fitness.model.person;
 
-import java.time.LocalDateTime;
 
 public class Guest{
     private String phone;

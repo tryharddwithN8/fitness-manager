@@ -49,4 +49,10 @@ public class CourseServiceImpl implements IService<Course, Integer>{
         return courseRepoImpl.displayCourses(col, val);
     }
 
+    public int getTotalCourses(){
+        int res = courseRepoImpl.getTotalCourses();
+        if(res <= 0)    return -1;
+        return res;
+    }
+
 }

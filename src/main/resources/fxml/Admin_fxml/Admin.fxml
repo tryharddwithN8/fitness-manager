@@ -1,32 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" stylesheets="@../../css/user_css/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.Admin_Ctrl_fxml.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" stylesheets="@../../css/user_css/main.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.Admin_Ctrl_fxml.AdminController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="259.0" style="-fx-background-color: #dedede;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -126,83 +111,52 @@
       <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">
          <children>
 
-            <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #CCCCCC;">
-               <children>
-                  <Label layoutX="57.0" layoutY="25.0" text="OverView">
-                     <font>
-                        <Font name="System Bold" size="27.0" />
-                     </font>
-                     <textFill>
-                        <LinearGradient endX="1.0" endY="1.0">
-                           <stops>
-                              <Stop>
-                                 <color>
-                                    <Color red="0.12365984171628952" green="0.9210526347160339" blue="0.4957764744758606" />
-                                 </color>
-                              </Stop>
-                              <Stop offset="1.0">
-                                 <color>
-                                    <Color red="0.6499999761581421" green="0.06499999761581421" blue="0.20388488471508026" />
-                                 </color>
-                              </Stop>
-                           </stops>
-                        </LinearGradient>
-                     </textFill>
-                  </Label>
-                  <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="72.0" prefHeight="92.0" prefWidth="661.0" spacing="50.0">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="22000" textFill="#2a73ff">
-                                 <font>
-                                    <Font name="System Bold" size="26.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Total Orders" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="1500" textFill="#26bfbc">
-                                 <font>
-                                    <Font name="System Bold" size="26.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Courses" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="1000" textFill="#fa5f7e">
-                                 <font>
-                                    <Font name="System Bold" size="26.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Users" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="780" textFill="#de0000">
-                                 <font>
-                                    <Font name="System Bold" size="26.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Coach" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <LineChart layoutX="38.0" layoutY="210.0" prefHeight="338.0" prefWidth="438.0">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </LineChart>
-                  <PieChart layoutX="526.0" layoutY="257.0" prefHeight="210.0" prefWidth="229.0" title="PieChart" />
-               </children>
+            <Pane fx:id="pnlUser" prefHeight="576.0" prefWidth="791.0" style="-fx-background-color: #CCCCCC;">
+               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="22.0" prefHeight="60.0" prefWidth="135.0" text="Users" textAlignment="CENTER" textOverrun="CLIP">
+                  <font>
+                     <Font name="Arial" size="22.0" />
+                  </font>
+               </Label>
+               <TextField fx:id="textFindUser" layoutX="152.0" layoutY="90.0" prefHeight="26.0" prefWidth="149.0" promptText="Find User" />
+               <TextField fx:id="textRemoveUser" layoutX="419.0" layoutY="90.0" prefHeight="26.0" prefWidth="149.0" promptText="Remove User" />
+               <Button fx:id="btnFindUser" cancelButton="true" layoutX="312.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayUser" prefHeight="25.0" prefWidth="59.0" style="-fx-border-radius: 10px;" text="Find" />
+               <Button fx:id="btnRemoveUser" layoutX="577.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleRemoveUser" text="Remove" />
+               <Button fx:id="btnDisplayUser" layoutX="681.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayAllUsers" prefHeight="25.0" prefWidth="88.0" text="Display All" />
+               <TableView fx:id="userTable" layoutX="25.0" layoutY="176.0" prefHeight="375.0" prefWidth="744.0">
+                  <columns>
+                     <TableColumn fx:id="userIDCol" minWidth="0.0" prefWidth="64.0" text="User ID" />
+                     <TableColumn fx:id="userNameCol" minWidth="0.0" prefWidth="128.0" text="Name" />
+                     <TableColumn fx:id="userUserNameCol" minWidth="0.0" prefWidth="101.0" text="UserName" />
+                     <TableColumn fx:id="userEmailCol" prefWidth="168.0" text="Email" />
+                     <TableColumn fx:id="userPhoneCol" minWidth="0.0" prefWidth="73.0" text="Phone" />
+                     <TableColumn fx:id="userAddressCol" minWidth="0.0" prefWidth="209.0" text="Address" />
+                  </columns>
+               </TableView>
+               <ChoiceBox fx:id="choiceBoxSearchUser" layoutX="27.0" layoutY="90.0" prefHeight="25.0" prefWidth="110.0">
+                  <items>
+                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="ID" />
+                        <String fx:value="Name" />
+                        <String fx:value="UserName" />
+                     </FXCollections>
+                  </items>
+               </ChoiceBox>
+               <Label layoutX="44.0" layoutY="146.0" text="Note:" />
+               <Label fx:id="lblWaitingDisplayUser" layoutX="698.0" layoutY="121.0" text="Waiting..." textAlignment="CENTER" visible="false">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblWaitingRemoveUser" layoutX="577.0" layoutY="121.0" text="Waiting..." textAlignment="CENTER" visible="false">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
+               <Label fx:id="lblWaitingFindUser" layoutX="313.0" layoutY="121.0" text="Waiting..." textAlignment="CENTER" visible="false">
+                  <font>
+                     <Font name="System Bold" size="12.0" />
+                  </font>
+               </Label>
             </Pane>
 
             <Pane fx:id="pnlCoach" prefHeight="576.0" prefWidth="790.0" style="-fx-background-color: #CCCCCC;">
@@ -215,7 +169,7 @@
                   <TextField fx:id="textFindCoach" layoutX="103.0" layoutY="90.0" prefHeight="25.0" prefWidth="149.0" promptText="Find Coach" />
                   <TextField fx:id="texRemoveCoach" layoutX="381.0" layoutY="90.0" promptText="Remove Coach" />
                   <Button fx:id="btnFindCoach" cancelButton="true" layoutX="258.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayCoach" prefHeight="25.0" prefWidth="59.0" style="-fx-border-radius: 10px;" text="Find" />
-                  <Button fx:id="btnRemoveCoach" layoutX="536.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleRemoveCoach" text="Remove" />
+                  <Button fx:id="btnRemoveCoach" layoutX="551.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleRemoveCoach" text="Remove" />
                   <Button fx:id="btnDisplayCoach" layoutX="681.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayAllCoach" prefHeight="25.0" prefWidth="88.0" text="Display All" />
                   <TableView fx:id="coachTable" layoutX="25.0" layoutY="187.0" prefHeight="375.0" prefWidth="744.0">
                      <columns>
@@ -278,7 +232,7 @@
                      </textFill>
                   </Label>
                   <TextField fx:id="textFindCourse" layoutX="142.0" layoutY="90.0" prefHeight="25.0" prefWidth="149.0" promptText="Find Course" />
-                  <TextField fx:id="textRemoveCourse" layoutX="426.0" layoutY="90.0" promptText="Remove Course" />
+                  <TextField fx:id="textRemoveCourse" layoutX="407.0" layoutY="90.0" promptText="Remove Course" />
                   <Button fx:id="btnFindCourse" cancelButton="true" layoutX="297.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayCourse" prefHeight="25.0" prefWidth="59.0" style="-fx-border-radius: 10px;" text="Find" />
                   <Button fx:id="btnRemoveCourse" layoutX="575.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleRemoveCourse" text="Remove" />
                   <Button fx:id="btnDisplayCourse" layoutX="672.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayAllCourse" prefHeight="25.0" prefWidth="88.0" text="Display All" />
@@ -321,52 +275,98 @@
                </children>
             </Pane>
 
-            <Pane fx:id="pnlUser" prefHeight="576.0" prefWidth="791.0" style="-fx-background-color: #CCCCCC;">
-               <Label alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="22.0" prefHeight="60.0" prefWidth="135.0" text="Users" textAlignment="CENTER" textOverrun="CLIP">
-                  <font>
-                     <Font name="Arial" size="22.0" />
-                  </font>
-               </Label>
-               <TextField fx:id="textFindUser" layoutX="152.0" layoutY="90.0" prefHeight="25.0" prefWidth="149.0" promptText="Find User" />
-               <TextField fx:id="textRemoveUser" layoutX="418.0" layoutY="90.0" promptText="Remove User" />
-               <Button fx:id="btnFindUser" cancelButton="true" layoutX="311.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" style="-fx-border-radius: 10px;" onAction="#handleDisplayUser" text="Find" />
-               <Button fx:id="btnRemoveUser" layoutX="575.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleRemoveUser" text="Remove" />
-               <Button fx:id="btnDisplayUser" layoutX="681.0" layoutY="90.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" onAction="#handleDisplayAllUsers" text="Display All" />
-               <TableView fx:id="userTable" layoutX="25.0" layoutY="176.0" prefHeight="375.0" prefWidth="744.0">
-                  <columns>
-                     <TableColumn fx:id="userIDCol" minWidth="0.0" prefWidth="64.0" text="User ID" />
-                     <TableColumn fx:id="userNameCol" minWidth="0.0" prefWidth="128.0" text="Name" />
-                     <TableColumn fx:id="userUserNameCol" minWidth="0.0" prefWidth="101.0" text="UserName" />
-                     <TableColumn fx:id="userEmailCol" prefWidth="168.0" text="Email" />
-                     <TableColumn fx:id="userPhoneCol" minWidth="0.0" prefWidth="73.0" text="Phone" />
-                     <TableColumn fx:id="userAddressCol" minWidth="0.0" prefWidth="209.0" text="Address" />
-                  </columns>
-               </TableView>
-               <ChoiceBox fx:id="choiceBoxSearchUser" layoutX="27.0" layoutY="90.0" prefHeight="25.0" prefWidth="110.0">
-                  <items>
-                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="ID" />
-                        <String fx:value="Name" />
-                        <String fx:value="UserName" />
-                     </FXCollections>
-                  </items>
-               </ChoiceBox>
-               <Label layoutX="44.0" layoutY="146.0" text="Note:" />
-               <Label fx:id="lblWaitingDisplayUser" layoutX="698.0" layoutY="121.0" text="Waiting..." textAlignment="CENTER" visible="false">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Label>
-               <Label fx:id="lblWaitingRemoveUser" layoutX="577.0" layoutY="121.0" text="Waiting..." textAlignment="CENTER" visible="false">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Label>
-               <Label fx:id="lblWaitingFindUser" layoutX="313.0" layoutY="121.0" text="Waiting..." textAlignment="CENTER" visible="false">
-                  <font>
-                     <Font name="System Bold" size="12.0" />
-                  </font>
-               </Label>
+            <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #CCCCCC;">
+               <children>
+                  <Label layoutX="57.0" layoutY="25.0" text="OverView">
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.12365984171628952" green="0.9210526347160339" blue="0.4957764744758606" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.6499999761581421" green="0.06499999761581421" blue="0.20388488471508026" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="72.0" prefHeight="92.0" prefWidth="661.0" spacing="50.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="4.5/5" textFill="#2a73ff">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Rating">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="labelTotalCourses" text="1500" textFill="#26bfbc">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Courses">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="labelTotalUsers" text="1000" textFill="#fa5f7e">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Users">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="labelTotalCoachs" text="780" textFill="#de0000">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Coach">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+
+                  <LineChart fx:id="lineChart" layoutY="182.0" prefHeight="355.0" prefWidth="477.0" title="Sample Line Chart">
+                      <xAxis>
+                        <NumberAxis fx:id="xAxis" label="Months" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis fx:id="yAxis" label="Sales" />
+                     </yAxis>
+                  </LineChart>
+
+                  <PieChart fx:id="ratingPieChart" layoutX="477.0" layoutY="211.0" prefHeight="300.0" prefWidth="308.0" title="Ratings" />
+                  
+               </children>
             </Pane>
 
          </children>

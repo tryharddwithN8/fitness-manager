@@ -25,7 +25,6 @@ public class UtilitySecurity {
 
     public static String getKeyFromServer(String email) throws Exception{
         String key = fetchKey(email);
-        System.err.println(key);
         return key;
     }
     
@@ -33,7 +32,7 @@ public class UtilitySecurity {
         String query = "?email=" + email;
     
         URL url = new URL(API_URL + query);
-        System.out.println("Full URL with query: " + url.toString());
+        System.out.println("Fetch Key: " + url.toString());
     
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
     

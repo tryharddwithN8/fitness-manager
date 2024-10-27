@@ -1,6 +1,9 @@
+@echo off
 
 clear || cls
 
-mvn clean javafx:run 
+echo "Starting project with maven.."
 
-mvn clean
+mvn clean -B javafx:run > output.log 2>&1
+
+echo "Done !"

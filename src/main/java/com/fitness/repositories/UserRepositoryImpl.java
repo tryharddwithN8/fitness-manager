@@ -276,6 +276,21 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         return exists;
     }
 
+    public int getTotalUsers(){
+        int totalUser = 0;
+        String sql = "SELECT COUNT(*) AS total FROM users";
+
+        try(Connection con = getConnection();
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()){
+                    totalUser = resultSet.getInt("total");
+                }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return totalUser;
+    }
 
     public int checkExitsAccount(String username, String email) {
         String sql = "SELECT COUNT(*) FROM users WHERE username = ? OR email = ?";
@@ -381,4 +396,4 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         }
         return null;
     }
-}
+}   

@@ -20,6 +20,22 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
         return ConnectionDB.getConnection();    
     }
 
+    public int getTotalCoachs(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) AS total FROM courses";
+
+        try(Connection con = getConnection();
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()){
+                    total = resultSet.getInt("total");
+                }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     @Override
     public List<Coach> getAll() throws SQLException {
         try {
@@ -185,10 +201,7 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
                     }
                     if (coaches != null) {
                         return coaches;
-                    } else {
-                        UtilityIO.showMsg("No coach were found");
-                        return null;
-                    }
+                    } 
                 } catch (SQLException e) {
                     UtilityIO.showMsg("Error occurred while retrieving coaches: " + e.getMessage()
                             + " SQLState: " + e.getSQLState()
@@ -203,6 +216,7 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
             UtilityIO.showMsg("Error occurred while establishing connection: " + e.getMessage());
             return null;
         }
+        return coaches;
     }
     public void print() throws SQLException {
         List<Coach> newCoach=getListCoach();

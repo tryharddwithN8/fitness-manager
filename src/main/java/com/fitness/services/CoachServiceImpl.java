@@ -42,4 +42,9 @@ public class CoachServiceImpl implements IService<Coach, Integer> {
     public List<Coach> displayCoaches(String col, String key) throws SQLException {
         return coachRepoImpl.displayCoaches(col, key);
     }
+    public int getTotalCoachs(){
+        int res = coachRepoImpl.getTotalCoachs();
+        if(res<=0)  return -1;
+        return res;
+    }
 }

@@ -22,6 +22,22 @@ public class CourseRepositoryImpl implements IRepository<Course, Integer> {
         return ConnectionDB.getConnection();    
     }
 
+    public int getTotalCourses(){
+        int total = 0;
+        String sql = "SELECT COUNT(*) AS total FROM courses";
+
+        try(Connection con = getConnection();
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()){
+                    total = resultSet.getInt("total");
+                }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return total;
+    }
+
     @Override
     public Course getById(Integer id) throws SQLException {
         try {

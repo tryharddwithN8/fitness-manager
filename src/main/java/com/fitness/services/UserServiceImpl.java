@@ -84,4 +84,10 @@ public class UserServiceImpl implements IService<User, Integer> {
         if (list.isEmpty()) return null;
         else return list.get(0);
     }
+    public int getTotalUsers(){
+        int res = userRepoImpl.getTotalUsers();
+        if(res <= 0)    return -1;
+        return res;
+    }
+
 }

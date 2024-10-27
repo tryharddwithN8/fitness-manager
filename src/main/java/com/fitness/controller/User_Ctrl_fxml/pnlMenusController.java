@@ -1,6 +1,5 @@
 package com.fitness.controller.User_Ctrl_fxml;
 
-import com.fitness.controller.LoginController;
 import com.fitness.model.fitness.Course;
 import com.fitness.model.fitness.Subscription;
 import com.fitness.model.fitness.Workout;

@@ -3,7 +3,6 @@ package com.fitness.repositories.Interface;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping;
 
 import java.sql.Connection;
 
