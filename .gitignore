@@ -6,5 +6,5 @@ target/*
 test/
 src/main/resources/application.properties
 nbactions.xml
-
+output.log
 server/key/smtp.key
