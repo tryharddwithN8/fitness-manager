@@ -196,8 +196,6 @@ public class UserController implements Initializable {
         executor.shutdown();
     }
 
-    public void giohang() {
-    }
 
     // pnlFeedback
     public void handleClicks(ActionEvent actionEvent) {

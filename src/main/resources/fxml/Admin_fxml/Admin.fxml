@@ -124,11 +124,12 @@
                <Button fx:id="btnDisplayUser" layoutX="681.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleDisplayAllUsers" prefHeight="25.0" prefWidth="88.0" text="Display All" />
                <TableView fx:id="userTable" layoutX="25.0" layoutY="176.0" prefHeight="375.0" prefWidth="744.0">
                   <columns>
-                     <TableColumn fx:id="userIDCol" minWidth="0.0" prefWidth="64.0" text="User ID" />
+                     <TableColumn fx:id="userIDCol" minWidth="0.0" prefWidth="64.0" text="userID" />
                      <TableColumn fx:id="userNameCol" minWidth="0.0" prefWidth="128.0" text="Name" />
-                     <TableColumn fx:id="userUserNameCol" minWidth="0.0" prefWidth="101.0" text="UserName" />
+                     <TableColumn fx:id="userUserNameCol" minWidth="0.0" prefWidth="101.0" text="userName" />
                      <TableColumn fx:id="userEmailCol" prefWidth="168.0" text="Email" />
-                     <TableColumn fx:id="userPhoneCol" minWidth="0.0" prefWidth="73.0" text="Phone" />
+                     <TableColumn fx:id="userPhoneCol" minWidth="0.0" prefWidth="84.0" text="Phone" />
+                     <TableColumn fx:id="userIsActiveCol" minWidth="0.0" prefWidth="60.0" text="isActive" />
                      <TableColumn fx:id="userAddressCol" minWidth="0.0" prefWidth="209.0" text="Address" />
                   </columns>
                </TableView>
@@ -352,12 +353,26 @@
                                  </font></Label>
                            </children>
                         </VBox>
+                        <VBox alignment="CENTER" layoutX="460.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="labelTotalActive" text="780" textFill="#09de00">
+                                 <font>
+                                    <Font name="System Bold" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Active">
+                                 <font>
+                                    <Font name="Roboto" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
 
                   <LineChart fx:id="lineChart" layoutY="182.0" prefHeight="355.0" prefWidth="477.0" title="Sample Line Chart">
                       <xAxis>
-                        <NumberAxis fx:id="xAxis" label="Months" />
+                        <NumberAxis label="Months" fx:id="xAxis" />
                      </xAxis>
                      <yAxis>
                         <NumberAxis fx:id="yAxis" label="Sales" />

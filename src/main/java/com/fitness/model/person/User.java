@@ -11,6 +11,7 @@ public class User extends Person {
     private ArrayList<String> courseList;
     private String role;
     private String createDate;
+    private Boolean isActive;
 
     public User() {
         super();
@@ -23,6 +24,7 @@ public class User extends Person {
         this.balance = 0;
         this.quantityCourse = 0;
         this.courseList = null;
+        this.isActive = false;
         this.role = role;
     }
 
@@ -109,7 +111,16 @@ public class User extends Person {
     public void decreaseQuantityCourse() {
         quantityCourse--;
     }
-
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    public Boolean getIsActive() {
+        return isActive;
+    }
+    public String getIsActiveString() {
+        return isActive != null && isActive ? "true" : "false";
+    }
+    
     @Override
     public String toString() {
         return "User{" +

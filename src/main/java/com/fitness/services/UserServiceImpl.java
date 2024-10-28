@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+import com.fitness.controller.LoginController;
 import com.fitness.model.person.User;
 import com.fitness.repositories.UserRepositoryImpl;
 import com.fitness.services.Interface.IService;
@@ -14,7 +14,7 @@ import com.fitness.services.Interface.IService;
  */
 public class UserServiceImpl implements IService<User, Integer> {
 
-    private UserRepositoryImpl userRepoImpl = new UserRepositoryImpl();
+    private static UserRepositoryImpl userRepoImpl = new UserRepositoryImpl();
 
     @Override
     public int add(User entity) throws SQLException {
@@ -79,6 +79,11 @@ public class UserServiceImpl implements IService<User, Integer> {
         return userRepoImpl.display(col, key);
     }
 
+    public static int updateIsActive(String nameUser, boolean isActive){
+        int res = userRepoImpl.updateIsActive(nameUser, isActive);
+        if(res <= 0)    return -1;
+        return res;
+    }
     public User getByUserName(String userName) throws SQLException {
         List<User> list = userRepoImpl.getAll().stream().filter(p -> p.getUsername().equals(userName)).collect(Collectors.toList());
         if (list.isEmpty()) return null;
@@ -88,6 +93,10 @@ public class UserServiceImpl implements IService<User, Integer> {
         int res = userRepoImpl.getTotalUsers();
         if(res <= 0)    return -1;
         return res;
+    }
+
+    public int countActiveUsers(){
+        return userRepoImpl.countActiveUsers();
     }
 
 }

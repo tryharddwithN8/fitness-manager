@@ -47,6 +47,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                         user.setRole(resultSet.getString("role"));
                         user.setCreateDate(resultSet.getString("created_at"));
                         String dob = resultSet.getString("dob");
+                        user.setIsActive(resultSet.getBoolean("is_active")); 
                         if (dob != null) {
                             user.setDob(LocalDate.parse(dob, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                         }
@@ -117,7 +118,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 return -1;
             }
 
-            String sql = "INSERT INTO users (username, password, email, role, address) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (username, password, email, role, address, isActive) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, entity.getUsername());
@@ -125,11 +126,11 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 statement.setString(3, entity.getEmail());
                 statement.setString(4, entity.getRole());
                 statement.setString(5, entity.getAddress());
-
+                statement.setBoolean(6, true);
 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
-                    UtilityIO.showMsg("user "+entity.getUsername()+" was added successfully!");
+                    UtilityIO.showMsg("User " + entity.getUsername() + " was added successfully!");
                     return rowsInserted;
                 } else {
                     UtilityIO.showMsg("No rows were inserted.");
@@ -146,6 +147,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
             return -1;
         }
     }
+
 
 
     @Override
@@ -237,6 +239,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 String role = resultSet.getString("role");
 
                 if (password.equals(hashedPassword)) {
+                    updateIsActive(username, true);
                     if (role.equals("admin"))
                         return 3; //  admin
                     else
@@ -252,6 +255,29 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
             return -1; //  -1 nếu có lỗi xảy ra
         }
     }
+    
+    public int updateIsActive(String username, boolean isActive) {
+        String updateSql = "UPDATE users SET is_active = ? WHERE username = ?";
+    
+        try (Connection connection = getConnection();
+             PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
+            updateStatement.setBoolean(1, isActive);   // Đặt giá trị isActive
+            updateStatement.setString(2, username);    // Đặt điều kiện là username
+            int rowsUpdated = updateStatement.executeUpdate();
+    
+            if (rowsUpdated > 0) {
+                System.out.println("User status updated successfully!");
+                return 1; 
+            } else {
+                System.out.println("No user found with the given username.");
+                return 0; 
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating is_active status: " + e.getMessage());
+            return -1; 
+        }
+    }
+    
 
     public int getByEmailExist(String email) {
         int exists = 0;
@@ -380,9 +406,11 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                         User user = new User();
                         user.setId(String.valueOf(resultSet.getInt("id")));
                         user.setUsername(resultSet.getString("username"));
+                        user.setFullName(resultSet.getString("fullname"));
                         user.setPassword(resultSet.getString("password"));
                         user.setEmail(resultSet.getString("email"));
                         user.setPhone(resultSet.getString("phone"));
+                        user.setIsActive(resultSet.getBoolean("is_active"));
                         user.setAddress(resultSet.getString("address"));
                         users.add(user);
                     }
@@ -396,4 +424,22 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
         }
         return null;
     }
+
+    public int countActiveUsers() {
+        String sql = "SELECT COUNT(*) FROM users WHERE is_active = true";
+        
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+    
+            if (resultSet.next()) {
+                return resultSet.getInt(1); 
+            }
+        } catch (SQLException e) {
+            System.out.println("Error counting active users: " + e.getMessage());
+            return -1;
+        }
+        return 0; 
+    }
+    
 }   

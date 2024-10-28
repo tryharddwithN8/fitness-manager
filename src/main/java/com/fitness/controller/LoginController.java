@@ -216,7 +216,6 @@ public class LoginController {
     }
 
 
-
     @FXML
     private void handleSignUp() throws SQLException{
 

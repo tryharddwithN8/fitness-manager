@@ -102,3 +102,26 @@
 .chart-plot-background {
     -fx-background-color:  transparent;
 }
+
+
+/* Tùy chỉnh ScrollBar cho TableView */
+.table-view .scroll-bar {
+    -fx-background-color: transparent; /* Nền của thanh cuộn */
+}
+
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button,
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color:  #CCCCCC; /* Màu nâu nhạt cho nút bấm */
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color:  #CCCCCC; /* Màu nâu nhạt cho thanh kéo */
+    -fx-background-radius: 5;      /* Bo góc cho thanh kéo */
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color:  #CCCCCC; 
+}
+

@@ -3,6 +3,8 @@ package com.fitness.utility;
 import java.util.Optional;
 
 import com.fitness.App;
+import com.fitness.controller.LoginController;
+import com.fitness.services.UserServiceImpl;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +32,7 @@ import javafx.stage.Stage;
 public class UtilityAlert {
 
     private static final String iconSuccessNotiPath = "/img/tick2.png";
+
 
     /*
      * show info Success Alert
@@ -89,6 +92,7 @@ public class UtilityAlert {
         alert.setContentText(message);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            UserServiceImpl.updateIsActive(LoginController.nameUser, false);
             Platform.exit();
             System.exit(0); 
         }
@@ -106,6 +110,7 @@ public class UtilityAlert {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
+                UserServiceImpl.updateIsActive(LoginController.nameUser, false);
                 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/Login.fxml"));
                 Parent root = fxmlLoader.load();
                 Scene scene = new Scene(root);

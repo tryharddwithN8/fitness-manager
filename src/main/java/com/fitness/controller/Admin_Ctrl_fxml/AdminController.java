@@ -8,7 +8,6 @@ import com.fitness.services.UserServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
@@ -17,6 +16,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.util.Duration;
 import javafx.scene.control.*;
 import com.fitness.model.fitness.Course;
@@ -24,21 +24,28 @@ import com.fitness.utility.UtilityAlert;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 
 
 public class AdminController {
+
+    /**
+     * @NOTE: update realtime 
+     * Dont need Query
+     */
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     final private CourseServiceImpl courseServiceImpl = new CourseServiceImpl();
     final private UserServiceImpl userServiceImpl = new UserServiceImpl();
@@ -67,9 +74,9 @@ public class AdminController {
     @FXML
     private TableView<User> userTable;
     @FXML
-    private TableColumn<User, String> userIDCol, userNameCol, userUserNameCol, userEmailCol, userPhoneCol, userAddressCol;
+    private TableColumn<User, String> userIDCol, userNameCol, userUserNameCol, userEmailCol, userPhoneCol, userIsActiveCol, userAddressCol;
     @FXML
-    private Label lblWaitingFindCoach, lblWaitingFindCourse, lblWaitingRemoveCoach, lblWaitingRemoveCourse, lblWaitingDisplayCoach, lblWaitingDisplayCourse, lblWaitingFindUser, lblWaitingRemoveUser, lblWaitingDisplayUser, labelTotalCourses, labelTotalUsers, labelTotalCoachs;
+    private Label lblWaitingFindCoach, lblWaitingFindCourse, lblWaitingRemoveCoach, lblWaitingRemoveCourse, lblWaitingDisplayCoach, lblWaitingDisplayCourse, lblWaitingFindUser, lblWaitingRemoveUser, lblWaitingDisplayUser, labelTotalCourses, labelTotalUsers, labelTotalCoachs, labelTotalActive;
     @FXML
     private LineChart<Number, Number> lineChart;
     @FXML
@@ -83,9 +90,11 @@ public class AdminController {
     public void displayInfoOverview(){
         loadSeries(lineChart);
         loadPieChart();
+        scheduler.scheduleAtFixedRate(this::updateStatistics, 0, 1, TimeUnit.SECONDS);
         labelTotalUsers.setText(String.valueOf(userServiceImpl.getTotalUsers()));
         labelTotalCourses.setText(String.valueOf(courseServiceImpl.getTotalCourses()));
         labelTotalCoachs.setText(String.valueOf(coachServiceImpl.getTotalCoachs()));
+        labelTotalActive.setText(String.valueOf(userServiceImpl.countActiveUsers()));
     }
 
     private void loadSeries(XYChart<Number, Number> lineChart) {
@@ -227,7 +236,32 @@ public class AdminController {
     public void initialize() throws SQLException {
         OverviewPanel();
         loadDataFromDB();
+        
     }
+
+    private void updateStatistics() {
+        try {
+            int totalUsers = userServiceImpl.getTotalUsers();
+            int totalCourses = courseServiceImpl.getTotalCourses();
+            int totalCoachs = coachServiceImpl.getTotalCoachs();
+            int totalActiveUsers = userServiceImpl.countActiveUsers();
+
+            Platform.runLater(() -> {
+                labelTotalUsers.setText(String.valueOf(totalUsers));
+                labelTotalCourses.setText(String.valueOf(totalCourses));
+                labelTotalCoachs.setText(String.valueOf(totalCoachs));
+                labelTotalActive.setText(String.valueOf(totalActiveUsers));
+            });
+        } catch (Exception e) {
+            System.out.println("Error updating statistics: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void stopScheduler() {
+        scheduler.shutdown();
+    }
+    
 
     public void loadDataFromDB() throws SQLException {
         handleDisplayAllCourse();
@@ -258,24 +292,39 @@ public class AdminController {
             List<User> users = null;
             try {
                 users = userServiceImpl.getAll();
+                users.sort((u1, u2) -> Boolean.compare(u2.getIsActive(), u1.getIsActive()));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
 
-            if (users == null) {
-                UtilityAlert.showError(Alert.AlertType.ERROR, "Update Failed", "Failed rồi\nKhông biết lỗi gì :((");
-                textFindUser.setText("");
-                return;
-            }
+           
             ObservableList<User> userList = FXCollections.observableArrayList(users);
 
             userIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             userNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             userUserNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
             userEmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+            userIsActiveCol.setCellValueFactory(new PropertyValueFactory<>("isActiveString"));
+            userIsActiveCol.setCellFactory(column -> new TableCell<User, String>() {
+                @Override
+                protected void updateItem(String isActive, boolean empty) {
+                    super.updateItem(isActive, empty);
+            
+                    if (empty || isActive == null) {
+                        setText(null);
+                    } else {
+                        Label statusLabel = new Label(Boolean.parseBoolean(isActive) ? "🟢" : "🔴");
+                        statusLabel.setStyle(Boolean.parseBoolean(isActive) ? "-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 18px;" 
+                                                                            : "-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 18px;");
+                        setAlignment(Pos.CENTER);
+                        setGraphic(statusLabel);
+                    }
+                }
+            });
+            
+
             userPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
             userAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-
             userTable.setItems(userList);
         });
 
@@ -406,12 +455,30 @@ public class AdminController {
                 return;
             }
             ObservableList<User> userList = FXCollections.observableArrayList(users);
+            userTable.getItems().clear();
 
             userIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
             userNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             userUserNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
             userEmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
             userPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+            userIsActiveCol.setCellValueFactory(new PropertyValueFactory<>("isActiveString"));
+            userIsActiveCol.setCellFactory(column -> new TableCell<User, String>() {
+                @Override
+                protected void updateItem(String isActive, boolean empty) {
+                    super.updateItem(isActive, empty);
+            
+                    if (empty || isActive == null) {
+                        setText(null);
+                    } else {
+                        Label statusLabel = new Label(Boolean.parseBoolean(isActive) ? "🟢" : "🔴");
+                        statusLabel.setStyle(Boolean.parseBoolean(isActive) ? "-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 18px;" 
+                                                                            : "-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 18px;");
+                        setAlignment(Pos.CENTER);
+                        setGraphic(statusLabel);
+                    }
+                }
+            });
             userAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
             userTable.setItems(userList);
