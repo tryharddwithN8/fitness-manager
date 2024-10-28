@@ -33,7 +33,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 UtilityIO.showMsg("Failed to establish or maintain connection to the database.");
                 return null;
             }
-            String sql = "SELECT * FROM users";
+            String sql = "SELECT * FROM users WHERE role = 'user'";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
@@ -388,7 +388,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
             if (Objects.equals(col, "id")) {
                 val = String.valueOf(Integer.parseInt(val));
                 sql = "SELECT * FROM users WHERE id = ? AND role = 'user'";
-            } else if (Objects.equals(col, "name")) {
+            } else if (Objects.equals(col, "fullname")) {
                 sql = "SELECT * FROM users WHERE role = 'user' AND " + col + " LIKE ?";
             } else if (Objects.equals(col, "username")) {
                 sql = "SELECT * FROM users WHERE role = 'user' AND " + col + " LIKE ?";

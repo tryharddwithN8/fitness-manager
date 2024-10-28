@@ -137,7 +137,7 @@
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="ID" />
-                        <String fx:value="Name" />
+                        <String fx:value="FullName" />
                         <String fx:value="UserName" />
                      </FXCollections>
                   </items>

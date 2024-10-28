@@ -53,10 +53,12 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
                 while (resultSet.next()) {
                     Coach coach = new Coach();
                     coach.setId(String.valueOf(resultSet.getInt("id")));
+                    coach.setFullName(resultSet.getString("fullName"));
                     coach.setUsername(resultSet.getString("username"));
                     coach.setPassword(resultSet.getString("password"));
                     coach.setEmail(resultSet.getString("email"));
                     coach.setRole(resultSet.getString("role"));
+                    coach.setPhone(resultSet.getString("phone"));
                     coach.setAddress(resultSet.getString("address"));
                     coaches.add(coach);
                 }
@@ -163,10 +165,10 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
                     while (resultSet.next()) {
                         Coach coach = new Coach();
                         coach.setId(String.valueOf(resultSet.getInt("id")));
+                        coach.setFullName(resultSet.getString("fullName"));
                         coach.setUsername(resultSet.getString("username"));
-                        coach.setPassword(resultSet.getString("password"));
                         coach.setEmail(resultSet.getString("email"));
-                        coach.setRole(resultSet.getString("role"));
+                        coach.setPhone(resultSet.getString("phone"));
                         coach.setAddress(resultSet.getString("address"));
                         coaches.add(coach);
                     }
@@ -180,6 +182,7 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
         }
         return null;
     }
+
     public List<Coach> getListCoach() throws SQLException {
         List<Coach> coaches = new ArrayList<>();
         try (Connection connection = getConnection()) {
@@ -218,6 +221,7 @@ public class CoachRepositoryImpl implements IRepository<Coach, Integer> {
         }
         return coaches;
     }
+
     public void print() throws SQLException {
         List<Coach> newCoach=getListCoach();
         for (Coach coach:newCoach){

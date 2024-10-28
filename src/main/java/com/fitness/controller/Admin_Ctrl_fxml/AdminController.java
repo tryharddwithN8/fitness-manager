@@ -38,7 +38,6 @@ import java.util.concurrent.TimeUnit;
 
 
 
-
 public class AdminController {
 
     /**
@@ -461,26 +460,27 @@ public class AdminController {
             userNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             userUserNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
             userEmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-            userPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
             userIsActiveCol.setCellValueFactory(new PropertyValueFactory<>("isActiveString"));
             userIsActiveCol.setCellFactory(column -> new TableCell<User, String>() {
                 @Override
                 protected void updateItem(String isActive, boolean empty) {
                     super.updateItem(isActive, empty);
-            
+
                     if (empty || isActive == null) {
                         setText(null);
                     } else {
                         Label statusLabel = new Label(Boolean.parseBoolean(isActive) ? "🟢" : "🔴");
-                        statusLabel.setStyle(Boolean.parseBoolean(isActive) ? "-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 18px;" 
-                                                                            : "-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 18px;");
+                        statusLabel.setStyle(Boolean.parseBoolean(isActive) ? "-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 18px;"
+                                : "-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 18px;");
                         setAlignment(Pos.CENTER);
                         setGraphic(statusLabel);
                     }
                 }
             });
-            userAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
+
+            userPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+            userAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
             userTable.setItems(userList);
         });
 
@@ -730,7 +730,7 @@ public class AdminController {
             coachNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             coachUserNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
             coachEmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-            coachRoleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
+            coachRoleCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
             coachAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
             coachTable.setItems(coachList);
@@ -864,7 +864,7 @@ public class AdminController {
             coachNameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             coachUserNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
             coachEmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
-            coachRoleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
+            coachRoleCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
             coachAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
 
             coachTable.setItems(coachList);
