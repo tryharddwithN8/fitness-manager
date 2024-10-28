@@ -118,7 +118,7 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 return -1;
             }
 
-            String sql = "INSERT INTO users (username, password, email, role, address, isActive) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (username, password, email, role, address) VALUES (?, ?, ?, ?, ?)";
 
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, entity.getUsername());
@@ -126,7 +126,6 @@ public class UserRepositoryImpl implements IRepository<User, Integer>{
                 statement.setString(3, entity.getEmail());
                 statement.setString(4, entity.getRole());
                 statement.setString(5, entity.getAddress());
-                statement.setBoolean(6, true);
 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {

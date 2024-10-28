@@ -252,7 +252,7 @@ public class LoginController {
                 int check = task.getValue();
                 if (check == 1) {
                     UtilityAlert.showInfo("Registration Successful", "Welcome " + username + "!");
-                    loadFrame("/fxml/User_fxml/Main_Pane/Main.fxml");
+                    showLoginForm();
                 } else if (check == 0) {
                     UtilityAlert.showError(Alert.AlertType.ERROR, "SignUp Failed", "Account already exists");
                     signupPasswordField.setText("");
