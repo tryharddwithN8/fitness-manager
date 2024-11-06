@@ -8,10 +8,11 @@ Below is the list of members participating in the project:
 
 | Name              | Role                  | Description                          |
 |-------------------|-----------------------|--------------------------------------|
-| APT3233           | Lead                  | Dont make anything   :))             |
+| APT3233           | Lead                  | Dont make anything                   |
 | VinCSS            | NULL                  | NULL                                 |
 | VuongPro22        | NULL                  | NULL                                 |
 | Tieens-1910       | NULL                  | NULL                                 |
+
 
 ## Key Features
 - Feature 1: 
@@ -39,7 +40,7 @@ To install and run the project, follow these steps:
 
 ## Contact
 If you have any questions, please contact us via email:
-- APT3233: [telegram](https://t.me/apt3233)
+- APT3233: [telegram]()
 - VinCSS: b@example.com
 - Le Van C: c@example.com
 - 
