@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('/font/Roboto/Roboto-Medium.ttf');
+}
+
+.root {
+    -fx-font-family: 'Roboto';
+}
+
+.button {
+    -fx-font-family: 'Roboto-Medium';
+}
+
+.label {
+    -fx-font-family: 'Roboto';
+}
+
+#textArea_content_fb:focused{
+    -fx-font-family: 'Roboto';
+    -fx-focus-color: transparent; 
+    -fx-faint-focus-color: transparent; 
+    -fx-background-insets: 0;
+}
+.btn_submit_fb{
+    -fx-background-color:  #ffa6c6;
+}
+.btn_cancer_fb{
+    -fx-background-color: #777;
+    -fx-text-fill:#fff;
+}
+.btn_submit_fb:hover{
+    -fx-background-color: #f5699c;
+    -fx-text-fill:#fff;
+    -fx-cursor:hand;
+
+}
+.btn_cancer_fb:hover{
+    -fx-background-color: #9c9799;
+    -fx-text-fill:#fff;
+    -fx-cursor:hand;
+}
+.btn_vote5s:hover,
+.btn_vote4s:hover,
+.btn_vote3s:hover,
+.btn_vote2s:hover,
+.btn_vote1s:hover
+{
+    -fx-background-color:  #ffa6c6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0, 3, 3);
+    -fx-translate-x: -2px;
+    -fx-translate-y: -2px;
+}

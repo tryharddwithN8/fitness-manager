@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.User_Ctrl_fxml.pnlSettingController">
+   <Pane fx:id="pnlSetting" prefHeight="596.0" prefWidth="996.0" style="-fx-background-color: #e9e9e9;">
+      <children>
+
+         <ImageView id="image_viewSetting" fitHeight="112.0" fitWidth="154.0" layoutX="434.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../img/tick2.png" />
+            </image>
+         </ImageView>
+
+         <Label id="label_ID" fx:id="userIdProfile" alignment="CENTER" disable="true" layoutX="438.0" layoutY="153.0" prefHeight="23.0" prefWidth="103.0" text="ID:">
+            <font>
+               <Font name="Roboto" size="13.0" />
+            </font>
+         </Label>
+         <Label layoutX="603.0" layoutY="258.0" prefHeight="34.0" prefWidth="96.0" text="Username">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_username" fx:id="usernameUserProfile" disable="true" layoutX="699.0" layoutY="258.0" prefHeight="34.0" prefWidth="199.0" />
+         <Label layoutX="101.0" layoutY="315.0" prefHeight="34.0" prefWidth="96.0" text="Email">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_email" fx:id="emailUserProfile" layoutX="212.0" layoutY="315.0" prefHeight="34.0" prefWidth="199.0" promptText="\@gmail.com" />
+         <Label layoutX="101.0" layoutY="368.0" prefHeight="34.0" prefWidth="96.0" text="Phone">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_phone" fx:id="phoneUserProfile" layoutX="212.0" layoutY="368.0" prefHeight="34.0" prefWidth="199.0" promptText="Must be 10 digits, start with 0" />
+         <Label layoutX="104.0" layoutY="422.0" prefHeight="34.0" prefWidth="96.0" text="Address">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_address" fx:id="addressUserProfile" layoutX="212.0" layoutY="422.0" prefHeight="34.0" prefWidth="199.0" />
+         <Label layoutX="603.0" layoutY="204.0" prefHeight="34.0" prefWidth="59.0" text="Role">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_role" fx:id="roleUserProfile" disable="true" layoutX="699.0" layoutY="204.0" prefHeight="34.0" prefWidth="199.0">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </TextField>
+         <Button id="btn_updateProfile" layoutX="411.0" layoutY="507.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="38.0" prefWidth="157.0" text="Update Profile">
+            <font>
+               <Font name="Roboto" size="17.0" />
+            </font>
+         </Button>
+         <Label layoutX="101.0" layoutY="204.0" prefHeight="34.0" prefWidth="96.0" text="Full Name">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_email" fx:id="fullNameUserProfile" layoutX="212.0" layoutY="204.0" prefHeight="34.0" prefWidth="199.0" promptText="Capitalize the first letter " />
+         <Label fx:id="dob" layoutX="101.0" layoutY="258.0" prefHeight="34.0" prefWidth="96.0" text="Date of Birth">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="day" fx:id="day" layoutX="212.0" layoutY="258.0" prefHeight="34.0" prefWidth="39.0" promptText="DD" />
+         <TextField fx:id="month" layoutX="276.0" layoutY="258.0" prefHeight="34.0" prefWidth="39.0" promptText="MM" />
+         <TextField id="year" fx:id="year" layoutX="335.0" layoutY="258.0" prefHeight="34.0" prefWidth="76.0" promptText="YYYY" />
+         <Text fill="#aea7a7" layoutX="320.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" wrappingWidth="13.47576904296875">
+            <font>
+               <Font size="27.0" />
+            </font>
+         </Text>
+         <Text fill="#aea7a7" layoutX="259.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" wrappingWidth="13.47576904296875">
+            <font>
+               <Font size="27.0" />
+            </font>
+         </Text>
+         <Label layoutX="603.0" layoutY="315.0" prefHeight="34.0" prefWidth="96.0" text="Create Date">
+            <font>
+               <Font name="Roboto" size="16.0" />
+            </font>
+         </Label>
+         <TextField id="text_username" fx:id="createDateUserProfile" disable="true" layoutX="699.0" layoutY="315.0" prefHeight="34.0" prefWidth="199.0" />
+         <Label fx:id="errorName" layoutX="220.0" layoutY="238.0" prefHeight="17.0" prefWidth="340.0" textFill="#ff0900" />
+         <Label fx:id="errorDob" layoutX="220.0" layoutY="290.0" prefHeight="17.0" prefWidth="191.0" textFill="#ff0900" />
+         <Label fx:id="errorEmail" layoutX="220.0" layoutY="349.0" prefHeight="17.0" prefWidth="191.0" textFill="#ff0900" />
+         <Label fx:id="errorPhone" layoutX="220.0" layoutY="402.0" prefHeight="17.0" prefWidth="191.0" textFill="#ff0900" />
+         <Label fx:id="updateLabel" alignment="CENTER" layoutX="411.0" layoutY="552.0" prefHeight="23.0" prefWidth="157.0" textFill="#12bf3d">
+            <font>
+               <Font name="System Bold" size="15.0" />
+            </font>
+         </Label>
+         <Button fx:id="uploadCV" layoutX="854.0" layoutY="41.0" mnemonicParsing="false" text="Upload CV" textFill="#611212" onAction="#openFileChosser">
+            <font>
+               <Font name="Roboto" size="13.0" />
+            </font>
+         </Button>
+      </children></Pane>
+</AnchorPane>

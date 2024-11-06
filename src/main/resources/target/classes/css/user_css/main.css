@@ -1,0 +1,127 @@
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/font/Roboto/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('/font/Roboto/Roboto-Medium.ttf');
+}
+
+.root {
+    -fx-font-family: 'Roboto';
+}
+
+.button {
+    -fx-font-family: 'Roboto-Medium';
+}
+
+.label {
+    -fx-font-family: 'Roboto';
+}
+
+.button
+{
+-fx-background-color : #dedede;
+-fx-text-fill : #000;
+
+}
+.btnVuong{
+    -fx-background-color : transparent;
+
+}
+.btnVuong:hover{
+    -fx-background-color : #fff;
+    -fx-cursor:hand;
+    -fx-text-fill: #ff0000;
+
+}
+.button:hover{
+    -fx-background-color : #fff;
+    -fx-cursor:hand;
+
+}
+
+.button:pressed
+{
+-fx-background-color : #f3f3f3;
+}
+
+.scroll-pane {
+    -fx-background-color: #fff;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:#fff;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: #fff;
+    -fx-border-color: #fff;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #fff;
+    -fx-background-radius: 5em;
+}
+
+.backColorf5{
+    -fx-background-color: #fff;
+}
+.total_order{
+    -fx-background-color: #fff;
+     -fx-background-radius: 10 10 0 0;
+     -fx-border-top:#000;
+}
+.peding_order{
+    -fx-background-color: #fff;
+    -fx-background-radius: 0 0 10 10;
+    -fx-border-color: #000 transparent transparent transparent;
+    -fx-border-width: 1px;
+}
+.hover:hover{
+    -fx-cursor:hand;
+}
+.next_AD{
+    -fx-background-radius: 50%;
+    -fx-background-color: #f3f3f3;
+    -fx-text-fill: #000;
+}
+.chart {
+    -fx-background-color:  transparent; /* Màu nền cho toàn bộ BarChart */
+}
+.chart-plot-background {
+    -fx-background-color:  transparent;
+}
+
+
+/* Tùy chỉnh ScrollBar cho TableView */
+.table-view .scroll-bar {
+    -fx-background-color: transparent; /* Nền của thanh cuộn */
+}
+
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button,
+.table-view .scroll-bar:vertical .increment-button,
+.table-view .scroll-bar:vertical .decrement-button {
+    -fx-background-color:  #CCCCCC; /* Màu nâu nhạt cho nút bấm */
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color:  #CCCCCC; /* Màu nâu nhạt cho thanh kéo */
+    -fx-background-radius: 5;      /* Bo góc cho thanh kéo */
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color:  #CCCCCC; 
+}
+

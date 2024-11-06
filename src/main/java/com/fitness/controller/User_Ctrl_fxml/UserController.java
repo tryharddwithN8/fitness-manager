@@ -14,12 +14,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
 import com.fitness.utility.UtilityAlert;
 
 public class UserController implements Initializable {
@@ -38,15 +40,15 @@ public class UserController implements Initializable {
     @FXML
     private Button btnCustomers;
     @FXML
-    private Button btnMenus, btnFeedback;
+    private Button btnMenus, btnFeedback, btnTimeTable;
     @FXML
     private Button btnSettings;
     @FXML
     private Button btnSignout;
     @FXML
-    private Pane pnlMenus;
+    private Pane pnlMenus, pnlTimeTable;
     @FXML
-    private Pane pnlCustomer ;
+    private Pane pnlCustomer;
     @FXML
     private Pane pnlOrders, pnlSetting, pnlFeedback;
     private Pane overviewPane;
@@ -62,7 +64,7 @@ public class UserController implements Initializable {
 
     //Khai Báo Controller
     LoginController loginController = new LoginController();
-    pnlSettingController pnlSettingController ;
+    pnlSettingController pnlSettingController;
     pnlOrdersController pnlOrdersController;
     pnlOverViewController pnlOverViewController = new pnlOverViewController();
 
@@ -80,6 +82,7 @@ public class UserController implements Initializable {
         loadPnlSetting();
         loadPnlFeedBack();
         loadPnlMenus();
+        loadPnlTimeTable();
         loadPnlOder();
     }
 
@@ -105,7 +108,8 @@ public class UserController implements Initializable {
         };
         executor.submit(task);
     }
-    private void loadPnlOder(){
+
+    private void loadPnlOder() {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -113,7 +117,7 @@ public class UserController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlOrders.fxml"));
                     pnlOrders = loader.load();
                     Platform.runLater(() -> {
-                        pnlOrdersController=loader.getController();
+                        pnlOrdersController = loader.getController();
                         pnlOrdersController.loadOrder();
                         stackPane_all.getChildren().add(pnlOrders);
                     });
@@ -125,6 +129,7 @@ public class UserController implements Initializable {
         };
         executor.submit(task);
     }
+
     private void loadPnlMenus() {
         Task<Void> task = new Task<>() {
             @Override
@@ -139,6 +144,27 @@ public class UserController implements Initializable {
                         MenusController.loadUserName();
                         pnlMenus.setVisible(false);
                         stackPane_all.getChildren().add(pnlMenus);
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        executor.submit(task);
+    }
+
+    private void loadPnlTimeTable() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User_fxml/Main_Pane/pnlTimeTable.fxml"));
+                    pnlTimeTable = loader.load();
+                    Platform.runLater(() -> {
+                        pnlMenusController MenusController = loader.getController();
+                        pnlTimeTable.setVisible(false);
+                        stackPane_all.getChildren().add(pnlTimeTable);
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -211,6 +237,12 @@ public class UserController implements Initializable {
             pnlMenus.setVisible(true);
             stackPane_all.getChildren().add(pnlMenus);
             btnMenus.setStyle("-fx-background-color : #fff");
+        } else if (actionEvent.getSource() == btnTimeTable) {
+            stackPane_all.setStyle("-fx-background-color : #76ace3");
+            stackPane_all.getChildren().clear();
+            pnlTimeTable.setVisible(true);
+            stackPane_all.getChildren().add(pnlTimeTable);
+            btnTimeTable.setStyle("-fx-background-color : #fff");
         } else if (actionEvent.getSource() == btnOverview) {
             stackPane_all.setStyle("-fx-background-color : #e9e9e9");
             stackPane_all.getChildren().clear();
@@ -246,6 +278,7 @@ public class UserController implements Initializable {
         btnSettings.setStyle("");
         btnSignout.setStyle("");
         btnFeedback.setStyle("");
+        btnTimeTable.setStyle("");
     }
     /*
      * Exit App
@@ -255,10 +288,11 @@ public class UserController implements Initializable {
     public void handleExit() {
         UtilityAlert.showConfimExit("Exit", "Do you want to exit :(");
     }
+
     /*
      * return login page
      */
-    public void handleSignOut(){
-        UtilityAlert.showConfirmSignOut("Sign Out", "Do you want to logout", (Stage)btnSignout.getScene().getWindow());
+    public void handleSignOut() {
+        UtilityAlert.showConfirmSignOut("Sign Out", "Do you want to logout", (Stage) btnSignout.getScene().getWindow());
     }
 }

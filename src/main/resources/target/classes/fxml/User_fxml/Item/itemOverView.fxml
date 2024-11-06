@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="paneItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="226.0" styleClass="paneItem" stylesheets="@../../../css/user_css/item.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="18.0" layoutY="15.0" prefHeight="214.0" prefWidth="191.0">
+         <children>
+            <AnchorPane fx:id="course_img" layoutX="6.0" prefHeight="148.0" prefWidth="179.0" styleClass="course_img">
+               <children>
+                  <ImageView fitHeight="135.0" fitWidth="150.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/gym1.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="itemOverview_button" layoutX="141.0" layoutY="110.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="30.0" styleClass="item_button" text="+" textFill="#dd1010">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.6710526347160339" green="0.6710526347160339" blue="0.6710526347160339" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+               </children>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.6184210777282715" green="0.6184210777282715" blue="0.6184210777282715" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </AnchorPane>
+            <Label layoutX="74.0" layoutY="171.0" style="-fx-font-size: 13px;" text="4.8" textFill="RED" />
+            <Label fx:id="label_itemOverview" layoutX="2.0" layoutY="150.0" prefHeight="21.0" prefWidth="191.0" style="-fx-alignment: center;" styleClass="tile_course" text="COURSE 1" />
+            <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="51.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/star2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="96.0" layoutY="172.0" text="(251)" />
+            <Text fx:id="price1" layoutX="57.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="price1" text="\$5.5" wrappingWidth="45.6484375" />
+            <Text fx:id="price2" layoutX="92.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="price2" text="\$3.9" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.User_Ctrl_fxml.pnlKhaoSatController">
+    <Pane fx:id="pnlKhaoSat" prefHeight="596.0" prefWidth="996.0">
+        <children>
+            <VBox alignment="TOP_LEFT" layoutX="47.0" layoutY="14.0" prefHeight="499.0" prefWidth="508.0" spacing="10">
+                <!-- Kinh nghiệm tập luyện -->
+                <Label text="Bạn đã từng tập luyện ở phòng gym trước đây chưa?" />
+                <!-- Gán ToggleGroup cho các RadioButton bằng mã trong controller -->
+                <Label text="Nếu có, bạn đã tập luyện trong bao lâu?" />
+                <ComboBox fx:id="durationComboBox" promptText="Chọn thời gian">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Chưa từng tập" />
+                            <String fx:value="Dưới 6 tháng" />
+                            <String fx:value="6-12 tháng" />
+                            <String fx:value="Trên 1 năm" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <!-- Cấp độ hiện tại -->
+                <Label text="Cấp độ hiện tại của bạn:" />
+                <ComboBox fx:id="levelComboBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Mới bắt đầu" />
+                            <String fx:value="Trung cấp" />
+                            <String fx:value="Nâng cao" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <!-- Kiểu luyện tập -->
+                <Label text="Kiểu luyện tập:" />
+                <ComboBox fx:id="trainingStyleComboBox">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Cardio" />
+                            <String fx:value="Sức mạnh" />
+                            <String fx:value="Yoga" />
+                            <String fx:value="CrossFit" />
+                            <String fx:value="HIIT" />
+                            <String fx:value="Thể dục nhịp điệu" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+
+                <!-- Thời gian rảnh để tập luyện -->
+
+                <Label layoutX="50.0" layoutY="200.0" text="Bạn có sẵn thời gian tập luyện vào những ngày nào trong tuần?" />
+                <VBox layoutX="50.0" layoutY="230.0" spacing="10">
+                    <children>
+                        <CheckBox fx:id="mondayCheckBox" text="Thứ Hai" />
+                        <CheckBox fx:id="tuesdayCheckBox" text="Thứ Ba" />
+                        <CheckBox fx:id="wednesdayCheckBox" text="Thứ Tư" />
+                        <CheckBox fx:id="thursdayCheckBox" text="Thứ Năm" />
+                        <CheckBox fx:id="fridayCheckBox" text="Thứ Sáu" />
+                        <CheckBox fx:id="saturdayCheckBox" text="Thứ Bảy" />
+                        <CheckBox fx:id="sundayCheckBox" text="Chủ Nhật" />
+                    </children>
+                </VBox>
+                <!-- Thời gian rảnh để tập luyện -->
+                <Label layoutX="50.0" layoutY="200.0" text="Bạn muốn tập thời gian nào trong ngày" />
+                <VBox layoutX="50.0" layoutY="230.0" spacing="10">
+                    <children>
+                        <CheckBox fx:id="morning" text="Buổi Sáng" />
+                        <CheckBox fx:id="afternoon" text="Buổi Chiều" />
+                        <CheckBox fx:id="evening" text="Buổi Tối" />
+                    </children>
+                </VBox>
+
+            </VBox>
+
+            <!-- Nút gửi khảo sát -->
+            <Button layoutX="453.0" layoutY="551.0" onAction="#handleClick" prefHeight="31.0" prefWidth="91.0" text="Gửi Khảo Sát" />
+            <Label layoutX="691.0" layoutY="14.0" prefHeight="153.0" prefWidth="184.0" text="SURVEY" textFill="#0777d3">
+                <font>
+                    <Font name="Bodoni MT Poster Compressed" size="96.0" />
+                </font>
+            </Label>
+            <ImageView fitHeight="291.0" fitWidth="328.0" layoutX="629.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../../img/servey.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Pane>
+</AnchorPane>

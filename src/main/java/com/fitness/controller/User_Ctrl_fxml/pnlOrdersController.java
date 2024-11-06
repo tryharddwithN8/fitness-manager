@@ -33,6 +33,8 @@ public class pnlOrdersController {
     private SubscriptionRepositoryImpl subscriptionRepository=new SubscriptionRepositoryImpl();
     private pnlMenusController pnlMenusController;
 
+    private pnlKhaoSatController pnlKhaoSatController = new pnlKhaoSatController();
+
     List<CourseOrder> listOrderDB=orderRepository.getAllOrder();
     List<Coach> coaches=coachRepository.getListCoach();
     List<Course> courses = courseRepoImpl.getAll();
@@ -81,6 +83,7 @@ public class pnlOrdersController {
                                 if(k==1){
                                     subcriptions.add(course);
                                     subscriptionRepository.saveSubDB();
+                                    pnlKhaoSatController.showSurvey();
                                 }
                             } );
                             btn_delete_order.setOnAction(event -> {
@@ -142,6 +145,7 @@ public class pnlOrdersController {
                     if(k==1){
                         subcriptions.add(courseOrder);
                         subscriptionRepository.saveSubDB();
+
                     }
                 } );
             } catch (IOException e) {

@@ -1,0 +1,42 @@
+.paneItem{
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius:20px
+
+}
+.course_img{
+    -fx-background-radius:20px;
+    -fx-background-color:#ededed;
+}
+.tile_course{
+    -fx-font-size:15px;
+    -fx-font-weight:800;
+}
+.price1{
+    -fx-font-size:15px;
+    -fx-font-weight:800;
+    -fx-strikethrough:true;
+    -fx-fill:#ee0f0f;
+}
+.price2{
+    -fx-font-size:15px;
+    -fx-font-weight:800;
+    -fx-fill:#52cd36;
+}
+.item_button {
+    -fx-background-radius: 50%;
+    -fx-font-size: 13px;
+    -fx-background-color:  #dfdfdf;
+    -fx-text-fill: #52cd36;
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+.item_button:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #e3e3e3;
+}
+.course_img:hover {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0.0, 0, -1);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}

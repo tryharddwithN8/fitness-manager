@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../css/user_css/myCourse.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.User_Ctrl_fxml.pnlTimeTableController">
+    <Pane fx:id="pnlTimeTable" prefHeight="596.0" prefWidth="1066.0" style="-fx-background-color: #76ace3; -fx-cursor: hand;">
+        <children>
+            <Pane layoutX="780.0" layoutY="400.0" prefHeight="21.0" prefWidth="22.0" style="-fx-background-color: #76ace3;" />
+         <ImageView fitHeight="165.0" fitWidth="213.0" layoutX="941.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../img/timetableImg.jpg" />
+            </image>
+         </ImageView>
+         <Pane prefHeight="165.0" prefWidth="943.0" style="-fx-background-color: #4296eb; -fx-background-radius: 10px;">
+            <children>
+               <ImageView fitHeight="165.0" fitWidth="180.0" layoutX="817.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/coach.png" />
+                  </image>
+               </ImageView>
+               <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="190.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/ta2.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="15.0" layoutY="67.0" style="-fx-font-size: 40px;" text="Good Day," />
+               <Label layoutX="20.0" layoutY="120.0" prefHeight="24.0" prefWidth="368.0" style="-fx-font-size: 20px;" text="Continues practice try your best" />
+               <ImageView fitHeight="99.0" fitWidth="141.0" layoutX="35.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/ta3.png" />
+                  </image>
+               </ImageView>
+               <ImageView fitHeight="134.0" fitWidth="158.0" layoutX="749.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/ta1.png" />
+                  </image>
+               </ImageView>
+               <Label layoutX="340.0" layoutY="36.0" prefHeight="99.0" prefWidth="387.0" text="Time Table" textFill="#ffcc00">
+                  <font>
+                     <Font name="Times New Roman Bold" size="76.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+         <LineChart layoutX="839.0" layoutY="206.0" prefHeight="390.0" prefWidth="227.0">
+            <xAxis>
+               <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+               <NumberAxis side="LEFT" />
+            </yAxis>
+         </LineChart>
+         <Pane layoutX="839.0" layoutY="165.0" prefHeight="42.0" prefWidth="227.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 10px 0 0;">
+            <children>
+               <Label layoutX="75.0" layoutY="6.0" style="-fx-font-size: 20px;" text="Progress" />
+            </children>
+         </Pane>
+         <ImageView fitHeight="437.0" fitWidth="832.0" layoutX="61.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../img/timetable2.png" />
+            </image>
+         </ImageView>
+         <Pane layoutX="25.0" layoutY="296.0" prefHeight="99.0" prefWidth="37.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 0 0 10px;">
+            <children>
+               <Label layoutX="-8.0" layoutY="35.0" rotate="-90.0" style="-fx-font-size: 20px;" text="Sáng" />
+            </children>
+         </Pane>
+         <Pane layoutX="25.0" layoutY="490.0" prefHeight="99.0" prefWidth="37.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 0 0 10px;">
+            <children>
+               <Label layoutX="5.0" layoutY="35.0" rotate="-90.0" style="-fx-font-size: 20px;" text="Tối" />
+            </children>
+         </Pane>
+         <Pane layoutX="25.0" layoutY="395.0" prefHeight="99.0" prefWidth="37.0" style="-fx-background-color: #388fe0; -fx-background-radius: 10px 0 0 10px;">
+            <children>
+               <Label layoutX="-11.0" layoutY="35.0" rotate="-90.0" style="-fx-font-size: 20px;" text="Chiều">
+                  <font>
+                     <Font name="Times New Roman" size="26.0" />
+                  </font>
+               </Label>
+            </children>
+         </Pane>
+         <TextArea layoutX="72.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="184.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="295.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="400.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="506.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="610.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="717.0" layoutY="273.0" prefHeight="118.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="72.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="184.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="295.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="400.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="506.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="610.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="717.0" layoutY="395.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="72.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="184.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="295.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="400.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="506.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="610.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+         <TextArea layoutX="717.0" layoutY="497.0" prefHeight="99.0" prefWidth="85.0" promptText="None" />
+        </children>
+    </Pane>
+</AnchorPane>

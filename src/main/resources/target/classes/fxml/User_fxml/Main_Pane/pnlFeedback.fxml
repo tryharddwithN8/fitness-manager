@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../css/user_css/utilities.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fitness.controller.User_Ctrl_fxml.pnlFeedbackController">
+   <children>
+      <Pane fx:id="pnlFeedback" prefHeight="596.0" prefWidth="1066.0" style="-fx-background-color: #f4f4f4; -fx-cursor: hand;">
+         <children>
+            <Label layoutX="117.0" layoutY="52.0" prefHeight="17.0" prefWidth="200.0" style="-fx-font-size: 30px;" text="FeedBack">
+               <font>
+                  <Font name="Roboto Medium" size="14.0" />
+               </font></Label>
+            <Label layoutX="150.0" layoutY="97.0" prefHeight="30.0" prefWidth="374.0" style="-fx-font-size: 20px;" text="Please fill in the information below">
+               <font>
+                  <Font name="Roboto Light" size="13.0" />
+               </font></Label>
+            <TextArea fx:id="textArea_content_fb" layoutX="135.0" layoutY="251.0" prefHeight="257.0" prefWidth="719.0" promptText="Response for us !" style="-fx-background-color: #fff; -fx-background-radius: 10px; -fx-wrap-text: true; -fx-padding: 10px;" />
+            <TextField fx:id="textField_name_fb" layoutX="886.0" layoutY="253.0" prefHeight="30.0" prefWidth="150.0" promptText="Your name:">
+               <font>
+                  <Font name="Roboto" size="13.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="textField_phone_fb" layoutX="886.0" layoutY="309.0" prefHeight="30.0" prefWidth="150.0" promptText="Your phone:" />
+            <TextField fx:id="textField_donate_fb" layoutX="886.0" layoutY="363.0" prefHeight="30.0" prefWidth="150.0" promptText="Donate($)">
+               <font>
+                  <Font name="C059-Bold" size="13.0" />
+               </font></TextField>
+            <Button fx:id="btn_submit_fb" layoutX="660.0" layoutY="527.0" mnemonicParsing="false" onAction="#sendFeedbackToServer" prefHeight="39.0" prefWidth="83.0" styleClass="btn_submit_fb" text="Submit">
+               <font>
+                  <Font name="Roboto" size="13.0" />
+               </font></Button>
+            <Button fx:id="btn_clear_fb" layoutX="770.0" layoutY="528.0" mnemonicParsing="false" onAction="#clearTextArea" prefHeight="39.0" prefWidth="83.0" styleClass="btn_cancer_fb" text="Clear">
+               <font>
+                  <Font name="Roboto Light" size="13.0" />
+               </font></Button>
+            <Button fx:id="btn_vote5s" onAction="#handleClicks" layoutX="634.0" layoutY="160.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="89.0" style="-fx-border-color: #a39f9e; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="btn_vote5s">
+               <graphic>
+                  <ImageView fitHeight="79.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/5s.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_vote4s" onAction="#handleClicks" layoutX="508.0" layoutY="160.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="89.0" style="-fx-border-color: #a39f9e; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="btn_vote4s">
+               <graphic>
+                  <ImageView fitHeight="79.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_vote4s">
+                     <image>
+                        <Image url="@../../../img/4s.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_vote3s" onAction="#handleClicks" layoutX="384.0" layoutY="159.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="89.0" style="-fx-border-color: #a39f9e; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="btn_vote3s">
+               <graphic>
+                  <ImageView fitHeight="79.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/2s.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_vote2s" onAction="#handleClicks" layoutX="260.0" layoutY="158.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="89.0" style="-fx-border-color: #a39f9e; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="btn_vote2s">
+               <graphic>
+                  <ImageView fitHeight="79.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true" styleClass="btn_vote2s">
+                     <image>
+                        <Image url="@../../../img/3s.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btn_vote1s" onAction="#handleClicks" layoutX="135.0" layoutY="158.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="83.0" style="-fx-border-color: #a39f9e; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="btn_vote1s">
+               <graphic>
+                  <ImageView fitHeight="79.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/1s.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Text fx:id="text_waiting_fb" layoutX="554.0" layoutY="550.0" text="Sending.." visible="false">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="13.0" />
+               </font>
+            </Text>
+         </children></Pane>
+   </children>
+</AnchorPane>
